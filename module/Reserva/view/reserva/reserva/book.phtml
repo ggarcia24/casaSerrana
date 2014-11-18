@@ -1,0 +1,285 @@
+<script type="text/javascript">
+
+public function abrirVentana()
+{
+	var nombreVentana="";
+ 	var propiedades="width=770,height=520,directories=no,menubar=no,resizable=yes,scrollbars=yes,status=no,titlebar=no,toolbar=no";
+ 	window.open(direccion,"",propiedades);
+}
+
+</script>
+
+
+</script>
+<div class="container">
+	<?php
+		$form = $this->form;
+		$form->setAttribute('action', $this->url('reserva', array('action' => 'add')));
+    	$form->prepare();
+		$formLabel = $this->plugin('formLabel');
+		echo $this->form()->openTag($form);
+	?>
+
+	<br>
+	<ol class="breadcrumb">
+  		<li><a href="<?php echo $this->url('home')?>reserva/index">Reservas</a></li>
+  		<li class="active">Generar Reserva</li>  		
+	</ol>
+	<h3><?php echo $this->titulo ?></h3>	
+	
+	<div class="row">
+		<h4>Reservas</h4><hr>
+		<div class="col-sm-2">
+			<?php
+    			$numeroHabitacion = $form->get('numeroHabitacion');
+    			$numeroHabitacion->setValue($habitacion->numero);     			
+    			echo $formLabel->openTag() . $numeroHabitacion->getLabel('label');    			
+    			//echo $this->formElementErrors($numeroHabitacion);
+    			echo $formLabel->closeTag();
+    			echo $this->formInput($numeroHabitacion);
+			?>
+		</div>
+		<div class="col-sm-2">
+			<?php
+    			$pabellon = $form->get('pabellon');   				 
+    			$pabellon->setValue($pabellonEncontrado->nombre); 
+    			echo $formLabel->openTag() . $pabellon->getLabel('label');    			
+    			//echo $this->formElementErrors($pabellon);
+    			echo $formLabel->closeTag();
+    			echo $this->formInput($pabellon);
+			?>
+		</div>
+		<div class="col-sm-2">
+			<?php
+    			$fechaIngreso = $form->get('fechaIngreso');
+    			echo $formLabel->openTag() . $fechaIngreso->getLabel('label');    			
+    			//echo $this->formElementErrors($pass);
+    			echo $formLabel->closeTag();
+    			echo $this->formInput($fechaIngreso);
+			?>
+		</div>
+		<div class="col-sm-2">
+			<?php
+    			$fechaSalida = $form->get('fechaSalida');
+    			echo $formLabel->openTag() . $fechaSalida->getLabel('label');    			
+    			//echo $this->formElementErrors($pass);
+    			echo $formLabel->closeTag();
+    			echo $this->formInput($fechaSalida);
+			?>
+		</div>	
+		
+	</div><br>
+	<div class="row">
+		
+		<div class="col-sm-6">
+			<?php
+    			$nombreReserva = $form->get('nombreReserva');
+    			echo $formLabel->openTag() . $nombreReserva->getLabel('label');    			
+    			//echo $this->formElementErrors($nombreReserva);
+    			echo $formLabel->closeTag();
+    			echo $this->formInput($nombreReserva);
+			?>
+		</div>
+		<div class="col-sm-2">
+			<?php
+    			$estadoReserva = $form->get('estadoReserva');
+    			echo $formLabel->openTag() . $estadoReserva->getLabel('label');    			
+    			//echo $this->formElementErrors($estadoReserva);
+    			echo $formLabel->closeTag();
+    			echo $this->formSelect($estadoReserva);
+			?>
+		</div>
+		<a href="" onclick="abrirVentana()" target="_blank">Probando popUP</a>
+	</div>
+	<div class="row"><br>	
+		<div class="col-sm-3">
+			<?php
+    			$telefonoCelular = $form->get('telefonoCelular');
+    			echo $formLabel->openTag() . $telefonoCelular->getLabel('label');    			
+    			//echo $this->formElementErrors($telCelular);
+    			echo $formLabel->closeTag();
+    			echo $this->formInput($telefonoCelular);
+			?>
+		</div>
+		<div class="col-sm-3">
+			<?php
+    			$email = $form->get('email');
+    			echo $formLabel->openTag() . $email->getLabel('label');    			    			
+    			echo $formLabel->closeTag();
+    			echo $this->formInput($email);
+    			//echo $this->formElementErrors($email);
+			?>  			
+		</div>
+		<div class="col-sm-3">
+			<?php
+    			$tipoConvenio = $form->get('tipoConvenio');
+    			echo $formLabel->openTag() . $tipoConvenio->getLabel('label');    			    			
+    			echo $formLabel->closeTag();
+    			echo $this->formSelect($tipoConvenio);
+    			//echo $this->formElementErrors($tipoConvenio);
+			?>  			
+		</div>
+		<div class="col-sm-3">
+			<div class="checkbox"><br>
+			<?php
+    			$titular = $form->get('titular');
+    			echo $formLabel->openTag() . $titular->getLabel('label');    			
+    			//echo $this->formElementErrors($titular);
+    			echo $formLabel->closeTag();
+    			echo $this->formCheckbox($titular);
+			?>
+			</div>
+		</div>
+	</div>
+	<br>
+	
+	<div class="row">
+		
+		<div class="col-sm-2">
+			<?php
+    			$cantidadAdulto = $form->get('cantidadAdulto');
+    			echo $formLabel->openTag() . $cantidadAdulto->getLabel('label');    			
+    			//echo $this->formElementErrors($cantidadAdulto);
+    			echo $formLabel->closeTag();
+    			echo $this->formInput($cantidadAdulto);
+			?>
+		</div>
+		<div class="col-sm-2">
+			<?php
+    			$cantidadMenor = $form->get('cantidadMenor');
+    			echo $formLabel->openTag() . $cantidadMenor->getLabel('label');    			    			
+    			echo $formLabel->closeTag();
+    			echo $this->formInput($cantidadMenor);
+    			//echo $this->formElementErrors($cantidadMenor);
+			?>  			
+		</div>		
+	</div>
+	<br>
+	<div class="row">
+		
+		<div class="col-sm-2">
+
+				<?php
+					$huesped = $form->get('huesped');
+    				echo $formLabel->openTag() . $huesped->getLabel('label');    			    			
+    				echo $formLabel->closeTag();
+    				echo $this->formInput($huesped);
+    			//	echo $this->formElementErrors($titular);
+    			?>			
+
+		</div>
+		<div class="col-sm-8">
+			<?php
+    			$huespedes = $form->get('huespedes');
+    			echo $formLabel->openTag() . $huespedes->getLabel('label');    			    			
+    			echo $formLabel->closeTag();
+    			echo $this->formTextArea($huespedes);
+    			//echo $this->formElementErrors($huespedes);
+			?>  			
+		</div>
+		<div class="col-sm-2">
+		<br><br>
+			<?php echo $this->formElement($form->get('agregarHuesped')) ?> 
+		<br><br>
+			<?php echo $this->formElement($form->get('borrarHuesped')) ?> 
+		</div>
+
+	</div><br><br>
+	<div data-role="tagsinput">
+		<input type="text" data-role="tagsinput" >
+	</div>
+	<h4>Comentarios</h4><hr>
+	<div class="row">	
+		
+		<div class="col-sm-6">
+			<?php
+    			$comentario = $form->get('comentario');
+    			echo $formLabel->openTag() . $comentario->getLabel('label');    			    			
+    			echo $formLabel->closeTag();
+    			echo $this->formTextArea($comentario);
+    			//echo $this->formElementErrors($documento);
+			?>  			
+		</div>
+		
+
+	</div><br><br>
+	<h4>Totales</h4><hr>
+	
+	<div class="row">
+
+
+		<div class="col-sm-3">
+			<?php
+    			$totalReserva = $form->get('totalReserva');
+    			echo $formLabel->openTag() . $totalReserva->getLabel('label'); 
+    			echo $formLabel->closeTag();
+    		?>
+			<div class="input-group">
+    			<span class="input-group-addon">$</span>	
+    			<?php
+    				echo $this->formInput($totalReserva);
+    				//echo $this->formElementErrors($totalReserva);
+				?>  
+			</div>				
+		</div>
+		<div class="col-sm-3">
+			<?php
+    			$descuento = $form->get('descuento');
+    			echo $formLabel->openTag() . $descuento->getLabel('label');
+    			echo $formLabel->closeTag();
+    		?>
+			<div class="input-group">
+    			<span class="input-group-addon">%</span>	
+    			<?php	    			    			
+    				
+    				echo $this->formInput($descuento);
+    				//echo $this->formElementErrors($descuento);
+				?>
+			</div>	  			
+		</div>
+	</div><br>	
+	<div class="row">
+		<div class="col-sm-6">			
+			<?php
+    			$total = $form->get('total');
+    			echo $formLabel->openTag() . $total->getLabel('label');    			    			
+    			echo $formLabel->closeTag();
+    		?>
+    		<div class="input-group">
+    			<span class="input-group-addon">$</span>
+    			<?php
+    				echo $this->formInput($total);
+    				//echo $this->formElementErrors($total);
+				?>
+			</div>  			
+		</div>
+		<div class="col-sm-6">
+			<?php echo $this->formElement($form->get('grabarReserva')) ?> 
+			
+
+			<?php echo $this->formElement($form->get('generarPago')) ?> 
+
+			<?php echo $this->formElement($form->get('imprimir')) ?> 
+
+			<?php echo $this->formElement($form->get('cancelar')) ?> 
+		</div>		
+
+	</div>	
+
+	<br><br><br>	
+	<div class="row">
+		
+			
+			
+
+
+
+	</div>
+
+</div>
+
+
+
+
+
+<?php  echo $this->form()->closeTag() ?>

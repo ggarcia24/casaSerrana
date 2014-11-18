@@ -1,0 +1,74 @@
+
+<div class="container">
+    <br>
+    <ol class="breadcrumb">
+        <li class="active">Reservas</li>    
+    </ol>
+    <h3><?php echo $this->titulo ?></h3>
+    <br>
+    <!-- desde aca -->
+    <div class="row">
+        <div class="col-sm-3">
+            <label for="buscador">Buscar Reserva</label>
+            <input type="text" onkeyup="doSearch()" id="buscador" class="form-control">
+        </div>  
+    </div>
+    <br>
+    <!-- hasta aca -->
+    <a href="<?php echo $this->url('reserva', array('controller'=> 'reserva', 'action' => 'add')) ?>">Nuevo Reserva (+)</a>
+    <br><br>
+    <table class="table" id="datos">
+        <tr>
+            <th>CUIT</th>
+            <th>Nombre Compañia</th>
+            <th>Nombre Contacto</th>
+            <th>Telefono Celular</th>
+            <th>Telefono Fijo</th>
+            <th>Editar Reserva</th>
+            <th>Eliminar Reserva</th>
+
+        </tr>
+
+        <?php 
+
+        foreach($reservas as $reserva) 
+        {
+        ?>
+        
+            <tr style="background-color:<?php echo $this->cycle(array("#F0F0F0","#FFFFFF"))->next() ?>">
+            
+                <td><?php echo $this->escapeHtml($reserva->cuit);?></td>
+                <td><?php echo $this->escapeHtml($reserva->nombreCompania );?></td>
+                <td><?php echo $this->escapeHtml($reserva->nombreContacto);?></td>
+                <td><?php echo $this->escapeHtml($reserva->telefonoCelular);?></td>
+                <td><?php echo $this->escapeHtml($reserva->telefonoFijo);?></td>
+                <td>
+                    <a href="<?php echo $this->url('reserva', array('controller'=> 'reserva', 'action' => 
+                    'update', 'id' =>$reserva->idReserva)) ?>">Editar</a>
+                </td>
+                <td>
+                    <a onclick="return confirm('Esta seguro que desea eliminar a <?php echo $reserva->cuit ?>?')" 
+                    href="<?php echo $this->url('reserva', array('controller'=> 'reserva', 'action' => 'delete', 
+                    'id' => $reserva->idReserva)) ?>">Eliminar</a>
+                </td>
+            </tr>
+        <?php
+        }       
+        ?>      
+        <?php
+            $this->cycle()->assign(array("#F0F0F0","#FFFFFF"));
+            $this->cycle()->prev();
+        ?>
+        
+
+
+
+    </table>
+
+</div>
+
+
+
+
+
+

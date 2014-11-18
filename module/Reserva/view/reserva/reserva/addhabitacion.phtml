@@ -1,0 +1,95 @@
+
+<div class="container">
+	<?php
+		$form = $this->form;
+		$form->setAttribute('action', $this->url('reserva', array('action' => 'addhabitacion')));
+    	$form->prepare();
+		$formLabel = $this->plugin('formLabel');
+		echo $this->form()->openTag($form);
+	?>
+
+	<br>
+	<ol class="breadcrumb">
+  		<li><a href="<?php echo $this->url('home')?>reserva/indexhabitacion">Habitacion</a></li>
+  		<li class="active">Alta</li>  		
+	</ol>
+	<h3><?php echo $this->titulo ?></h3>	
+	<br>	
+	<div class="row">
+		<h4>Datos habitacion</h4><hr>
+		<?php echo $this->formHidden($form->get('idHabitacion')); ?>
+		<div class="col-sm-2">
+			<?php
+    			$numeroHabitacion = $form->get('numero');
+    			echo $formLabel->openTag() . $numeroHabitacion->getLabel('label');    			
+    			//echo $this->formElementErrors($numeroHabitacion);
+    			echo $formLabel->closeTag();
+    			echo $this->formInput($numeroHabitacion);
+			?>
+		</div>
+		<div class="col-sm-2">
+			<?php
+				
+    			$idPabellon = $form->get('idPabellon');
+    			echo $formLabel->openTag() . $idPabellon->getLabel('label');    			
+    			//echo $this->formElementErrors($idPabellon);
+    			echo $formLabel->closeTag(); 
+    			echo $this->formSelect($idPabellon);		    			
+			?>
+		</div>
+		<div class="col-sm-2">
+			<?php
+			
+    			$plazaMaxima = $form->get('plazaMaxima');
+    			echo $formLabel->openTag() . $plazaMaxima->getLabel('label');    			
+    			//echo $this->formElementErrors($plazaMaximo);
+    			echo $formLabel->closeTag();
+    			echo $this->formInput($plazaMaxima);
+    				
+			?>
+		</div>
+		
+		<div class="col-sm-3">
+			<?php
+				
+    			$idCategoria = $form->get('idCategoria');
+    			echo $formLabel->openTag() . $idCategoria->getLabel('label');    			
+    			//echo $this->formElementErrors($idCategoria);
+    			echo $formLabel->closeTag();
+    			echo $this->formSelect($idCategoria);
+    			
+			?>
+		</div>		
+		<div class="col-sm-3">
+			<?php
+				
+    			$idEstado = $form->get('idEstado');
+    			echo $formLabel->openTag() . $idEstado->getLabel('label');    			
+    			//echo $this->formElementErrors($idEstado);
+    			echo $formLabel->closeTag();
+    			echo $this->formSelect($idEstado);
+    			
+			?>
+		</div>
+	</div>
+	<br>
+	<br>	
+	<div class="row">
+		
+		<div class="col-sm-12">
+			<?php 
+				echo $this->formElement($form->get('send')) 
+			?> 
+		</div>		
+
+
+
+	</div>
+
+</div>
+
+
+
+
+
+<?php  echo $this->form()->closeTag() ?>

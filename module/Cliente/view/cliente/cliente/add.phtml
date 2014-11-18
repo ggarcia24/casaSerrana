@@ -1,0 +1,232 @@
+<script type="text/javascript">
+   
+    function clonar()
+    {
+    	//$('.magico').clone().insertAfter(".box");
+
+    	var contador=1;
+    	var elemento=document.createElement("text");
+    	var = 'idTarjetaPorCliente'+contador;
+    	elemento.setAttribute('class','form-control');
+  		elemento.setAttribute('class','form-control');
+  		elemento.setAttribute('id','hello');
+  		var caja=document.getElementById("caja");
+  		caja.appendChild(elemento);
+    }
+
+    function hola()
+    {
+    	//$('.magico').clone().insertAfter(".box");
+
+    
+    	alert('dsadsa');
+    }
+
+
+
+</script>
+
+
+<div class="container">
+	<?php
+		$form = $this->form;
+		$form->setAttribute('action', $this->url('cliente', array('action' => 'add')));
+    	$form->prepare();
+		$formLabel = $this->plugin('formLabel');
+		echo $this->form()->openTag($form);
+	?>
+
+	<br>
+	<ol class="breadcrumb">
+  		<li><a href="<?php echo $this->url('home')?>cliente/index">Clientes</a></li>
+  		<li class="active">Alta</li>  		
+	</ol>
+	<h3><?php echo $this->titulo ?></h3>	
+	<br>	
+	<div class="row">
+		<?php echo $this->formHidden($form->get('idCliente')); ?>
+		<h4>Datos Personales</h4><hr>
+		<div class="col-sm-2">
+			<?php
+    			$apellido = $form->get('apellido');
+    			echo $formLabel->openTag() . $apellido->getLabel('label');    			
+    			//echo $this->formElementErrors($apellido);
+    			echo $formLabel->closeTag();
+    			echo $this->formInput($apellido);
+			?>
+		</div>
+		<div class="col-sm-2">
+			<?php
+    			$nombre = $form->get('nombre');
+    			echo $formLabel->openTag() . $nombre->getLabel('label');    			
+    			//echo $this->formElementErrors($nombre);
+    			echo $formLabel->closeTag();
+    			echo $this->formInput($nombre);
+			?>
+		</div>
+		<div class="col-sm-2">
+			<?php
+    			$fechaNacimiento = $form->get('fechaNacimiento');
+    			echo $formLabel->openTag() . $fechaNacimiento->getLabel('label');    			
+    			//echo $this->formElementErrors($pass);
+    			echo $formLabel->closeTag();
+    			echo $this->formInput($fechaNacimiento);
+			?>
+		</div>
+		
+		<div class="col-sm-3">
+			<?php
+    			$telefonoFijo = $form->get('telefonoFijo');
+    			echo $formLabel->openTag() . $telefonoFijo->getLabel('label');    			
+    			//echo $this->formElementErrors($telFijo);
+    			echo $formLabel->closeTag();
+    			echo $this->formInput($telefonoFijo);
+			?>
+		</div>		
+		<div class="col-sm-3">
+			<?php
+    			$telefonoCelular = $form->get('telefonoCelular');
+    			echo $formLabel->openTag() . $telefonoCelular->getLabel('label');    			
+    			//echo $this->formElementErrors($telCelular);
+    			echo $formLabel->closeTag();
+    			echo $this->formInput($telefonoCelular);
+			?>
+		</div>
+	</div>
+	<br>
+	<div class="row">
+		<div class="col-sm-2">
+			<?php
+    			$tipoDocumento = $form->get('tipoDocumento');
+    			echo $formLabel->openTag() . $tipoDocumento->getLabel('label');    			    			
+    			echo $formLabel->closeTag();
+    			echo $this->formSelect($tipoDocumento);
+    			echo $this->formElementErrors($tipoDocumento);
+			?>  			
+		</div>
+		<div class="col-sm-2">
+			<?php
+    			$documento = $form->get('documento');
+    			echo $formLabel->openTag() . $documento->getLabel('label');    			    			
+    			echo $formLabel->closeTag();
+    			echo $this->formInput($documento);
+    			//echo $this->formElementErrors($documento);
+			?>  			
+		</div>
+		<div class="col-sm-4">
+			<?php
+    			$email = $form->get('email');
+    			echo $formLabel->openTag() . $email->getLabel('label');    			
+    			//echo $this->formElementErrors($email);
+    			echo $formLabel->closeTag();
+    			echo $this->formInput($email);
+			?>
+		</div>
+	</div>
+	<br><br>
+	<div class="row">
+		<h4>Datos Residenciales</h4><hr>
+		<div class="col-sm-3">
+			<?php
+    			$direccion = $form->get('direccion');
+    			echo $formLabel->openTag() . $direccion->getLabel('label');    			
+    			//echo $this->formElementErrors($direccion);
+    			echo $formLabel->closeTag();
+    			echo $this->formInput($direccion);
+			?>
+		</div>
+		<div class="col-sm-2">
+			<?php
+    			$idCodigoPostal = $form->get('codigoPostal');
+    			echo $formLabel->openTag() . $idCodigoPostal->getLabel('label');    			    			
+    			echo $formLabel->closeTag();
+    			echo $this->formInput($idCodigoPostal);
+    			//echo $this->formElementErrors($documento);
+			?>  			
+		</div>		
+	</div>
+	<br><br>
+	<div class="row">
+		<h4>Datos Administrativos</h4><hr>
+		<div class="col-sm-2">
+			<div class="checkbox">
+				<?php
+					$titular = $form->get('titular');
+    				echo $formLabel->openTag() . $titular->getLabel('label');    			    			
+    				echo $formLabel->closeTag();
+    				echo $this->formCheckbox($titular);
+    			//	echo $this->formElementErrors($titular);
+    			?>			
+    		</div>
+		</div>
+		<div class="col-sm-2">
+			<?php
+    			$idBancoPorCliente = $form->get('idBancoPorCliente');
+    			echo $formLabel->openTag() . $idBancoPorCliente->getLabel('label');    			    			
+    			echo $formLabel->closeTag();
+    			echo $this->formInput($idBancoPorCliente);
+    			//echo $this->formElementErrors($documento);
+			?>  			
+		</div>
+		
+		<div class="col-sm-4">
+			<?php
+    			$idAlimentoEspecial = $form->get('idAlimentoEspecial');
+    			echo $formLabel->openTag() . $idAlimentoEspecial->getLabel('label');    			    			
+    			echo $formLabel->closeTag();
+    			echo $this->formInput($idAlimentoEspecial);
+    			//echo $this->formElementErrors($documento);
+			?>  			
+		</div>
+		
+		
+		
+		<div class="col-sm-4">
+			<?php
+    			$idPadronAfiliado = $form->get('idPadronAfiliado');
+    			echo $formLabel->openTag() . $idPadronAfiliado->getLabel('label');    			    			
+    			echo $formLabel->closeTag();
+    			echo $this->formInput($idPadronAfiliado);
+    			//echo $this->formElementErrors($idPadronAfiliado);
+			?>  			
+		</div>
+	</div>	
+	<div class="row">
+		<div class="magico">
+			<div class="col-sm-2">
+				<?php
+    				$idTarjetaPorCliente = $form->get('idTarjetaPorCliente');
+    				echo $formLabel->openTag() . $idTarjetaPorCliente->getLabel('label');    			    			
+    				echo $formLabel->closeTag();
+    				echo $this->formInput($idTarjetaPorCliente);
+    				//echo $this->formElementErrors($documento);
+				?>  			
+			</div>
+		</div>
+		
+		
+
+	</div><br>	
+	<?php
+		if ($this->validaciones) {
+			echo $this->validaciones;			
+		}
+	?>
+	<br>	
+	<div class="row">
+		
+		<div class="col-sm-12">
+			<?php echo $this->formElement($form->get('send')) ?> 
+		</div>		
+
+
+
+	</div>
+
+</div>
+
+
+
+
+
+<?php  echo $this->form()->closeTag() ?>

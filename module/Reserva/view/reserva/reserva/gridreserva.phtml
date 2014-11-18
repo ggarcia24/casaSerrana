@@ -1,0 +1,112 @@
+<?php
+
+
+	$disponibles=array();
+	foreach ($grillas as $grilla)
+	{
+		$disponibles[] = $grilla;
+	};
+
+
+
+?>
+
+<br>
+<?php
+
+?>
+<div class="container">
+	<h3><?php echo $this->titulo ?></h3>
+	<br><br>
+
+	<div class="row">
+		<div class="table-responsive" style="text-align:center">
+			<table class="table table-bordered">
+				<?php
+					$fechaDesde=strtotime($fechaDesde);
+					$fechaHasta=strtotime($fechaHasta);
+
+
+				?>
+				<tr>
+					<td>
+						
+					</td>
+					<?php
+					for($i=$fechaDesde;$i<=$fechaHasta;$i+=86400)
+					{
+						?>
+						<td style="background-color:#d9edf7;font-weight: bold;">
+							<?php echo date("D, d-m-Y", $i)?>
+						</td>	
+					<?php
+					}
+					
+					?>	
+				</tr>
+				<?php
+					 foreach ($habitaciones as $habitacion) 
+					 {
+				?>				
+					<tr>
+						<td style="background-color:#d9edf7;font-weight: bold;">
+							<?php
+					 	
+					 		
+					 			echo $habitacion->numero;
+					 		?>
+					 	</td>
+
+					 	<?php
+					 		for($i=$fechaDesde;$i<=$fechaHasta;$i+=86400)
+							{
+								?>
+					 			<td>
+					 			<?php
+					 				foreach ($disponibles as $disponible) 
+			            			{
+			            				if($habitacion->idHabitacion == $disponible["idHabitacion"])
+			            				{
+			            					
+
+			            					if ($disponible["fechaIn"] <= date("Y-m-d", $i) && $disponible["fechaOut"] >=  date("Y-m-d", $i)) 
+					 						{
+					 							?>
+			            						<a href="" class="btn" style="background-color:#FD5E5E;color:black"> 
+			            						<?php
+			            							echo $habitacion->numero;
+			            						?>
+				            					</a>		            					
+			            						<?php
+					 						}	
+
+			            				} 
+
+			            				
+			            			}
+					 				
+					 			?>
+									
+								</td>
+						<?php
+							}	
+						?>	
+					 	
+
+						
+						
+
+						
+					<?php
+					}
+					?>
+				</tr>	
+					
+
+			</table>
+		</div>
+	</div>
+
+
+</div>	
+
