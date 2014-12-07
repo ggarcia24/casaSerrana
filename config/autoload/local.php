@@ -16,8 +16,8 @@ return array
 (
 	'db' =>array
 	(
-		'username' => 'root',
-		'password' => '',
+		'username' => 'admin',
+		'password' => 'admin$loopiX',
 	),
 
 

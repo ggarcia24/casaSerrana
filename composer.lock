@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4d2233cf331630dab54e9fcd31523741",
+    "hash": "5f523a3d63dff2ec7d9c6048a635f55f",
     "packages": [
         {
             "name": "snapshotpl/zf-snap-jquery",
