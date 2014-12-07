@@ -30,7 +30,9 @@ namespace Proveedor\Controller;
          $form = new ProveedorForm();
          $form->get('send')->setValue('Agregar');
          $request = $this->getRequest();
+
          if ($request->isPost()) {
+            
              $proveedor = new Proveedor();
              $form->setInputFilter($proveedor->getInputFilter());
              $form->setData($request->getPost());

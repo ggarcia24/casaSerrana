@@ -20,7 +20,7 @@ namespace Reserva\Form;
                 'label' => 'Número Habitación:',
             ),
             'attributes' =>array(
-            'required' => 'required',
+            //'required' => 'required',
             'type'  => 'text',
             'class' => 'form-control',
             'maxlength' => '10',
@@ -28,13 +28,18 @@ namespace Reserva\Form;
             ),
         ));
 
+         $this->add(array(
+            'name' => 'idHabitacion',
+            'type' => 'Hidden',
+        )); 
+
         $this->add(array(
             'name' => 'pabellon',
             'options' => array(
                 'label' => 'Pabellon:',
             ),
             'attributes' =>array(
-            'required' => 'required',
+            //'required' => 'required',
             'type'  => 'text',
             'class' => 'form-control',
             'maxlength' => '50',
@@ -78,16 +83,11 @@ namespace Reserva\Form;
 
         $this->add(array(
             'type' => 'Zend\Form\Element\Select',
-            'name' => 'estadoReserva',
+            'name' => 'idEstado',
             'options' => array(
                     'label' => 'Estado Reserva:',
-                    'empty_option' => 'Seleccione....',
-                    'value_options' => array(
-                            '1' => 'Sin Señar',
-                            '2' => 'Señada',
-                            '3' => 'Pagada',
+                    //'empty_option' => 'Seleccione....',
 
-                    ),
                     
            ),
             'attributes' =>array(
@@ -104,6 +104,7 @@ namespace Reserva\Form;
             'type'  => 'text',
             'class' => 'form-control',
             'maxlength' => '50',
+            'disabled' => 'disabled',
             ),
         ));
 
@@ -116,15 +117,16 @@ namespace Reserva\Form;
             'attributes' =>array(            
             'class' => 'form-control',
             'maxlength' => '60',
-        ),
+            //'disabled' => 'disabled',
+        ), 
         ));
        
         $this->add(array(
             'type' => 'Zend\Form\Element\Select',
-            'name' => 'tipoConvenio',
+            'name' => 'idTipoHuesped',
             'options' => array(
                     'label' => 'Tipo de Convenio',
-                    'empty_option' => 'Seleccione....',
+                    //'empty_option' => 'Seleccione....',
                     'value_options' => array(
                             '1' => 'Afiliado',
                             '2' => 'Particular',
@@ -252,6 +254,7 @@ namespace Reserva\Form;
             'attributes' =>array(            
             'class' => 'form-control',
             'maxlength' => '60',
+            'disabled' => 'disabled',
         ),
         ));
            $this->add(array(
@@ -259,70 +262,58 @@ namespace Reserva\Form;
             'options' => array(
             'label' => 'Total Reserva:'
             ),
-            'attributes' =>array(            
+            'attributes' =>array(      
+            'id'    =>  'totalReserva',
             'class' => 'form-control',
             'maxlength' => '60',
             'disabled' => 'disabled',
         ),
         ));
 
-
-
-
-       
-
-        $this->add(array(
-            'name' => 'agregarHuesped',            
-            'attributes' => array(
-                'type'  => 'submit',
-                'value' => 'Agregar Huésped',
-                'class' => 'btn btn-warning',
-            ),
-        ));
-
-        $this->add(array(
-            'name' => 'borrarHuesped',            
-            'attributes' => array(
-                'type'  => 'submit',
-                'value' => 'Borrar Huésped',
-                'class' => 'btn btn-warning',
-            ),
-        ));
         $this->add(array(
             'name' => 'grabarReserva',            
             'attributes' => array(
                 'type'  => 'submit',
                 'value' => 'Grabar Reserva',
-                'class' => 'btn btn-warning',
+                'class' => 'btn btn-success',
             ),
         ));
 
+// Defino los campos para jquery
+
         $this->add(array(
-            'name' => 'generarPago',            
-            'attributes' => array(
-                'type'  => 'submit',
-                'value' => 'Generar Pago',
-                'class' => 'btn btn-warning',
-            ),
-        ));
-        $this->add(array(
-            'name' => 'imprimir',            
-            'attributes' => array(
-                'type'  => 'submit',
-                'value' => 'Imprimir',
-                'class' => 'btn btn-warning',
-            ),
+            'name' => 'slider',
+            'type' => 'ZfSnapJquery\Form\Element\Slider',
         ));
 
         $this->add(array(
-            'name' => 'cancelar',            
-            'attributes' => array(
-                'type'  => 'submit',
-                'value' => 'Cancelar',
-                'class' => 'btn btn-warning',
-            ),
+            'name' => 'spinner',
+            'type' => 'ZfSnapJquery\Form\Element\Spinner',
         ));
 
+        $this->add(array(
+            'name' => 'datepicker',
+            'type' => 'ZfSnapJquery\Form\Element\Datepicker',
+        ));
+
+        $this->add(array(
+            'name' => 'autocomplete',
+            'type' => 'ZfSnapJquery\Form\Element\Autocomplete',
+            'attributes' => array(
+                'jquery' => array(
+                    'source' => '/casaserrana/public/cliente'
+                )
+            )
+        ));
+
+        $this->add(array(
+            'name' => 'submit',
+            'attributes' => array(
+                'type'  => 'submit',
+                'value' => 'Submit ZfSnapJquery form!',
+            ),
+        ));
+        
 
 
 

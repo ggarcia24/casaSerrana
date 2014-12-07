@@ -40,27 +40,106 @@ namespace Reserva\Model;
 
      public function getInputFilter()
      {
-         if (!$this->inputFilter) {
-             $inputFilter = new InputFilter();
+        if (!$this->inputFilter) 
+        {
+            $inputFilter = new InputFilter();
 
-             $inputFilter->add(array(
-                 'name'     => 'numero',
-                 'required' => true,
-                 'filters'  => array(
-                     array('name' => 'StripTags'),
-                     array('name' => 'StringTrim'),
-                 ),
-                 'validators' => array(
-                     array(
-                         'name'    => 'StringLength',
-                         'options' => array(
-                             'encoding' => 'UTF-8',
-                             'min'      => 1,
-                             'max'      => 100,
-                         ),
-                     ),
-                 ),
-             ));
+
+
+            $inputFilter->add(array(
+                'name' => 'numero',
+                'required' => true,
+                'filters' => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                      'name' =>'NotEmpty', 
+                        'options' => array(
+                            'messages' => array(
+                                \Zend\Validator\NotEmpty::IS_EMPTY => 'Por favor introducir el numero de habitacion' 
+                            ),
+                        ),
+                    ),
+                ),
+            ));
+
+            $inputFilter->add(array(
+                'name' => 'plazaMaxima',
+                'required' => true,
+                'filters' => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                      'name' =>'NotEmpty', 
+                        'options' => array(
+                            'messages' => array(
+                                \Zend\Validator\NotEmpty::IS_EMPTY => 'Por favor introducir las plazas maximas' 
+                            ),
+                        ),
+                    ),
+                ),
+            )); 
+
+            $inputFilter->add(array(
+                'name' => 'idPabellon',
+                'required' => true,
+                'filters' => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                      'name' =>'NotEmpty', 
+                        'options' => array(
+                            'messages' => array(
+                                \Zend\Validator\NotEmpty::IS_EMPTY => 'Por favor introducir el pabellon' 
+                            ),
+                        ),
+                    ),
+                ),
+            ));
+
+            $inputFilter->add(array(
+                'name' => 'idCategoria',
+                'required' => true,
+                'filters' => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                      'name' =>'NotEmpty', 
+                        'options' => array(
+                            'messages' => array(
+                                \Zend\Validator\NotEmpty::IS_EMPTY => 'Por favor introducir la categoria de habitacion' 
+                            ),
+                        ),
+                    ),
+                ),
+            ));  
+
+            $inputFilter->add(array(
+                'name' => 'idEstado',
+                'required' => true,
+                'filters' => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                      'name' =>'NotEmpty', 
+                        'options' => array(
+                            'messages' => array(
+                                \Zend\Validator\NotEmpty::IS_EMPTY => 'Por favor introducir el estado de la habitacion' 
+                            ),
+                        ),
+                    ),
+                ),
+            ));  
 
 
              

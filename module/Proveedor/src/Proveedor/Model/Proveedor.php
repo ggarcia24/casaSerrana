@@ -70,7 +70,11 @@ namespace Proveedor\Model;
                              'encoding' => 'UTF-8',
                              'min'      => 1,
                              'max'      => 100,
+                             'messages' => array(
+                                'stringLengthTooShort' => 'CUIT demasiado largo',
+                            ),
                          ),
+
                      ),
                  ),
              ));

@@ -48,17 +48,17 @@
     },
     {
         "name": "zendframework/zendframework",
-        "version": "2.3.1",
-        "version_normalized": "2.3.1.0",
+        "version": "2.3.3",
+        "version_normalized": "2.3.3.0",
         "source": {
             "type": "git",
             "url": "https://github.com/zendframework/zf2.git",
-            "reference": "055eac4314425c291f3ef0e104a6196a8fc24cd5"
+            "reference": "88c9b6f566fc1097f64ead155625db9bdfee531e"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/zendframework/zf2/zipball/055eac4314425c291f3ef0e104a6196a8fc24cd5",
-            "reference": "055eac4314425c291f3ef0e104a6196a8fc24cd5",
+            "url": "https://api.github.com/repos/zendframework/zf2/zipball/88c9b6f566fc1097f64ead155625db9bdfee531e",
+            "reference": "88c9b6f566fc1097f64ead155625db9bdfee531e",
             "shasum": ""
         },
         "require": {
@@ -120,7 +120,7 @@
         },
         "require-dev": {
             "doctrine/annotations": ">=1.0",
-            "fabpot/php-cs-fixer": "*@dev",
+            "fabpot/php-cs-fixer": "dev-master#fcbb09b5204",
             "ircmaxell/random-lib": "dev-master",
             "ircmaxell/security-lib": "dev-master",
             "mikey179/vfsstream": "1.2.*",
@@ -136,7 +136,7 @@
             "zendframework/zendpdf": "ZendPdf for creating PDF representations of barcodes",
             "zendframework/zendservice-recaptcha": "ZendService\\ReCaptcha for rendering ReCaptchas in Zend\\Captcha and/or Zend\\Form"
         },
-        "time": "2014-04-15 14:47:18",
+        "time": "2014-09-16 22:58:11",
         "bin": [
             "bin/classmap_generator.php",
             "bin/pluginmap_generator.php",
@@ -163,6 +163,60 @@
         "homepage": "http://framework.zend.com/",
         "keywords": [
             "framework",
+            "zf2"
+        ]
+    },
+    {
+        "name": "snapshotpl/zf-snap-jquery",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/snapshotpl/ZfSnapJquery.git",
+            "reference": "549b02c7c38c43621fb0765f79c5404259488f42"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/snapshotpl/ZfSnapJquery/zipball/549b02c7c38c43621fb0765f79c5404259488f42",
+            "reference": "549b02c7c38c43621fb0765f79c5404259488f42",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.3",
+            "zendframework/zend-modulemanager": "2.*",
+            "zendframework/zend-view": "2.*"
+        },
+        "require-dev": {
+            "zendframework/zendframework": "2.*"
+        },
+        "time": "2014-05-15 19:03:43",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "ZfSnapJquery": "src/"
+            },
+            "classmap": [
+                "Module.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Witold Wasiczko",
+                "email": "witold@wasiczko.pl",
+                "homepage": "http://www.psd2html.pl/"
+            }
+        ],
+        "description": "jQuery and jQuery UI helpers and form elements for Zend Framework 2",
+        "keywords": [
+            "Zend Framework",
+            "javascript",
+            "jquery",
+            "jquery-ui",
             "zf2"
         ]
     }

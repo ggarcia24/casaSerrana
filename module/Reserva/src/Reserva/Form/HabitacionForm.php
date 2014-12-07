@@ -30,7 +30,7 @@ namespace Reserva\Form;
                 'label' => 'Numero *',
             ),
             'attributes' =>array(
-            'required' => 'required',
+
             'type'  => 'text',
             'class' => 'form-control',
             'maxlength' => '50',
@@ -43,7 +43,7 @@ namespace Reserva\Form;
                 'label' => 'Plazas Maximas: *',
             ),
             'attributes' =>array(
-            'required' => 'required',
+
             'type'  => 'text',
             'class' => 'form-control',
             'maxlength' => '10',
@@ -57,7 +57,8 @@ namespace Reserva\Form;
             'name' => 'idPabellon',
             'options' => array(
                                 'label' => 'Pabellon:',
-                                'empty_option' => 'Seleccione....',                    
+                                'empty_option' => 'Seleccione....',
+                                'disable_inarray_validator' => true
                                 ),
             'attributes' =>array(
                                 'class' => 'form-control',
@@ -75,6 +76,7 @@ namespace Reserva\Form;
             'options' => array(
                     'label' => 'Categoria:',
                     'empty_option' => 'Seleccione....',
+                    'disable_inarray_validator' => true
                    
                     
            ),
@@ -88,7 +90,8 @@ namespace Reserva\Form;
             'name' => 'idEstado',
             'options' => array(
                     'label' => 'Estado:',
-                    'empty_option' => 'Seleccione....'
+                    'empty_option' => 'Seleccione....',
+                    'disable_inarray_validator' => true
                     
            ),
             'attributes' =>array(

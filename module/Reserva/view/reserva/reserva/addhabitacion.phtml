@@ -21,55 +21,68 @@
 		<div class="col-sm-2">
 			<?php
     			$numeroHabitacion = $form->get('numero');
-    			echo $formLabel->openTag() . $numeroHabitacion->getLabel('label');    			
-    			//echo $this->formElementErrors($numeroHabitacion);
+    			echo $formLabel->openTag() . $numeroHabitacion->getLabel('label');    			   			
     			echo $formLabel->closeTag();
     			echo $this->formInput($numeroHabitacion);
-			?>
+    			?>
+    			<div style="color:red">
+    				<?php echo $this->formElementErrors($numeroHabitacion);?>	
+    			</div>
 		</div>
 		<div class="col-sm-2">
 			<?php
 				
     			$idPabellon = $form->get('idPabellon');
     			echo $formLabel->openTag() . $idPabellon->getLabel('label');    			
-    			//echo $this->formElementErrors($idPabellon);
+    			
     			echo $formLabel->closeTag(); 
-    			echo $this->formSelect($idPabellon);		    			
-			?>
+    			echo $this->formSelect($idPabellon);
+    			?>
+    			<div style="color:red">
+
+    				<?php echo $this->formElementErrors($idPabellon);?>
+    			</div>	
 		</div>
 		<div class="col-sm-2">
 			<?php
 			
     			$plazaMaxima = $form->get('plazaMaxima');
-    			echo $formLabel->openTag() . $plazaMaxima->getLabel('label');    			
-    			//echo $this->formElementErrors($plazaMaximo);
+    			echo $formLabel->openTag() . $plazaMaxima->getLabel('label');
     			echo $formLabel->closeTag();
     			echo $this->formInput($plazaMaxima);
+    			?>
+    			<div style="color:red">
+    				<?php echo $this->formElementErrors($plazaMaxima);?>
+    			</div>
     				
-			?>
+			
 		</div>
 		
 		<div class="col-sm-3">
 			<?php
 				
     			$idCategoria = $form->get('idCategoria');
-    			echo $formLabel->openTag() . $idCategoria->getLabel('label');    			
-    			//echo $this->formElementErrors($idCategoria);
+    			echo $formLabel->openTag() . $idCategoria->getLabel('label');     			
     			echo $formLabel->closeTag();
     			echo $this->formSelect($idCategoria);
-    			
-			?>
+    			?>
+    			<div style="color:red">
+    				<?php echo $this->formElementErrors($idCategoria);?>	
+    			</div>
+    			    			
+			
 		</div>		
 		<div class="col-sm-3">
 			<?php
 				
     			$idEstado = $form->get('idEstado');
     			echo $formLabel->openTag() . $idEstado->getLabel('label');    			
-    			//echo $this->formElementErrors($idEstado);
     			echo $formLabel->closeTag();
     			echo $this->formSelect($idEstado);
-    			
-			?>
+    			?>
+  				<div style="color:red">    		
+    				<?php echo $this->formElementErrors($idEstado);?>
+    			</div>
 		</div>
 	</div>
 	<br>

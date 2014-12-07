@@ -69,26 +69,23 @@ class ReservaTable
     public function saveReserva(Reserva $reserva)
     {
         $data = array(            
-            'cuit'              =>$reserva->cuit,
-            'nombre'                =>$reserva->nombre,
-            'domicilio'             =>$reserva->domicilio,
-            'telefonoFijo'          =>$reserva->telefonoFijo,
-            'telefonoCelular'       =>$reserva->telefonoCelular,
-            'tipoDocumento'         =>$reserva->tipoDocumento,
-            'documento'             =>$reserva->documento,            
-            'titular'               =>$reserva->titular,
-            'email'                 =>$reserva->email,
-            'idAlimentoEspecial'    =>$reserva->idAlimentoEspecial,
-            'codigoPostal'          =>$reserva->codigoPostal,            
-            'fechaNacimiento'       =>$reserva->fechaNacimiento,
-            'idPadronAfiliado'      =>$$reserva->idPadronAfiliado,
+           // 'idCliente'             =>$reserva->idCLiente,
+            'idHabitacion'          =>$reserva->idHabitacion,
+            'idTarifa'              =>$reserva->idTarifa,
+            'idEstado'              =>$reserva->idEstado,
+            'idTipoHuesped'         =>$reserva->idTipoHuesped,
+            'fechaIn'               =>$reserva->fechaIn,
+            'fechaOut'              =>$reserva->fechaOut,            
+            'cantidadAdultos'       =>$reserva->cantidadAdultos,
+            'cantidadMenores'       =>$reserva->cantidadMenores,
+            //'idPago'                =>$reserva->idPago,
+            'comentario'            =>$reserva->comentario, 
         );
 
         $id = (int) $reserva->idReserva;
         if($id == 0)
         {
-            print_r($data);
-            exit;
+
             $this->tableGateway->insert($data);
         }else
         {

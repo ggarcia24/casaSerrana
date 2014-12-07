@@ -21,11 +21,18 @@
 			<?php
     			$cuit = $form->get('cuit');
     			echo $formLabel->openTag() . $cuit->getLabel('label');    			
-    			//echo $this->formElementErrors($cuit);
+    			
     			echo $formLabel->closeTag();
+
     			echo $this->formInput($cuit);
+
+    			
+    				echo $this->formElementErrors($cuit);	
+    			   			
+    			
 			?>
 		</div>
+
 		<div class="col-sm-2">
 			<?php
     			$nombreCompania = $form->get('nombreCompania');

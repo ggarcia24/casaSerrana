@@ -9,33 +9,33 @@ namespace Reserva\Model;
 
  class Reserva implements InputFilterAwareInterface
  {
-
-    public $nombreCompania;    
-    public $cuit;     
-    public $nombreContacto;
-    public $telefonoFijo;
-    public $telefonoCelular;
-    public $provincia;
-    public $localidad;
-    public $email;
-    public $domicilio;
-    public $codigoPostal;
+    public $idReserva;    
+    public $idCliente;
+    public $idHabitacion;
+    public $idTarifa;    
+    public $idEstado;
+    public $idTipoHuesped;
+    public $fechaIn;    
+    public $fechaOut;     
+    public $cantidadAdultos;
+    public $cantidadMenores;
+    //public $idPago;
+    public $comentario;
     protected $inputFilter;                       // <-- Add this variable
 
      public function exchangeArray($data)
-     {
-
-         
-         $this->nombreCompania  = (isset($data['nombreCompania']))  ? $data['nombreCompania']  : null;
-         $this->cuit  = (isset($data['cuit']))  ? $data['cuit']  : null;
-         $this->nombreContacto  = (isset($data['nombreContacto']))  ? $data['nombreContacto']  : null;
-         $this->telefonoFijo  = (isset($data['telefonoFijo']))  ? $data['telefonoFijo']  : null;
-         $this->telefonoCelular  = (isset($data['telefonoCelular']))  ? $data['telefonoCelular']  : null;
-         $this->provincia  = (isset($data['provincia']))  ? $data['provincia']  : null;
-         $this->localidad  = (isset($data['localidad']))  ? $data['localidad']  : null;
-         $this->email  = (isset($data['email']))  ? $data['email']  : null;
-         $this->domicilio  = (isset($data['domicilio']))  ? $data['domicilio']  : null;
-         $this->codigoPostal  = (isset($data['codigoPostal']))  ? $data['codigoPostal']  : null;
+     {         
+         $this->idReserva = (isset($data['idReserva']))  ? $data['idReserva']  : null;
+         //$this->idCliente = (isset($data['idCliente']))  ? $data['idCliente']  : null;
+         $this->cantidadAdultos = (isset($data['cantidadAdulto']))  ? $data['cantidadAdulto']  : null;    
+         $this->idHabitacion = (isset($data['idHabitacion']))  ? $data['idHabitacion']  : null;       
+         $this->idTarifa = (isset($data['idTarifa']))  ? $data['idTarifa']  : null;       
+         $this->idEstado = (isset($data['idEstado']))  ? $data['idEstado']  : null;       
+         $this->idTipoHuesped = (isset($data['idTipoHuesped']))  ? $data['idTipoHuesped']  : null;      
+         $this->fechaIn = (isset($data['fechaIngreso']))  ? $data['fechaIngreso']  : null;       
+         $this->fechaOut = (isset($data['fechaSalida']))  ? $data['fechaSalida']  : null;   
+         $this->cantidadAdultos = (isset($data['cantidadAdulto']))  ? $data['cantidadAdulto']  : null;       
+         $this->comentario = (isset($data['comentario']))  ? $data['comentario']  : null;       
          
      }
 
@@ -48,50 +48,87 @@ namespace Reserva\Model;
     
      public function getInputFilter()
      {
-         if (!$this->inputFilter) {
-             $inputFilter = new InputFilter();
-
-             $inputFilter->add(array(
-                 'name'     => 'artist',
-                 'required' => true,
-                 'filters'  => array(
-                     array('name' => 'StripTags'),
-                     array('name' => 'StringTrim'),
-                 ),
-                 'validators' => array(
-                     array(
-                         'name'    => 'StringLength',
-                         'options' => array(
-                             'encoding' => 'UTF-8',
-                             'min'      => 1,
-                             'max'      => 100,
-                         ),
-                     ),
-                 ),
+         if (!$this->inputFilter) 
+         {
+            $inputFilter = new InputFilter();
+/*
+            $inputFilter->add(array(
+                'name'     => 'cantidadAdulto',
+                'required' => true,
+                'options' => array(
+                    'messages' => array(
+                        'isEmpty' => 'Please enter a value for "foo".',
+                        ),
+                ),                
              ));
+*/
+                $inputFilter->add(array(
+                    'name' => 'cantidadAdulto',
+                    'required' => true,
+                    'filters' => array(
+                        array('name' => 'StripTags'),
+                        array('name' => 'StringTrim'),
+                    ),
+                    'validators' => array(
+                        array(
+                          'name' =>'NotEmpty', 
+                            'options' => array(
+                                'messages' => array(
+                                    \Zend\Validator\NotEmpty::IS_EMPTY => 'Por favor introducir la cantidad de adultos' 
+                                ),
+                            ),
+                        ),
+                    ),
+                ));
 
-             $inputFilter->add(array(
-                 'name'     => 'title',
-                 'required' => true,
-                 'filters'  => array(
-                     array('name' => 'StripTags'),
-                     array('name' => 'StringTrim'),
-                 ),
-                 'validators' => array(
-                     array(
-                         'name'    => 'StringLength',
-                         'options' => array(
-                             'encoding' => 'UTF-8',
-                             'min'      => 1,
-                             'max'      => 100,
-                         ),
-                     ),
-                 ),
-             ));
+            $inputFilter->add(array(
+                'name' => 'fechaIngreso',
+                'required' => true,
+                'filters' => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                      'name' =>'NotEmpty', 
+                        'options' => array(
+                            'messages' => array(
+                                \Zend\Validator\NotEmpty::IS_EMPTY => 'Ingresar fecha desde' 
+                            ),
+                        ),
+                    ),
+                ),
+            ));
+
+            $inputFilter->add(array(
+                'name' => 'fechaSalida',
+                'required' => true,
+                'filters' => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                      'name' =>'NotEmpty', 
+                        'options' => array(
+                            'messages' => array(
+                                \Zend\Validator\NotEmpty::IS_EMPTY => 'Ingresar fecha hasta' 
+                            ),
+                        ),
+                    ),
+                ),
+            ));
+
+
+
+
+
+
+
 
              
 
-             $this->inputFilter = $inputFilter;
+            $this->inputFilter = $inputFilter;
          }
 
          return $this->inputFilter;

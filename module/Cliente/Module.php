@@ -34,10 +34,11 @@ use Zend\Db\TableGateway\TableGateway;
      {
          return array(
              'factories' => array(  
-                                'Cliente\Model\ClienteTable' =>  function($sm) {
-                                $tableGateway = $sm->get('ClienteTableGateway');
-                                $table = new ClienteTable($tableGateway);
-                                return $table;
+                                'Cliente\Model\ClienteTable' =>  function($sm) 
+                                {
+                                    $tableGateway = $sm->get('ClienteTableGateway');
+                                    $table = new ClienteTable($tableGateway);
+                                    return $table;
                                 },
                                 'ClienteTableGateway' => function ($sm) 
                                 {

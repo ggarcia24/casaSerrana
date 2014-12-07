@@ -17,7 +17,7 @@ use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\InputFilter\InputProviderInterface;
-use Zend\InputFilter\ReplaceableInputInterface;
+use Zend\InputFilter\ReplaceableInputInterface; 
 use Zend\Stdlib\ArrayUtils;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 
@@ -255,9 +255,12 @@ class Form extends Fieldset implements FormInterface
     public function setData($data)
     {
         if ($data instanceof Traversable) {
+
             $data = ArrayUtils::iteratorToArray($data);
         }
+
         if (!is_array($data)) {
+
             throw new Exception\InvalidArgumentException(sprintf(
                 '%s expects an array or Traversable argument; received "%s"',
                 __METHOD__,
@@ -266,6 +269,7 @@ class Form extends Fieldset implements FormInterface
         }
 
         $this->hasValidated = false;
+
         $this->data         = $data;
         $this->populateValues($data);
 
@@ -467,8 +471,8 @@ class Form extends Fieldset implements FormInterface
     {
         if ($this->hasValidated) {
             return $this->isValid;
-        }
 
+        }
         $this->isValid = false;
 
         if (!is_array($this->data) && !is_object($this->object)) {
@@ -634,12 +638,12 @@ class Form extends Fieldset implements FormInterface
                 }
 
                 $value = $values;
-            } else {
-                if (!isset($data[$key])) {
-                    $data[$key] = array();
-                }
-                $this->prepareValidationGroup($fieldset, $data[$key], $validationGroup[$key]);
             }
+
+            if (!isset($data[$key])) {
+                $data[$key] = array();
+            }
+            $this->prepareValidationGroup($fieldset, $data[$key], $validationGroup[$key]);
         }
     }
 
@@ -760,7 +764,7 @@ class Form extends Fieldset implements FormInterface
             $elements = $fieldset->getElements();
         }
 
-        if (!$fieldset instanceof Collection || $inputFilter instanceof CollectionInputFilter) {
+        if (!$fieldset instanceof Collection || !$fieldset->getTargetElement() instanceof FieldsetInterface || $inputFilter instanceof CollectionInputFilter) {
             foreach ($elements as $element) {
                 $name = $element->getName();
 

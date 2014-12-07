@@ -15,6 +15,8 @@ use Reserva\Model\Estado;
 use Reserva\Model\EstadoTable;
 use Reserva\Model\Tarifa;
 use Reserva\Model\TarifaTable;
+use Reserva\Model\Tipohuesped;
+use Reserva\Model\TipohuespedTable;
 use Zend\Db\TableGateway\TableGateway;
 
  class Module implements AutoloaderProviderInterface, ConfigProviderInterface
@@ -119,7 +121,21 @@ use Zend\Db\TableGateway\TableGateway;
                                     $resultSetPrototype = new ResultSet();
                                     $resultSetPrototype->setArrayObjectPrototype(new Tarifa());
                                     return new TableGateway('tarifas', $dbAdapter, null, $resultSetPrototype);
-                                },                                       
+                                },
+
+
+                                'Reserva\Model\TipohuespedTable' =>  function($sm) {
+                                $tableGateway = $sm->get('TipohuespedTableGateway');
+                                $table = new TipohuespedTable($tableGateway);
+                                return $table;
+                                },
+                                'TipohuespedTableGateway' => function ($sm) 
+                                {
+                                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                                    $resultSetPrototype = new ResultSet();
+                                    $resultSetPrototype->setArrayObjectPrototype(new Tipohuesped());
+                                    return new TableGateway('tipoHuespedes', $dbAdapter, null, $resultSetPrototype);
+                                },                                        
                                 
 
                                 

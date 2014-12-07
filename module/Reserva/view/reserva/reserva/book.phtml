@@ -1,20 +1,19 @@
 <script type="text/javascript">
 
-public function abrirVentana()
-{
-	var nombreVentana="";
- 	var propiedades="width=770,height=520,directories=no,menubar=no,resizable=yes,scrollbars=yes,status=no,titlebar=no,toolbar=no";
- 	window.open(direccion,"",propiedades);
-}
+$(document).ready(function()
+	{
+		$('#totalReserva').val('holaaa');
 
-</script>
+	});
 
 
 </script>
 <div class="container">
 	<?php
 		$form = $this->form;
-		$form->setAttribute('action', $this->url('reserva', array('action' => 'add')));
+		$form->setAttribute('action', 
+							$this->url('reserva', array('action' => 'book', 'id' => $this->idHabitacione))
+							);
     	$form->prepare();
 		$formLabel = $this->plugin('formLabel');
 		echo $this->form()->openTag($form);
@@ -34,17 +33,23 @@ public function abrirVentana()
     			$numeroHabitacion = $form->get('numeroHabitacion');
     			$numeroHabitacion->setValue($habitacion->numero);     			
     			echo $formLabel->openTag() . $numeroHabitacion->getLabel('label');    			
-    			//echo $this->formElementErrors($numeroHabitacion);
+    			echo $this->formElementErrors($numeroHabitacion);
     			echo $formLabel->closeTag();
     			echo $this->formInput($numeroHabitacion);
 			?>
 		</div>
+		<?php 
+			$idHabitacion=$form->get('idHabitacion');
+			$idHabitacion->setValue($habitacion->idHabitacion);
+			echo $this->formHidden($idHabitacion); 
+			 
+		?>
 		<div class="col-sm-2">
 			<?php
     			$pabellon = $form->get('pabellon');   				 
     			$pabellon->setValue($pabellonEncontrado->nombre); 
     			echo $formLabel->openTag() . $pabellon->getLabel('label');    			
-    			//echo $this->formElementErrors($pabellon);
+    			echo $this->formElementErrors($pabellon);
     			echo $formLabel->closeTag();
     			echo $this->formInput($pabellon);
 			?>
@@ -53,20 +58,25 @@ public function abrirVentana()
 			<?php
     			$fechaIngreso = $form->get('fechaIngreso');
     			echo $formLabel->openTag() . $fechaIngreso->getLabel('label');    			
-    			//echo $this->formElementErrors($pass);
     			echo $formLabel->closeTag();
     			echo $this->formInput($fechaIngreso);
-			?>
-		</div>
+    			?>
+    			<div style="color:red">
+    			<?php echo $this->formElementErrors($fechaIngreso);?>
+		        </div>
+		</div>        
 		<div class="col-sm-2">
 			<?php
     			$fechaSalida = $form->get('fechaSalida');
-    			echo $formLabel->openTag() . $fechaSalida->getLabel('label');    			
-    			//echo $this->formElementErrors($pass);
+    			echo $formLabel->openTag() . $fechaSalida->getLabel('label');    			    			
     			echo $formLabel->closeTag();
     			echo $this->formInput($fechaSalida);
-			?>
+    			?>
+    			<div style="color:red">
+    				<?php echo $this->formElementErrors($fechaSalida);?>
+    			</div>
 		</div>	
+
 		
 	</div><br>
 	<div class="row">
@@ -75,28 +85,27 @@ public function abrirVentana()
 			<?php
     			$nombreReserva = $form->get('nombreReserva');
     			echo $formLabel->openTag() . $nombreReserva->getLabel('label');    			
-    			//echo $this->formElementErrors($nombreReserva);
+    			echo $this->formElementErrors($nombreReserva);
     			echo $formLabel->closeTag();
     			echo $this->formInput($nombreReserva);
 			?>
 		</div>
 		<div class="col-sm-2">
 			<?php
-    			$estadoReserva = $form->get('estadoReserva');
-    			echo $formLabel->openTag() . $estadoReserva->getLabel('label');    			
-    			//echo $this->formElementErrors($estadoReserva);
+    			$idEstado = $form->get('idEstado');
+    			echo $formLabel->openTag() . $idEstado->getLabel('label');    			
+    			echo $this->formElementErrors($idEstado);
     			echo $formLabel->closeTag();
-    			echo $this->formSelect($estadoReserva);
+    			echo $this->formSelect($idEstado);
 			?>
 		</div>
-		<a href="" onclick="abrirVentana()" target="_blank">Probando popUP</a>
 	</div>
 	<div class="row"><br>	
 		<div class="col-sm-3">
 			<?php
     			$telefonoCelular = $form->get('telefonoCelular');
     			echo $formLabel->openTag() . $telefonoCelular->getLabel('label');    			
-    			//echo $this->formElementErrors($telCelular);
+    			echo $this->formElementErrors($telefonoCelular);
     			echo $formLabel->closeTag();
     			echo $this->formInput($telefonoCelular);
 			?>
@@ -107,16 +116,16 @@ public function abrirVentana()
     			echo $formLabel->openTag() . $email->getLabel('label');    			    			
     			echo $formLabel->closeTag();
     			echo $this->formInput($email);
-    			//echo $this->formElementErrors($email);
+    			echo $this->formElementErrors($email);
 			?>  			
 		</div>
 		<div class="col-sm-3">
 			<?php
-    			$tipoConvenio = $form->get('tipoConvenio');
-    			echo $formLabel->openTag() . $tipoConvenio->getLabel('label');    			    			
+    			$idTipoHuesped = $form->get('idTipoHuesped');
+    			echo $formLabel->openTag() . $idTipoHuesped->getLabel('label');    			    			
     			echo $formLabel->closeTag();
-    			echo $this->formSelect($tipoConvenio);
-    			//echo $this->formElementErrors($tipoConvenio);
+    			echo $this->formSelect($idTipoHuesped);
+    			echo $this->formElementErrors($idTipoHuesped);
 			?>  			
 		</div>
 		<div class="col-sm-3">
@@ -124,7 +133,7 @@ public function abrirVentana()
 			<?php
     			$titular = $form->get('titular');
     			echo $formLabel->openTag() . $titular->getLabel('label');    			
-    			//echo $this->formElementErrors($titular);
+    			echo $this->formElementErrors($titular);
     			echo $formLabel->closeTag();
     			echo $this->formCheckbox($titular);
 			?>
@@ -139,10 +148,13 @@ public function abrirVentana()
 			<?php
     			$cantidadAdulto = $form->get('cantidadAdulto');
     			echo $formLabel->openTag() . $cantidadAdulto->getLabel('label');    			
-    			//echo $this->formElementErrors($cantidadAdulto);
+    			
     			echo $formLabel->closeTag();
     			echo $this->formInput($cantidadAdulto);
-			?>
+    			?>
+    			<div style="color:red">
+    			<?php echo $this->formElementErrors($cantidadAdulto); ?>
+    			</div>
 		</div>
 		<div class="col-sm-2">
 			<?php
@@ -150,7 +162,7 @@ public function abrirVentana()
     			echo $formLabel->openTag() . $cantidadMenor->getLabel('label');    			    			
     			echo $formLabel->closeTag();
     			echo $this->formInput($cantidadMenor);
-    			//echo $this->formElementErrors($cantidadMenor);
+    			echo $this->formElementErrors($cantidadMenor);
 			?>  			
 		</div>		
 	</div>
@@ -164,7 +176,7 @@ public function abrirVentana()
     				echo $formLabel->openTag() . $huesped->getLabel('label');    			    			
     				echo $formLabel->closeTag();
     				echo $this->formInput($huesped);
-    			//	echo $this->formElementErrors($titular);
+    			echo $this->formElementErrors($huesped);
     			?>			
 
 		</div>
@@ -174,20 +186,25 @@ public function abrirVentana()
     			echo $formLabel->openTag() . $huespedes->getLabel('label');    			    			
     			echo $formLabel->closeTag();
     			echo $this->formTextArea($huespedes);
-    			//echo $this->formElementErrors($huespedes);
+    			echo $this->formElementErrors($huespedes);
 			?>  			
 		</div>
-		<div class="col-sm-2">
+
+						
+
+				<div class="form_element">
+Autocomplete:
+<?php echo $this->formJqueryAutocomplete($this->form->get('autocomplete')); ?>
+</div>
+		<div class="col-sm-2">		
 		<br><br>
-			<?php echo $this->formElement($form->get('agregarHuesped')) ?> 
+			<a href="" class="btn btn-info">Agregar Huesped</a>
 		<br><br>
-			<?php echo $this->formElement($form->get('borrarHuesped')) ?> 
+			<a href="" class="btn btn-info">Borrar Huesped</a>
 		</div>
 
 	</div><br><br>
-	<div data-role="tagsinput">
-		<input type="text" data-role="tagsinput" >
-	</div>
+	
 	<h4>Comentarios</h4><hr>
 	<div class="row">	
 		
@@ -197,7 +214,7 @@ public function abrirVentana()
     			echo $formLabel->openTag() . $comentario->getLabel('label');    			    			
     			echo $formLabel->closeTag();
     			echo $this->formTextArea($comentario);
-    			//echo $this->formElementErrors($documento);
+    			echo $this->formElementErrors($comentario);
 			?>  			
 		</div>
 		
@@ -218,7 +235,7 @@ public function abrirVentana()
     			<span class="input-group-addon">$</span>	
     			<?php
     				echo $this->formInput($totalReserva);
-    				//echo $this->formElementErrors($totalReserva);
+    				echo $this->formElementErrors($totalReserva);
 				?>  
 			</div>				
 		</div>
@@ -233,7 +250,7 @@ public function abrirVentana()
     			<?php	    			    			
     				
     				echo $this->formInput($descuento);
-    				//echo $this->formElementErrors($descuento);
+    				echo $this->formElementErrors($descuento);
 				?>
 			</div>	  			
 		</div>
@@ -249,19 +266,28 @@ public function abrirVentana()
     			<span class="input-group-addon">$</span>
     			<?php
     				echo $this->formInput($total);
-    				//echo $this->formElementErrors($total);
+    				echo $this->formElementErrors($total);
 				?>
 			</div>  			
 		</div>
-		<div class="col-sm-6">
+	</div><br><br>
+	<div class="row">
+		<div class="col-sm-2">
 			<?php echo $this->formElement($form->get('grabarReserva')) ?> 
+		</div>	
+		<div class="col-sm-2">
+			<a href="" class="btn btn-info">Imprimir</a>
+		</div>
+		<div class="col-sm-2">
+			<a href="" class="btn btn-info">Cancelar</a>
+		</div>
+		<div class="col-sm-2">
+			<a href="" class="btn btn-info">Generar Pago</a>
+		</div>
+
 			
-
-			<?php echo $this->formElement($form->get('generarPago')) ?> 
-
-			<?php echo $this->formElement($form->get('imprimir')) ?> 
-
-			<?php echo $this->formElement($form->get('cancelar')) ?> 
+			
+			
 		</div>		
 
 	</div>	

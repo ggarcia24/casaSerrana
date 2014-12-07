@@ -12,8 +12,11 @@ namespace Reserva\Controller;
  use Reserva\Model\TarifaTable;
  use Reserva\Model\Habitacion;
  use Reserva\Model\HabitacionTable;
+ use Reserva\Model\Tipohuesped;
+ use Reserva\Model\TipohuespedTable;
  use Reserva\Form\HabitacionForm;
  use Reserva\Form\PabellonForm;
+ use Reserva\Form\TipohuespedForm;
 
  use Reserva\Form\ReservaForm;
 
@@ -25,6 +28,7 @@ namespace Reserva\Controller;
      protected $categoriaTable;
      protected $estadoTable;
      protected $tarifaTable;
+     protected $tipohuespedTable;
 
 
      public function indexAction()
@@ -66,18 +70,31 @@ namespace Reserva\Controller;
          return new ViewModel(array(
             'titulo'=>'Listado de Tarifas',
             'tarifas' => $this->getTarifaTable()->fetchAll(),
+            'categorias' => $this->getCategoriaTable()->fetchAll(),
+            'tipohuespedes' => $this->getTipoHuespedTable()->fetchAll(),
+
          ));
      }
 
+     public function indextipohuespedAction()
+     {
+         return new ViewModel(array(
+            'titulo'=>'Listado de Tipos de Convenios',
+            'tipohuespedes' => $this->getTipohuespedTable()->fetchAll(),
 
+         ));
+     }
      
 
-      public function addAction()
+   /*   public function addAction()
      {
          $form = new ReservaForm();
-         $form->get('send')->setValue('Agregar');
+         $form->get('grabarReserva')->setValue('Agregar');
          $request = $this->getRequest();
-         if ($request->isPost()) {
+
+         if ($request->isPost()) 
+         {
+            exit;
              $reserva = new Reserva();
              $form->setInputFilter($reserva->getInputFilter());
              $form->setData($request->getPost());
@@ -98,13 +115,15 @@ namespace Reserva\Controller;
          return array('form' => $form);
      }  
 
-
+*/
 
     public function addhabitacionAction()
      {
         
         $form = new HabitacionForm();
         $form->get('send')->setValue('Agregar');
+
+
 
         $pabellones=$this->getPabellonTable()->fetchAllWithAlias();
         $vectorPabellon=array();         
@@ -113,6 +132,10 @@ namespace Reserva\Controller;
             $vectorPabellon[]=$pabellon;
         }
         $form->get('idPabellon')->setValueOptions($vectorPabellon); 
+
+
+
+
                
         $categorias=$this->getCategoriaTable()->fetchAllWithAlias(); 
         $vectorCategoria=array();
@@ -133,6 +156,8 @@ namespace Reserva\Controller;
         $request = $this->getRequest();
 
         if ($request->isPost()) {
+
+
 
              $habitacion = new Habitacion();
              $form->setInputFilter($habitacion->getInputFilter());
@@ -172,6 +197,29 @@ namespace Reserva\Controller;
                  $this->getPabellonTable()->savePabellon($pabellon);
                  return $this->redirect()->toRoute('reserva', array('controller'=>'ReservaController',
         'action' => 'indexpabellon'));
+             }
+
+         }
+         return array('form' => $form);
+     }  
+
+     public function addtipohuespedAction()
+     {
+         $form = new TipohuespedForm();
+
+         $form->get('send')->setValue('Agregar');
+         $request = $this->getRequest();
+         if ($request->isPost()) {
+             $tipohuesped = new Tipohuesped();
+             $form->setInputFilter($tipohuesped->getInputFilter());
+             $form->setData($request->getPost());
+             if ($form->isValid()) 
+             {
+                 
+                 $tipohuesped->exchangeArray($form->getData());                 
+                 $this->getTipohuespedTable()->saveTipohuesped($tipohuesped);
+                 return $this->redirect()->toRoute('reserva', array('controller'=>'ReservaController',
+        'action' => 'indextipohuesped'));
              }
 
          }
@@ -220,6 +268,51 @@ namespace Reserva\Controller;
                  $this->getPabellonTable()->savePabellon($pabellon);
                  return $this->redirect()->toRoute('reserva', array('controller'=>'ReservaController',
         'action' => 'indexpabellon'));
+             }
+         }
+
+         return array(
+             'id' => $id,
+             'form' => $form,
+         );
+    }
+
+    public function edittipohuespedAction()
+    {
+        $id = (int) $this->params()->fromRoute('id', 0);
+         if (!$id) {
+             return $this->redirect()->toRoute('reserva', array(
+                 'action' => 'addtipohuesped'
+             ));
+         }
+         try {
+             $tipohuesped = $this->getTipohuespedTable()->getTipohuesped($id);
+         }
+         catch (\Exception $ex) {
+             return $this->redirect()->toRoute('reserva', array(
+                 'action' => 'indextipohuesped'
+             ));
+         }
+         $form  = new TipohuespedForm();
+
+         $form->bind($tipohuesped);
+         
+         $form->get('send')->setAttribute('value', 'Editar');
+
+         $request = $this->getRequest();
+
+         
+         if ($request->isPost()) {
+
+             $form->setInputFilter($tipohuesped->getInputFilter());
+             $form->setData($request->getPost());
+             
+             if ($form->isValid()) {
+                
+                
+                 $this->getTipohuespedTable()->saveTipohuesped($tipohuesped);
+                 return $this->redirect()->toRoute('reserva', array('controller'=>'ReservaController',
+        'action' => 'indextipohuesped'));
              }
          }
 
@@ -299,20 +392,67 @@ namespace Reserva\Controller;
 
      public function bookAction()
      {
-        $form = new ReservaForm();
+      
+        $form = new ReservaForm();        
         $id = (int) $this->params()->fromRoute('id', 0);
-         if (!$id) {
-             return $this->redirect()->toRoute('reserva', array(
-                 'action' => 'book'
-             ));
+        $habitacion=$this->getHabitacionTable()->getHabitacion($id);
+        $pabellon=$this->getPabellonTable()->getPabellon($habitacion->idPabellon);
+
+         //si la habitacion esta reservada o reservada con seña, no permitimos cargar los huespedes
+         if($habitacion->idEstado = 2 OR 3) 
+         {
+             $form->get('huesped')->setAttribute('disabled', 'disabled');
+             $form->get('huespedes')->setAttribute('disabled', 'disabled');             
          }
-         $habitacion=$this->getHabitacionTable()->getHabitacion($id);
-         $pabellon=$this->getPabellonTable()->getPabellon($habitacion->idPabellon);
+
+        //obtengo listado de estados de habitacion
+        $estados=$this->getEstadoTable()->fetchAllWithAlias(); 
+        $vectorEstado=array();
+        foreach ($estados as $estado) 
+        {
+            $vectorEstado[]=$estado;
+        }
+        $form->get('idEstado')->setValueOptions($vectorEstado);
+        //
+
+
+        //obtengo listado de convenio
+        $convenios=$this->getTipohuespedTable()->fetchAllWithAlias(); 
+        $vectorConvenio=array();
+        foreach ($convenios as $convenio) 
+        {
+            $vectorConvenio[]=$convenio;
+        }
+        $form->get('idTipoHuesped')->setValueOptions($vectorConvenio);
+        //
+
+
+         $request = $this->getRequest();
+         
+         if ($request->isPost()) 
+         {   
+
+            
+            $reserva = new Reserva();
+            $form->setInputFilter($reserva->getInputFilter());             
+            $form->setData($request->getPost());
+            if ($form->isValid()) 
+            {
+                $reserva->exchangeArray($form->getData());                 
+                $this->getReservaTable()->saveReserva($reserva);
+                return $this->redirect()->toRoute('reserva');
+            }
+        }
+
+        
          return array(
                         'form' => $form,
                         'habitacion'=> $habitacion,
                         'pabellonEncontrado'=>$pabellon,
+                        'idHabitacione' =>$id,
                     );
+
+         
      }
 
      public function gridreservaAction()
@@ -353,6 +493,13 @@ namespace Reserva\Controller;
         return $this->redirect()->toRoute('reserva',array('controler'=>'reserva','action'=>'indexpabellon'));
      }
 
+     public function deletetipohuespedAction()
+     {
+        $id = (int) $this->params()->fromRoute("id", 0);
+        $this->getTipohuespedTable()->deleteTipohuesped($id);
+        return $this->redirect()->toRoute('reserva',array('controler'=>'reserva','action'=>'indextipohuesped'));
+     }     
+
      public function getReservaTable()
      {
          if (!$this->reservaTable) {
@@ -378,7 +525,18 @@ namespace Reserva\Controller;
             $this->pabellonTable = $sm->get('Reserva\Model\PabellonTable');
         }
         return $this->pabellonTable;
+    }
+
+    public function getTarifaTable()
+    {
+        if (!$this->tarifaTable) {
+            $sm = $this->getServiceLocator();
+            $this->tarifaTable = $sm->get('Reserva\Model\TarifaTable');
+        }
+        return $this->tarifaTable;
     }  
+
+
 
         public function getCategoriaTable()
     {   
@@ -400,14 +558,16 @@ namespace Reserva\Controller;
         return $this->estadoTable;
     }
 
-     public function getTarifaTable()
+    public function getTipohuespedTable()
     {   
 
-        if (!$this->tarifaTable) {
+        if (!$this->tipohuespedTable) {
             $sm = $this->getServiceLocator();
-            $this->tarifaTable = $sm->get('Reserva\Model\TarifaTable');
+            $this->tipohuespedTable = $sm->get('Reserva\Model\TipohuespedTable');
         }
-        return $this->tarifaTable;
+        return $this->tipohuespedTable;
     }
+
+     
     
  }

@@ -1,106 +1,15 @@
-<script language="JavaScript">
-    function doSearch() 
-    {
-        var tableReg = document.getElementById('datos');
-        var searchText = document.getElementById('buscador').value.toLowerCase();
-        for (var i = 1; i < tableReg.rows.length; i++)
-        {
-            var cellsOfRow = tableReg.rows[i].getElementsByTagName('td');
-            var found = false;
-            for (var j = 0; j < cellsOfRow.length && !found; j++)
-            {
-                var compareWith = cellsOfRow[j].innerHTML.toLowerCase();
-                if (searchText.length == 0 || (compareWith.indexOf(searchText) > -1))
-                {
-                    found = true;
-                }
-            }
-            if(found) 
-            {
-                tableReg.rows[i].style.display = '';
-            }else{
-                    tableReg.rows[i].style.display = 'none';
-                 }
-        }
-    }    
-</script>
-<div class="container">
-    <br>
-    <ol class="breadcrumb">
-        <li class="active">Clientes</li>    
-    </ol>
-    <h3><?php echo $this->titulo ?></h3>
-    <br>
-    <!-- desde aca -->
-    <div class="row">
-        <div class="col-sm-3">
-            <label for="buscador">Buscar Cliente</label>
-            <input type="text" onkeyup="doSearch()" id="buscador" class="form-control">
-        </div>  
-    </div>
-    <br>
-    <!-- hasta aca -->
-    <a href="<?php echo $this->url('cliente', array('controller'=> 'cliente', 'action' => 'add')) ?>">Nuevo Cliente (+)</a>
-    <br><br>
-    <table class="table" id="datos">
-        <tr>
-            <th>Apellido</th>
-            <th>Nombre</th>
-            <th>Documento</th>
-            <th>Telefono Celular</th>
-            <th>Titular Si/No</th>
-            <th>Editar Cliente</th>
-            <th>Eliminar Cliente</th>
-
-        </tr>
-        <?php foreach($clientes as $cliente) 
-        {
-        ?>
-        
-            <tr style="background-color:<?php echo $this->cycle(array("#F0F0F0","#FFFFFF"))->next() ?>">
-            
-                <td><?php echo $this->escapeHtml($cliente->apellido);?></td>
-                <td><?php echo $this->escapeHtml($cliente->nombre);?></td>
-                <td><?php echo $this->escapeHtml($cliente->documento);?></td>
-                <td><?php echo $this->escapeHtml($cliente->telefonoCelular);?></td>
-                <td>
-                    <?php 
-                        if($cliente->titular)
-                        {
-                            echo "Si";  
-                        }else
-                        {
-                            echo "No";      
-                        } 
-                    ?>
-                </td>
-                <td>
-                    <a href="<?php echo $this->url('cliente', array('controller'=> 'cliente', 'action' => 
-                    'edit', 'id' =>$cliente->idCliente)) ?>">Editar</a>
-                </td>
-                <td>
-                    <a onclick="return confirm('Esta seguro que desea eliminar a <?php echo $cliente->apellido ?>?')" 
-                    href="<?php echo $this->url('cliente', array('controller'=> 'cliente', 'action' => 'delete', 
-                    'id' => $cliente->idCliente)) ?>">Eliminar</a>
-                </td>
-            </tr>
-        <?php
-        }       
-        ?>      
-        <?php
-            $this->cycle()->assign(array("#F0F0F0","#FFFFFF"));
-            $this->cycle()->prev();
-        ?>
-        
+<?php 
 
 
+$res = array();
 
-    </table>
+foreach($clientes as $cliente) 
 
-</div>
+{
+    $res[] = array(
+        'label' => $cliente->nombre . ' ' . $cliente->apellido,
+        'value' => json_encode($cliente)
+    );
+}
 
-
-
-
-
-
+die(json_encode($res));
