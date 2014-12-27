@@ -45,9 +45,9 @@ use Zend\Db\TableGateway\TableGateway;
          return array(
              'factories' => array(  
                                 'Reserva\Model\ReservaTable' =>  function($sm) {
-                                $tableGateway = $sm->get('ReservaTableGateway');
-                                $table = new ReservaTable($tableGateway);
-                                return $table;
+                                    $tableGateway = $sm->get('ReservaTableGateway');
+                                    $table = new ReservaTable($tableGateway);
+                                    return $table;
                                 },
                                 'ReservaTableGateway' => function ($sm) 
                                 {
@@ -58,9 +58,9 @@ use Zend\Db\TableGateway\TableGateway;
                                 },
 
                                 'Reserva\Model\HabitacionTable' =>  function($sm) {
-                                $tableGateway = $sm->get('HabitacionTableGateway');
-                                $table = new HabitacionTable($tableGateway);
-                                return $table;
+                                    $tableGateway = $sm->get('HabitacionTableGateway');
+                                    $table = new HabitacionTable($tableGateway);
+                                    return $table;
                                 },
                                 'HabitacionTableGateway' => function ($sm) 
                                 {
@@ -69,12 +69,10 @@ use Zend\Db\TableGateway\TableGateway;
                                     $resultSetPrototype->setArrayObjectPrototype(new Habitacion());
                                     return new TableGateway('habitaciones', $dbAdapter, null, $resultSetPrototype);
                                 },
-                                
-
                                 'Reserva\Model\PabellonTable' =>  function($sm) {
-                                $tableGateway = $sm->get('PabellonTableGateway');
-                                $table = new PabellonTable($tableGateway);
-                                return $table;
+                                    $tableGateway = $sm->get('PabellonTableGateway');
+                                    $table = new PabellonTable($tableGateway);
+                                    return $table;
                                 },
                                 'PabellonTableGateway' => function ($sm) 
                                 {
@@ -83,11 +81,10 @@ use Zend\Db\TableGateway\TableGateway;
                                     $resultSetPrototype->setArrayObjectPrototype(new Pabellon());
                                     return new TableGateway('pabellones', $dbAdapter, null, $resultSetPrototype);
                                 },
-
                                 'Reserva\Model\CategoriaTable' =>  function($sm) {
-                                $tableGateway = $sm->get('CategoriaTableGateway');
-                                $table = new CategoriaTable($tableGateway);
-                                return $table;
+                                    $tableGateway = $sm->get('CategoriaTableGateway');
+                                    $table = new CategoriaTable($tableGateway);
+                                    return $table;
                                 },
                                 'CategoriaTableGateway' => function ($sm) 
                                 {
@@ -98,9 +95,9 @@ use Zend\Db\TableGateway\TableGateway;
                                 },
                                 
                                 'Reserva\Model\EstadoTable' =>  function($sm) {
-                                $tableGateway = $sm->get('EstadoTableGateway');
-                                $table = new EstadoTable($tableGateway);
-                                return $table;
+                                    $tableGateway = $sm->get('EstadoTableGateway');
+                                    $table = new EstadoTable($tableGateway);
+                                    return $table;
                                 },
                                 'EstadoTableGateway' => function ($sm) 
                                 {
@@ -111,9 +108,9 @@ use Zend\Db\TableGateway\TableGateway;
                                 },   
 
                                 'Reserva\Model\TarifaTable' =>  function($sm) {
-                                $tableGateway = $sm->get('TarifaTableGateway');
-                                $table = new TarifaTable($tableGateway);
-                                return $table;
+                                    $tableGateway = $sm->get('TarifaTableGateway');
+                                    $table = new TarifaTable($tableGateway);
+                                    return $table;
                                 },
                                 'TarifaTableGateway' => function ($sm) 
                                 {
@@ -143,6 +140,24 @@ use Zend\Db\TableGateway\TableGateway;
 
 
 
+         );
+     }
+
+     public function getViewHelperConfig()
+     {
+         return array(
+             'factories' => array(
+                 'getCategoriaName' => function($sm) {
+                     $helper = new View\Helper\GetCategoriaName();
+                     $helper->setServiceLocator($sm->getServiceLocator());
+                     return $helper;
+                 },
+                 'getTipoHuespedName' => function($sm) {
+                     $helper = new View\Helper\GetTipoHuespedName() ;
+                     $helper->setServiceLocator($sm->getServiceLocator());
+                     return $helper;
+                 }
+             )
          );
      }
  }

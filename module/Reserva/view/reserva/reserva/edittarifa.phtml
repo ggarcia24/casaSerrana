@@ -1,0 +1,45 @@
+
+<div class="container">
+	<?php
+		$form = $this->form;
+		$form->setAttribute('action', $this->url('reserva', array('action' => 'addtarifa')));
+    	$form->prepare();
+		$formLabel = $this->plugin('formLabel');
+		echo $this->form()->openTag($form);
+	?>
+
+	<br>
+	<ol class="breadcrumb">
+    	<li><a href="<?php echo $this->url('home')?>reserva/indextarifa">Tarifa</a></li>
+  		<li class="active">Edicion</li>  		
+	</ol>
+	<h3><?php echo $this->titulo ?></h3>	
+	<br>
+	<div class="row">
+		<?php echo $this->formHidden($form->get('idCategoria')); ?>
+		<?php echo $this->formHidden($form->get('idTipoHuesped')); ?>
+		<h4>Datos</h4><hr>
+    </div>
+	<div class="row">
+		<div class="col-sm-2"><?php
+			$monto = $form->get('monto');
+			echo $formLabel->openTag() . $monto->getLabel('label') . $formLabel->closeTag();
+			echo $this->formElementErrors($monto);
+		    echo $this->formElement($monto);
+		?></div>
+	</div>
+	<div class="row">
+		<div class="col-sm-2"><?php
+			$vigencia = $form->get('vigencia');
+			echo $formLabel->openTag() . $vigencia->getLabel('label') . $formLabel->closeTag();
+			echo $this->formElementErrors($vigencia);
+		    echo $this->formElement($vigencia);
+		?></div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12">
+			<?php echo $this->formElement($form->get('submit')) ?> 
+		</div>		
+	</div>
+</div>
+<?php  echo $this->form()->closeTag() ?>

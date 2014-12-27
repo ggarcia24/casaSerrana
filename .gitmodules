@@ -1,3 +1,3 @@
-[submodule "vendor/ZF2"]
-	path = vendor/ZF2
-	url = https://github.com/zendframework/zf2.git
+[submodule "module/FacturaScriptBridge/src/facturascripts"]
+	path = module/FacturaScriptBridge/src/facturascripts
+	url = https://github.com/ggarcia24/facturascripts.git

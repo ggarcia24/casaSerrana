@@ -37,5 +37,5 @@ return array(
          'template_path_stack' => array(
              'reserva' => __DIR__ . '/../view',
          ),
-     ),
+     )
  );

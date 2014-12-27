@@ -31,7 +31,7 @@
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
                         
-                        <li class=" active dropdown">
+                        <li class="dropdown">
                             <a href="<?php echo $this->url('home') ?>" class="dropdown-toggle" data-toggle="dropdown">
                                 <span class="glyphicon glyphicon-user"></span>
                                 <?php echo $this->translate(' Reservas') ?>
@@ -57,33 +57,61 @@
                                 </ul>
                             </a>
                         </li>
-                        <li class="dropdown">
-                            <a href="<?php echo $this->url('home') ?>" class="dropdown-toggle" data-toggle="dropdown">
-                                <span class="glyphicon glyphicon-barcode"></span>
-                                <?php echo $this->translate(' Proveedores') ?>
-                                <span class="caret"></span></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="<?php echo $this->url('home') ?>proveedor/index">Consulta</a></li>
-                                    <li><a href="<?php echo $this->url('home') ?>proveedor/add">Alta</a></li>
-                                </ul>
-                            </a>
-                        </li>
                         <li>
                             <a href="<?php echo $this->url('home') ?>">
                                 <span class="glyphicon glyphicon-glass"></span>
                                 <?php echo $this->translate(' Bar') ?>
                             </a>
                         </li>
+                        <li class="dropdown">
+                            <a href="<?php echo $this->url('facturascripts') ?>?page=admin_almacenes" class="dropdown-toggle" data-toggle="dropdown">
+                                <span class="glyphicon glyphicon-th-large"></span>
+                                <?php echo $this->translate(' Deposito') ?>
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="<?php echo $this->url('facturascripts') ?>?page=admin_almacenes">Almacenes</a></li>
+                                <li><a href="<?php echo $this->url('facturascripts') ?>?page=almacenes_albaranes">Movimientos entre Almacenes</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="<?php echo $this->url('facturascripts') ?>?page=contabilidad_cuentas" class="dropdown-toggle" data-toggle="dropdown">
+                                <span class="glyphicon glyphicon-usd"></span>
+                                <?php echo $this->translate(' Tesoreria') ?>
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="<?php echo $this->url('facturascripts') ?>?page=contabilidad_ejercicios">Ejercicios</a></li>
+                                <li><a href="<?php echo $this->url('facturascripts') ?>?page=contabilidad_asientos">Asientos</a></li>
+                            </ul>
+                        </li>
                         <li>
-                            <a href="<?php echo $this->url('home') ?>">
-                                <span class="glyphicon glyphicon-shopping-cart"></span
-                                ><?php echo $this->translate(' Deposito y Stock') ?>
+                            <a href="<?php echo $this->url('facturascripts') ?>?page=contabilidad_cuentas">
+                                <span class="glyphicon glyphicon-list-alt"></span>
+                                <?php echo $this->translate(' Contaduria') ?>
+                            </a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="<?php echo $this->url('facturascripts') ?>?page=compras_proveedores" class="dropdown-toggle" data-toggle="dropdown">
+                                <span class="glyphicon glyphicon-barcode"></span>
+                                Proveedores
+                                <span class="caret"></span>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="<?php echo $this->url('facturascripts') ?>?page=ventas_articulos">Articulos</a></li>
+                                    <li><a href="<?php echo $this->url('facturascripts') ?>?page=compras_albaranes">Compra a Proveedores</a></li>
+                                </ul>
                             </a>
                         </li>
                         <li>
-                            <a href="<?php echo $this->url('home') ?>">
+                            <a href="<?php echo $this->url('facturascripts') ?>">
+                                <span class="glyphicon glyphicon-stats"></span>
+                                Reportes
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<?php echo $this->url('facturascripts') ?>">
                                 <span class="glyphicon glyphicon-list-alt"></span>
-                                <?php echo $this->translate(' Auditoría') ?>
+                                Auditoria
                             </a>
                         </li>
                     </ul>

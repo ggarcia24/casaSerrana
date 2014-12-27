@@ -126,7 +126,7 @@ namespace Reserva\Form;
             'name' => 'idTipoHuesped',
             'options' => array(
                     'label' => 'Tipo de Convenio',
-                    //'empty_option' => 'Seleccione....',
+                    'empty_option' => 'Seleccione....',
                     'value_options' => array(
                             '1' => 'Afiliado',
                             '2' => 'Particular',
@@ -209,7 +209,7 @@ namespace Reserva\Form;
         ));
 
         $this->add(array(
-            'type' => 'Zend\Form\Element\TextArea',    
+            'type' => 'Zend\Form\Element\Textarea',
             'name' => 'huespedes',
             'options' => array(
             'label' => 'Lista Huespedes'
