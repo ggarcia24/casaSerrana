@@ -156,6 +156,11 @@ use Zend\Db\TableGateway\TableGateway;
                      $helper = new View\Helper\GetTipoHuespedName() ;
                      $helper->setServiceLocator($sm->getServiceLocator());
                      return $helper;
+                 },
+                 'getPabellonName' => function($sm) {
+                     $helper = new View\Helper\GetPabellonName() ;
+                     $helper->setServiceLocator($sm->getServiceLocator());
+                     return $helper;
                  }
              )
          );

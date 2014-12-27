@@ -8,12 +8,13 @@
 
 namespace Reserva\View\Helper;
 
+use Reserva\Model\PabellonTable;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\View\Helper\AbstractHelper;
 
 
-class GetCategoriaName extends AbstractHelper implements ServiceLocatorAwareInterface {
+class GetPabellonName extends AbstractHelper implements ServiceLocatorAwareInterface {
 
     /**
      * @var ServiceLocatorInterface
@@ -43,17 +44,15 @@ class GetCategoriaName extends AbstractHelper implements ServiceLocatorAwareInte
 
     public function __invoke($id = 0)
     {
-        $ret = 'Categoría no encontrada';
+        $ret = 'Pabellon no encontrado';
         $sm = $this->getServiceLocator()->getServiceLocator();
-        /* @var CategoriaTable $table */
-        $table = $sm->get('Reserva\Model\CategoriaTable');
+        /* @var PabellonTable $table */
+        $table = $sm->get('Reserva\Model\PabellonTable');
         try {
-            $ret = $table->getCategoria($id)->nombre;
+            $ret = $table->getPabellon($id)->nombre;
         } catch (\Exception $e) {
 
         }
-
         return $ret;
-
     }
 }

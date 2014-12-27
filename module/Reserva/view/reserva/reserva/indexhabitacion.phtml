@@ -25,16 +25,6 @@
     }    
 </script>
 
-
-<?php
-$categoriasArray = array();
-            foreach ($categorias as $categoria)
-            {
-                $categoriasArray[] = $categoria;
-            }
-?>            
-
-
 <div class="container">
     <br>
     <ol class="breadcrumb">
@@ -72,37 +62,9 @@ $categoriasArray = array();
             <tr style="background-color:<?php echo $this->cycle(array("#F0F0F0","#FFFFFF"))->next() ?>">
             
                 <td><?php echo $this->escapeHtml($habitacion->numero);?></td>
-                <td><?php echo $this->escapeHtml($habitacion->idPabellon);?></td>
+                <td><?php echo $this->escapeHtml($this->getPabellonName($habitacion->idPabellon));?></td>
                 <td><?php echo $this->escapeHtml($habitacion->plazaMaxima);?></td>
-
-                <?php 
-                    $categoria="";
-                    foreach($categoriasArray as $categoriaArray)
-                    {
-                        
-                        if ($categoriaArray->idCategoria==$habitacion->idCategoria)
-                        { 
-                            ?>                              
-                                <?php 
-                                    $categoria=$this->escapeHtml($categoriaArray->nombre);
-                                    break;
-                                
-                                ?>
-                            <?php
-                        }
-                    }
-                    ?>
-                <td>  
-                    <?php
-                        if ($categoria != "") 
-                        {
-                            echo $categoria;
-                        }else
-                        {
-                            echo "Categoria no encontrada";
-                        }
-                    ?>
-                </td>
+                <td><?php echo $this->escapeHtml($this->getCategoriaName($habitacion->idCategoria));?></td>
                 <td>
                     <a href="<?php echo $this->url('reserva', array('controller'=> 'reserva', 'action' => 
                     'edithabitacion', 'id' =>$habitacion->idHabitacion)) ?>">Editar</a>

@@ -43,14 +43,16 @@ class GetTipoHuespedName extends AbstractHelper implements ServiceLocatorAwareIn
 
     public function __invoke($id = 0)
     {
-        if($id == 0) {
-            throw new \InvalidArgumentException('ID parameter required');
-        }
+        $ret = 'Tipo de Huesped no encontrado';
         $sm = $this->getServiceLocator()->getServiceLocator();
         /* @var TipohuespedTable $table */
         $table = $sm->get('Reserva\Model\TipohuespedTable');
+        try {
+            $ret = $table->getTipohuesped($id)->nombre;
+        } catch (\Exception $e) {
 
-        return $table->getTipohuesped($id)->nombre;
+        }
+        return $ret;
 
     }
 }
