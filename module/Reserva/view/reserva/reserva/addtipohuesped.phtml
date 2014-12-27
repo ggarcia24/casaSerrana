@@ -21,10 +21,14 @@
 			<?php
     			$nombre = $form->get('nombre');
     			echo $formLabel->openTag() . $nombre->getLabel('label');    			
-    			//echo $this->formElementErrors($nombre);
+    			
     			echo $formLabel->closeTag();
     			echo $this->formInput($nombre);
-			?>
+                        ?>
+                    <div style="color:red">
+                        <?php echo $this->formElementErrors($nombre); ?>
+                    </div>
+			
 		</div>
 	</div>
 	<br>

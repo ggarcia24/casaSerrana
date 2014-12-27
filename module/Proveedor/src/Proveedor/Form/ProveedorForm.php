@@ -28,7 +28,6 @@ namespace Proveedor\Form;
                 'label' => 'CUIT *',
             ),
             'attributes' =>array(
-            'required' => 'required',
             'type'  => 'text',
             'class' => 'form-control',
             'maxlength' => '50',
@@ -41,7 +40,6 @@ namespace Proveedor\Form;
                 'label' => 'Nombre Compañia*',
             ),
             'attributes' =>array(
-            'required' => 'required',
             'type'  => 'text',
             'class' => 'form-control',
             'maxlength' => '50',

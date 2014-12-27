@@ -50,20 +50,24 @@
 		<div class="col-sm-2">
 			<?php
     			$apellido = $form->get('apellido');
-    			echo $formLabel->openTag() . $apellido->getLabel('label');    			
-    			//echo $this->formElementErrors($apellido);
+    			echo $formLabel->openTag() . $apellido->getLabel('label');    		
     			echo $formLabel->closeTag();
     			echo $this->formInput($apellido);
 			?>
+                        <div style="color:red">
+                            <?php echo $this->formElementErrors($apellido); ?>
+                        </div>
 		</div>
 		<div class="col-sm-2">
 			<?php
     			$nombre = $form->get('nombre');
-    			echo $formLabel->openTag() . $nombre->getLabel('label');    			
-    			//echo $this->formElementErrors($nombre);
+    			echo $formLabel->openTag() . $nombre->getLabel('label');  
     			echo $formLabel->closeTag();
     			echo $this->formInput($nombre);
 			?>
+                        <div style="color:red">
+                            <?php echo $this->formElementErrors($nombre); ?>
+                        </div>
 		</div>
 		<div class="col-sm-2">
 			<?php
@@ -77,21 +81,15 @@
 		
 		<div class="col-sm-3">
 			<?php
-    			$telefonoFijo = $form->get('telefonoFijo');
-    			echo $formLabel->openTag() . $telefonoFijo->getLabel('label');    			
-    			//echo $this->formElementErrors($telFijo);
+    			$telefono = $form->get('telefono');
+    			echo $formLabel->openTag() . $telefono->getLabel('label');    			
     			echo $formLabel->closeTag();
-    			echo $this->formInput($telefonoFijo);
-			?>
-		</div>		
-		<div class="col-sm-3">
-			<?php
-    			$telefonoCelular = $form->get('telefonoCelular');
-    			echo $formLabel->openTag() . $telefonoCelular->getLabel('label');    			
-    			//echo $this->formElementErrors($telCelular);
-    			echo $formLabel->closeTag();
-    			echo $this->formInput($telefonoCelular);
-			?>
+    			echo $this->formInput($telefono);                        
+                        ?>
+                        <div style="color:red">
+                            <?php echo $this->formElementErrors($telefono); ?>
+                        </div>
+
 		</div>
 	</div>
 	<br>
@@ -111,8 +109,10 @@
     			echo $formLabel->openTag() . $documento->getLabel('label');    			    			
     			echo $formLabel->closeTag();
     			echo $this->formInput($documento);
-    			//echo $this->formElementErrors($documento);
-			?>  			
+                         ?>
+                        <div style="color:red">
+                            <?php echo $this->formElementErrors($documento); ?>
+                        </div>
 		</div>
 		<div class="col-sm-4">
 			<?php
@@ -136,6 +136,15 @@
     			echo $this->formInput($direccion);
 			?>
 		</div>
+		<div class="col-sm-3">
+			<?php
+    			$ciudad = $form->get('ciudad');
+    			echo $formLabel->openTag() . $ciudad->getLabel('label');    			
+    			//echo $this->formElementErrors($direccion);
+    			echo $formLabel->closeTag();
+    			echo $this->formInput($ciudad);
+			?>
+		</div>
 		<div class="col-sm-2">
 			<?php
     			$idCodigoPostal = $form->get('codigoPostal');
@@ -144,7 +153,33 @@
     			echo $this->formInput($idCodigoPostal);
     			//echo $this->formElementErrors($documento);
 			?>  			
-		</div>		
+		</div>
+		<div class="col-sm-2">
+			<?php				
+    			$provincia = $form->get('provincia');
+    			echo $formLabel->openTag() . $provincia->getLabel('label');
+    			echo $formLabel->closeTag(); 
+    			echo $this->formSelect($provincia);
+    			?>
+    			<div style="color:red">
+
+    				<?php echo $this->formElementErrors($provincia);?>
+    			</div>	
+		</div>
+		<div class="col-sm-2">
+			<?php
+				
+    			$pais = $form->get('pais');
+    			echo $formLabel->openTag() . $pais->getLabel('label');
+    			echo $formLabel->closeTag(); 
+    			echo $this->formSelect($pais);
+    			?>
+    			<div style="color:red">
+
+    				<?php echo $this->formElementErrors($pais);?>
+    			</div>	
+		</div>
+
 	</div>
 	<br><br>
 	<div class="row">

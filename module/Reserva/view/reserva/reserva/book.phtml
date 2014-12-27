@@ -42,6 +42,9 @@ $(document).ready(function()
 			$idHabitacion=$form->get('idHabitacion');
 			$idHabitacion->setValue($habitacion->idHabitacion);
 			echo $this->formHidden($idHabitacion); 
+                        
+                        $idCliente=$form->get('idCliente');			
+			echo $this->formHidden($idCliente); 
 			 
 		?>
 		<div class="col-sm-2">
@@ -83,12 +86,22 @@ $(document).ready(function()
 		
 		<div class="col-sm-6">
 			<?php
-    			$nombreReserva = $form->get('nombreReserva');
-    			echo $formLabel->openTag() . $nombreReserva->getLabel('label');    			
-    			echo $this->formElementErrors($nombreReserva);
-    			echo $formLabel->closeTag();
-    			echo $this->formInput($nombreReserva);
+    			//$nombreReserva = $form->get('nombreReserva');
+    			//echo $formLabel->openTag() . $nombreReserva->getLabel('label');    			
+    			//echo $this->formElementErrors($nombreReserva);
+    			//echo $formLabel->closeTag();
+    			//echo $this->formInput($nombreReserva);
 			?>
+                    
+
+                        <?php 
+                        $autocomplete=$form->get('autocomplete');
+                        echo $formLabel->openTag() . $autocomplete->getLabel('label');    			
+                        echo $formLabel->closeTag();
+                        echo $this->formJqueryAutocomplete($autocomplete); 
+                        
+                        ?>
+
 		</div>
 		<div class="col-sm-2">
 			<?php
@@ -103,11 +116,11 @@ $(document).ready(function()
 	<div class="row"><br>	
 		<div class="col-sm-3">
 			<?php
-    			$telefonoCelular = $form->get('telefonoCelular');
-    			echo $formLabel->openTag() . $telefonoCelular->getLabel('label');    			
-    			echo $this->formElementErrors($telefonoCelular);
+    			$telefono = $form->get('telefono');
+    			echo $formLabel->openTag() . $telefono->getLabel('label');    			
+    			echo $this->formElementErrors($telefono);
     			echo $formLabel->closeTag();
-    			echo $this->formInput($telefonoCelular);
+    			echo $this->formInput($telefono);
 			?>
 		</div>
 		<div class="col-sm-3">
@@ -166,41 +179,39 @@ $(document).ready(function()
 			?>  			
 		</div>		
 	</div>
-	<br>
+	<br><br>
+        <h4>Lista de Huespedes</h4><hr>
 	<div class="row">
 		
+		<div class="col-sm-3">
+
+                    <?php
+                        $nombreHuesped = $form->get('nombreHuesped');
+                        echo $formLabel->openTag() . $nombreHuesped->getLabel('label');    			    			
+                        echo $formLabel->closeTag();
+                        echo $this->formInput($nombreHuesped);
+    			echo $this->formElementErrors($nombreHuesped);
+                    ?>			
+
+		</div>
 		<div class="col-sm-2">
-
-				<?php
-					$huesped = $form->get('huesped');
-    				echo $formLabel->openTag() . $huesped->getLabel('label');    			    			
-    				echo $formLabel->closeTag();
-    				echo $this->formInput($huesped);
-    			echo $this->formElementErrors($huesped);
-    			?>			
-
-		</div>
-		<div class="col-sm-8">
 			<?php
-    			$huespedes = $form->get('huespedes');
-    			echo $formLabel->openTag() . $huespedes->getLabel('label');    			    			
-    			echo $formLabel->closeTag();
-    			echo $this->formTextArea($huespedes);
-    			echo $this->formElementErrors($huespedes);
+                        $documentoHuesped = $form->get('documentoHuesped');
+                        echo $formLabel->openTag() . $documentoHuesped->getLabel('label');    			    			
+                        echo $formLabel->closeTag();
+                        echo $this->formInput($documentoHuesped);
+    			echo $this->formElementErrors($documentoHuesped);
 			?>  			
+		</div>		
+		<div class="col-sm-2">  
+                    
+		<br>
+			<a id="agregarHuesped" class="btn btn-info">Agregar Huesped</a>
 		</div>
-
-						
-
-				<div class="form_element">
-Autocomplete:
-<?php echo $this->formJqueryAutocomplete($this->form->get('autocomplete')); ?>
-</div>
-		<div class="col-sm-2">		
-		<br><br>
-			<a href="" class="btn btn-info">Agregar Huesped</a>
-		<br><br>
-			<a href="" class="btn btn-info">Borrar Huesped</a>
+		<div class="col-sm-2">  
+                    <div id="listaHuesped">
+                        
+                    </div>
 		</div>
 
 	</div><br><br>
@@ -279,7 +290,7 @@ Autocomplete:
 			<a href="" class="btn btn-info">Imprimir</a>
 		</div>
 		<div class="col-sm-2">
-			<a href="" class="btn btn-info">Cancelar</a>
+			<a href="" class="btn btn-info">Check Out</a>
 		</div>
 		<div class="col-sm-2">
 			<a href="" class="btn btn-info">Generar Pago</a>
@@ -309,3 +320,35 @@ Autocomplete:
 
 
 <?php  echo $this->form()->closeTag() ?>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+       $('#agregarHuesped').on('click', function()
+       {
+           var nombre= $('#nombreHuesped').val();
+           var documento= $('#documentoHuesped').val();
+           if(nombre==='' || documento==='')
+           {
+               alert('Complete Nombre y Documento del Huesped');
+               return false;               
+           }else
+           {
+               
+               var huesped = '<div onclick="remover()" class="huesped">' + nombre + ' - ' +  documento + ' ' + '<a type="button" id="botonHuesped" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-remove-sign"></span></a></div>' + '<br><br>';
+               $('#listaHuesped').append(huesped);
+           }           
+       });
+       
+    });
+    
+    
+    function remover()
+    {
+        var huesped = $('.huesped');
+        var padre= $(this).parent();
+        huesped.remove();
+        
+    }
+    
+</script>

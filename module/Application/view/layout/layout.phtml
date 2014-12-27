@@ -3,7 +3,7 @@
 <html lang="es">
     <head>
         <meta charset="utf-8">
-        <?php echo $this->headTitle('ZF2 '. $this->translate('Skeleton Application'))->setSeparator(' - ')->setAutoEscape(false) ?>
+        <?php echo $this->headTitle('Casa Serrana '. $this->translate(''))->setSeparator(' - ')->setAutoEscape(false) ?>
 
         <?php echo $this->headMeta()
             ->appendName('viewport', 'width=device-width, initial-scale=1.0')
@@ -11,7 +11,7 @@
         ?>
 
         <!-- Le styles -->
-        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/bellboy.ico'))
                         ->prependStylesheet($this->basePath() . '/css/style.css')
                         ->prependStylesheet($this->basePath() . '/css/bootstrap-theme.min.css')
                         ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css') ?>
@@ -27,13 +27,21 @@
     </head>
     <body>
         <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-            <div class="container">                
+            <div class="container">         
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="<?php echo $this->url('home') ?>">&nbsp;<?php echo $this->translate('Casa Serrana') ?></a>
+                </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
                         
                         <li class=" active dropdown">
                             <a href="<?php echo $this->url('home') ?>" class="dropdown-toggle" data-toggle="dropdown">
-                                <span class="glyphicon glyphicon-user"></span>
+                                <span class="glyphicon glyphicon-book"></span>
                                 <?php echo $this->translate(' Reservas') ?>
                                 <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
@@ -41,7 +49,8 @@
                                     <li><a href="<?php echo $this->url('home') ?>reserva/indexhabitacion">Habitaciones</a></li>
                                     <li><a href="<?php echo $this->url('home') ?>reserva/indexpabellon">Pabellones</a></li>
                                     <li><a href="<?php echo $this->url('home') ?>reserva/indextarifa">Tarifas</a></li>
-                                    <li><a href="<?php echo $this->url('home') ?>reserva/indextipohuesped">Tipo Convenios</a></li>                           
+                                    <li><a href="<?php echo $this->url('home') ?>reserva/indextipohuesped">Tipo Convenios</a></li>
+
                                 </ul>
                             </a>
                         </li>
@@ -51,8 +60,11 @@
                                 <?php echo $this->translate(' Clientes') ?>
                                 <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="<?php echo $this->url('home') ?>cliente/index">Consulta</a></li>
-                                    <li><a href="<?php echo $this->url('home') ?>cliente/add">Alta</a></li>
+                                    <li><a href="<?php echo $this->url('home') ?>cliente/index">Consulta Cliente</a></li>
+                                    <li><a href="<?php echo $this->url('home') ?>cliente/add">Alta Cliente</a></li>
+                                    <li><a href="<?php echo $this->url('home') ?>banco/index">Bancos</a></li>
+                                    <li><a href="<?php echo $this->url('home') ?>tarjeta/index  ">Tarjetas</a></li>
+                                    <li><a href="<?php echo $this->url('home') ?>alimento/index">Alimentos Especiales</a></li>                                    
                                     
                                 </ul>
                             </a>
@@ -83,7 +95,7 @@
                         <li>
                             <a href="<?php echo $this->url('home') ?>">
                                 <span class="glyphicon glyphicon-list-alt"></span>
-                                <?php echo $this->translate(' Auditoría') ?>
+                                <?php echo $this->translate(' Informes') ?>
                             </a>
                         </li>
                     </ul>

@@ -31,6 +31,15 @@ namespace Reserva\Form;
          $this->add(array(
             'name' => 'idHabitacion',
             'type' => 'Hidden',
+        ));
+         
+        $this->add(array(
+            'name' => 'idCliente',
+            'type' => 'Hidden',
+            'attributes' => array(
+            'id' => 'idCliente'    
+            ),
+            
         )); 
 
         $this->add(array(
@@ -96,11 +105,12 @@ namespace Reserva\Form;
         ));
 
         $this->add(array(
-            'name' => 'telefonoCelular',
+            'name' => 'telefono',
             'options' => array(
-                'label' => 'Teléfono Celular',
+                'label' => 'Teléfono',
             ),
             'attributes' =>array(
+            'id'   => 'telefono',
             'type'  => 'text',
             'class' => 'form-control',
             'maxlength' => '50',
@@ -109,15 +119,16 @@ namespace Reserva\Form;
         ));
 
         $this->add(array(
-            'type' => 'Zend\Form\Element\Email',
+            //'type' => 'Zend\Form\Element\Email',
             'name' => 'email',
             'options' => array(
             'label' => 'Email'
             ),
-            'attributes' =>array(            
+            'attributes' =>array(
+            'id'   => 'email',    
             'class' => 'form-control',
             'maxlength' => '60',
-            //'disabled' => 'disabled',
+            'disabled' => 'disabled',
         ), 
         ));
        
@@ -126,16 +137,13 @@ namespace Reserva\Form;
             'name' => 'idTipoHuesped',
             'options' => array(
                     'label' => 'Tipo de Convenio',
-                    //'empty_option' => 'Seleccione....',
-                    'value_options' => array(
-                            '1' => 'Afiliado',
-                            '2' => 'Particular',
-                            '3' => 'Congreso',
-                    ),
+                    'empty_option' => ' ',
                     
            ),
             'attributes' =>array(
-            'class' => 'form-control',
+                'class' => 'form-control',
+                'id'    => 'idTipoHuesped',
+                'disabled' => 'disabled',
             ),
         ));
 
@@ -161,6 +169,7 @@ namespace Reserva\Form;
                 'label' => 'Cantidad Adultos:',
             ),
             'attributes' =>array(
+            'id'    =>  'cantidadAdulto',
             'type'  => 'text',
             'class' => 'form-control',
             'maxlength' => '10',
@@ -198,25 +207,26 @@ namespace Reserva\Form;
 
 
         $this->add(array(
-            'name' => 'huesped',
+            'name' => 'nombreHuesped',
             'options' => array(
-            'label' => 'Agregar Huéspedes'
+            'label' => 'Nombre Completo'
             ),
             'attributes' =>array(            
-            'class' => 'form-control',
-            'maxlength' => '60',
+                'class'     => 'form-control',
+                'maxlength' => '100',
+                'id'        => 'nombreHuesped',
         ),
         ));
 
         $this->add(array(
-            'type' => 'Zend\Form\Element\TextArea',    
-            'name' => 'huespedes',
+            'name' => 'documentoHuesped',
             'options' => array(
-            'label' => 'Lista Huespedes'
+            'label' => 'Documento'
             ),
-            'attributes' =>array(            
-            'class' => 'form-control',
-            'rows' => '6',
+            'attributes' =>array(
+                'class'     => 'form-control',
+                'maxlength' => '60',
+                'id'        => 'documentoHuesped',
         ),
         ));
 
@@ -282,27 +292,20 @@ namespace Reserva\Form;
 // Defino los campos para jquery
 
         $this->add(array(
-            'name' => 'slider',
-            'type' => 'ZfSnapJquery\Form\Element\Slider',
-        ));
-
-        $this->add(array(
-            'name' => 'spinner',
-            'type' => 'ZfSnapJquery\Form\Element\Spinner',
-        ));
-
-        $this->add(array(
-            'name' => 'datepicker',
-            'type' => 'ZfSnapJquery\Form\Element\Datepicker',
-        ));
-
-        $this->add(array(
             'name' => 'autocomplete',
-            'type' => 'ZfSnapJquery\Form\Element\Autocomplete',
+            'type' => 'ZfSnapJquery\Form\Element\Autocomplete', 
+            'options' => array(
+            'label' => 'Nombre Reserva:'
+            ),
             'attributes' => array(
+                'class' => 'form-control',
                 'jquery' => array(
-                    'source' => '/casaserrana/public/cliente'
-                )
+       
+                    'source' => '/casaserrana/public/cliente',
+                    'focus' => new \Zend\Json\Expr('function( event, ui ) { $( "#autocomplete" ).val( ui.item.label ); return false; }'),
+                    'select' => new \Zend\Json\Expr('function( event, ui ) { $( "#email" ).val( ui.item.email ); $( "#telefono" ).val( ui.item.telefono);$( "#idTipoHuesped" ).val( ui.item.idPadronAfiliado); $( "#idCliente" ).val( ui.item.cliente ); return false; }'),
+                    
+                                 ),
             )
         ));
 

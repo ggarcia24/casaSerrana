@@ -1,0 +1,204 @@
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+        
+        $('#botonBuscar').on('click', function()
+        {
+            
+            
+            //var banco= idBancoPorCliente.;
+            var fechaIn= $('#fechaDesde').val();
+            var fechaOut=$('#fechaHasta').val();
+            if(fechaIn === "" || fechaOut === "")            
+            {
+                alert('Ingrese un rango de Fechas');
+                return false;
+            }else
+            if(fechaIn > fechaOut)
+            {
+                alert('La Fecha Hasta es mayor a la Fecha Desde, por favor modifique las Fechas');
+                return false;
+            }else
+            {
+                url = "gridreserva" + "/" + fechaIn + "/" + fechaOut;
+                alert(url); 
+                $(location).attr('href', url);
+            }
+            
+            
+            
+            
+        });
+    });
+</script>
+
+<?php
+$records = array();
+            foreach ($pabellones as $pabellon)
+            {
+                $records[] = $pabellon;
+            }
+?>            
+<div class="container">
+    <br>
+    <ol class="breadcrumb">
+        <li class="active">Reservas</li>
+
+    </ol>
+        <h4>Buscar por rango de fechas</h4><br>
+
+
+    <div class="row">
+        <div class="col-sm-2">
+            <label for="fechaDesde">Fecha Desde:
+                <input type="date" id="fechaDesde" class="form-control" placeholder="Ingresar fecha Desde">
+            </label>
+        </div>    
+        <div class="col-sm-2">    
+            <label for="fechaHasta">Fecha Hasta:
+                <input type="date" id="fechaHasta" class="form-control" placeholder="Ingresar fecha Hasta">
+            </label>    
+        </div>
+        <div class="col-sm-2">    
+            <label for="pabellones">Pabellon:
+            <select class="form-control" id="pabellones">
+                <?php
+                    foreach($records as $record)
+                    {
+                        ?>
+                        <option value="<?php $record->idPabellon?>">
+                            <?php echo $record->nombre ?>
+                        </option>
+                        <?php
+                    }
+                ?>    
+            </select>
+        </div>        
+        <div class="col-sm-2">    <br><?php $hola=12 ?>
+            <a type="button" id="botonBuscar" class="btn btn-primary" >Buscar </a>
+        </div>    
+
+
+    </div>
+    <br><br>
+
+    <h4><?php echo $this->titulo;?></h4>
+    <br>
+    
+            <?php
+            $estado=0;
+            $disponibles=array();
+            foreach ($reservas as $reserva)
+            {
+                
+                $disponibles[] = $reserva;
+            };
+
+            
+            
+
+                foreach($records as $record)
+                {
+
+                    ?>
+                    <div class="row">
+                    <div class="col-sm-12">
+                        <div class="panel panel-info">
+                                                          
+                                <div class="panel-heading">
+                                    <?php echo $record->nombre  ?>
+                                </div>
+                                
+                                <div class="panel-body">
+                                   
+                                        <?php                  
+                                            foreach($habitaciones as $habitacion)
+                                            {   
+                                                
+                                                if($habitacion->idPabellon==$record->idPabellon)
+                                                {
+                                                    $estado=0;
+                                                    $fechaDesde="";
+                                                    $fechaHasta="";
+                                                    foreach($disponibles as $disponible)
+                                                    {
+                                                        if($habitacion->idHabitacion==$disponible["idHabitacion"])
+                                                        {
+                                                           $fechaDesde= $disponible["fechaIn"];
+                                                           $fechaHasta= $disponible["fechaOut"];
+                                                           $estado=$disponible["idEstado"];
+                                                          
+                                                           $titulo= "";
+                                                        }
+                                                        
+                                                    }
+                                                    ?>
+                                                <a type="button" 
+                                                   <?php
+                                                    switch ($estado) 
+                                                    {
+                                                        //disponible, blanco
+                                                        case '1':
+                                                            $colorHabitacion="#2EFE2E";
+                                                            $diaDesde = new DateTime($fechaDesde);
+                                                            $diaHasta = new DateTime($fechaHasta);
+                                                            $titulo="Reservada desde ".$diaDesde->format('d-m-Y')." hasta ". $diaHasta->format('d-m-Y');                                                            
+                                                            break;
+                                                        //reservado, amarillo
+                                                        case '2':
+                                                            $colorHabitacion="blue";
+                                                            break;
+                                                        //reservado con pago, naranja
+                                                        case '3':
+                                                            $diaDesde = new DateTime($fechaDesde);
+                                                            $diaHasta = new DateTime($fechaHasta);
+                                                            $titulo="Reservada desde ".$diaDesde->format('d-m-Y')." hasta ". $diaHasta->format('d-m-Y');
+                                                            $colorHabitacion="yellow";
+                                                            break;
+                                                        //ocupado, rojo
+                                                        // si no marron
+                                                        default:
+                                                            $colorHabitacion="#D8D8D8";
+                                                            $titulo="Disponible";
+                                                            break;
+                                                    }                                            
+                                                   
+                                                   ?>
+                                                   
+                                                   style="background-color:<?php echo $colorHabitacion;?>;color:black;" 
+                                                   title="<?php echo $titulo ?>" 
+                                                   class="btn" 
+                                                   href="<?php echo $this->url('reserva', array('controller'=> 'reserva', 'action' => 'book', 'id' =>$habitacion->idHabitacion)) ?>">
+                                                       <?php echo $habitacion->numero; ?></a>
+                                                    <?php
+
+                                                }
+                                                
+                                            }
+
+                                            
+                                        ?>  
+                                            
+
+                                  
+                                </div>
+                           
+                        </div>
+                        </div>
+                    </div>
+                      
+                    <?php
+                }
+                //echo $this->test_helper("me","e");
+                //echo $this->test_helper()->fooMethod("holaaa");
+                //echo $this->test_habitacion()->probando();
+                //echo $this->test_habitacion()->obtengoHabitacion(3);
+                //echo $this->test_habitacion('habitaciones')->getHabitacionTable();
+            ?>
+
+            
+            
+    <br>
+    <br>
+    <br>
+</div>

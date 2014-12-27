@@ -17,7 +17,6 @@ namespace Reserva\Controller;
  use Reserva\Form\HabitacionForm;
  use Reserva\Form\PabellonForm;
  use Reserva\Form\TipohuespedForm;
-
  use Reserva\Form\ReservaForm;
 
  class ReservaController extends AbstractActionController
@@ -397,13 +396,18 @@ namespace Reserva\Controller;
         $id = (int) $this->params()->fromRoute('id', 0);
         $habitacion=$this->getHabitacionTable()->getHabitacion($id);
         $pabellon=$this->getPabellonTable()->getPabellon($habitacion->idPabellon);
-
          //si la habitacion esta reservada o reservada con seña, no permitimos cargar los huespedes
-         if($habitacion->idEstado = 2 OR 3) 
+         if($habitacion->idEstado ==  2 || $habitacion->idEstado ==  3)                 
          {
              $form->get('huesped')->setAttribute('disabled', 'disabled');
-             $form->get('huespedes')->setAttribute('disabled', 'disabled');             
+             $form->get('huespedes')->setAttribute('disabled', 'disabled');
+             $form->get('fechaIngreso')->setAttribute('disabled', 'disabled');
+             $form->get('fechaSalida')->setAttribute('disabled', 'disabled');
+             $form->get('fechaIngreso')->setValue('disabled', 'disabled');
+             $form->get('fechaSalida')->setValue('disabled', 'disabled');
+             //$reserva=$this->getReservaTable()->getReserva($habitacion->idPabellon);
          }
+         
 
         //obtengo listado de estados de habitacion
         $estados=$this->getEstadoTable()->fetchAllWithAlias(); 
@@ -413,9 +417,6 @@ namespace Reserva\Controller;
             $vectorEstado[]=$estado;
         }
         $form->get('idEstado')->setValueOptions($vectorEstado);
-        //
-
-
         //obtengo listado de convenio
         $convenios=$this->getTipohuespedTable()->fetchAllWithAlias(); 
         $vectorConvenio=array();
@@ -424,15 +425,12 @@ namespace Reserva\Controller;
             $vectorConvenio[]=$convenio;
         }
         $form->get('idTipoHuesped')->setValueOptions($vectorConvenio);
-        //
+        
 
 
          $request = $this->getRequest();
-         
-         if ($request->isPost()) 
-         {   
-
-            
+        if ($request->isPost()) 
+        {           
             $reserva = new Reserva();
             $form->setInputFilter($reserva->getInputFilter());             
             $form->setData($request->getPost());

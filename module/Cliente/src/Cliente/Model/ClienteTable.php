@@ -4,6 +4,7 @@ use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Sql\Sql;
 use Zend\Db\Sql\Where;
 use Zend\Db\Adapter\Adapter;
+use Zend\Db\Sql\Predicate;
 class ClienteTable
 {
      protected $tableGateway;
@@ -40,10 +41,29 @@ class ClienteTable
            // }
           //  exit; 
            //    $row = $result->current();
-         return $result;
-
-
-        
+         return $result;        
+     }
+     
+     public function getClientePorDatos($datos)
+     {
+         
+        $adapter=$this->tableGateway->getAdapter();
+        $sql=new Sql($adapter);
+        $select=$sql->select();
+        $select->from('clientes');
+        $select->where(array(
+            new Predicate\PredicateSet(
+                array(
+                    new Predicate\Like('nombre', '%'.$datos.'%'),
+                    new Predicate\Like('apellido', '%'.$datos.'%'),
+                    new Predicate\Operator('documento', '=',  $datos),
+                ),
+                Predicate\PredicateSet::COMBINED_BY_OR
+            ),
+        ));
+        $statement = $sql->prepareStatementForSqlObject($select);
+        $result = $statement->execute();
+        return $result;
      }
 
      public function getCliente($id)
@@ -63,22 +83,23 @@ class ClienteTable
     public function saveCliente(Cliente $cliente)
     {
         $data = array(            
-            'idCliente'              =>$cliente->idCliente,
+            'idCliente'             =>$cliente->idCliente,
             'apellido'              =>$cliente->apellido,
             'nombre'                =>$cliente->nombre,
             'direccion'             =>$cliente->direccion,
-            'telefonoFijo'          =>$cliente->telefonoFijo,
-            'telefonoCelular'       =>$cliente->telefonoCelular,
+            'telefono'              =>$cliente->telefono,
             'tipoDocumento'         =>$cliente->tipoDocumento,
             'documento'             =>$cliente->documento,
             'idBancoPorCliente'     =>$cliente->idBancoPorCliente,
             'titular'               =>$cliente->titular,
             'email'                 =>$cliente->email,
-            'idAlimentoEspecial'    =>$cliente->idAlimentoEspecial,
+            'idAlimentoEspecial'    =>$cliente->alimento,
             'codigoPostal'          =>$cliente->codigoPostal,
             'idTarjetaPorCliente'   =>$cliente->idTarjetaPorCliente,
             'fechaNacimiento'       =>$cliente->fechaNacimiento,
-            'idPadronAfiliado'      =>$cliente->idPadronAfiliado,
+            'idTipoHuesped'         =>$cliente->idPadronAfiliado,
+            'idProvincia'           =>$cliente->provincia,
+            'idPais'                =>$cliente->pais,
         );
 
         $id = (int) $cliente->idCliente;

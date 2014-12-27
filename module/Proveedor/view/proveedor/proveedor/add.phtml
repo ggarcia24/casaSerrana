@@ -25,22 +25,24 @@
     			echo $formLabel->closeTag();
 
     			echo $this->formInput($cuit);
-
-    			
-    				echo $this->formElementErrors($cuit);	
-    			   			
-    			
-			?>
+                        ?>
+                    
+                        <div style="color:red">
+                            <?php echo $this->formElementErrors($cuit);  ?>
+                        </div>
 		</div>
 
 		<div class="col-sm-2">
 			<?php
     			$nombreCompania = $form->get('nombreCompania');
     			echo $formLabel->openTag() . $nombreCompania->getLabel('label');    			
-    			//echo $this->formElementErrors($nombre);
+    			
     			echo $formLabel->closeTag();
     			echo $this->formInput($nombreCompania);
-			?>
+                        ?>
+                        <div style="color:red">                        
+                            <?php echo $this->formElementErrors($nombreCompania);?>
+                        </div>
 		</div>
 		<div class="col-sm-2">
 			<?php

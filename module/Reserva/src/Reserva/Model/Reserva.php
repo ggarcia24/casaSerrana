@@ -26,7 +26,7 @@ namespace Reserva\Model;
      public function exchangeArray($data)
      {         
          $this->idReserva = (isset($data['idReserva']))  ? $data['idReserva']  : null;
-         //$this->idCliente = (isset($data['idCliente']))  ? $data['idCliente']  : null;
+         $this->idCliente = (isset($data['idCliente']))  ? $data['idCliente']  : null;
          $this->cantidadAdultos = (isset($data['cantidadAdulto']))  ? $data['cantidadAdulto']  : null;    
          $this->idHabitacion = (isset($data['idHabitacion']))  ? $data['idHabitacion']  : null;       
          $this->idTarifa = (isset($data['idTarifa']))  ? $data['idTarifa']  : null;       

@@ -26,7 +26,6 @@ namespace Reserva\Form;
                 'label' => 'Nombre *',
             ),
             'attributes' =>array(
-            'required' => 'required',
             'type'  => 'text',
             'class' => 'form-control',
             'maxlength' => '50',

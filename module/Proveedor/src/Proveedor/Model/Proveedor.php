@@ -56,47 +56,43 @@ namespace Proveedor\Model;
          if (!$this->inputFilter) {
              $inputFilter = new InputFilter();
 
-             $inputFilter->add(array(
-                 'name'     => 'cuit',
-                 'required' => true,
-                 'filters'  => array(
-                     array('name' => 'StripTags'),
-                     array('name' => 'StringTrim'),
-                 ),
-                 'validators' => array(
-                     array(
-                         'name'    => 'StringLength',
-                         'options' => array(
-                             'encoding' => 'UTF-8',
-                             'min'      => 1,
-                             'max'      => 100,
-                             'messages' => array(
-                                'stringLengthTooShort' => 'CUIT demasiado largo',
+            $inputFilter->add(array(
+                'name' => 'cuit',
+                'required' => true,
+                'filters' => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                      'name' =>'NotEmpty', 
+                        'options' => array(
+                            'messages' => array(
+                                \Zend\Validator\NotEmpty::IS_EMPTY => 'Por favor introducir el CUIT' 
                             ),
-                         ),
+                        ),
+                    ),
+                ),
+            ));
 
-                     ),
-                 ),
-             ));
-
-             $inputFilter->add(array(
-                 'name'     => 'nombreCompania',
-                 'required' => true,
-                 'filters'  => array(
-                     array('name' => 'StripTags'),
-                     array('name' => 'StringTrim'),
-                 ),
-                 'validators' => array(
-                     array(
-                         'name'    => 'StringLength',
-                         'options' => array(
-                             'encoding' => 'UTF-8',
-                             'min'      => 1,
-                             'max'      => 100,
-                         ),
-                     ),
-                 ),
-             ));
+            $inputFilter->add(array(
+                'name' => 'nombreCompania',
+                'required' => true,
+                'filters' => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                      'name' =>'NotEmpty', 
+                        'options' => array(
+                            'messages' => array(
+                                \Zend\Validator\NotEmpty::IS_EMPTY => 'Por favor introducir el nombre de la Compañia' 
+                            ),
+                        ),
+                    ),
+                ),
+            ));
 
              
 

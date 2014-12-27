@@ -24,7 +24,6 @@ namespace Cliente\Form;
                 'label' => 'Apellido *',
             ),
             'attributes' =>array(
-            'required' => 'required',
             'type'  => 'text',
             'class' => 'form-control',
             'maxlength' => '50',
@@ -37,7 +36,6 @@ namespace Cliente\Form;
                 'label' => 'Nombre *',
             ),
             'attributes' =>array(
-            'required' => 'required',
             'type'  => 'text',
             'class' => 'form-control',
             'maxlength' => '50',
@@ -55,23 +53,11 @@ namespace Cliente\Form;
             'maxlength' => '50',
             ),
         ));
-
+        
         $this->add(array(
-            'name' => 'telefonoFijo',
+            'name' => 'ciudad',
             'options' => array(
-                'label' => 'Teléfono Fijo',
-            ),
-            'attributes' =>array(
-            'type'  => 'text',
-            'class' => 'form-control',
-            'maxlength' => '30',
-            ),
-        ));
-
-        $this->add(array(
-            'name' => 'telefonoCelular',
-            'options' => array(
-                'label' => 'Teléfono Celular',
+                'label' => 'Ciudad',
             ),
             'attributes' =>array(
             'type'  => 'text',
@@ -79,7 +65,49 @@ namespace Cliente\Form;
             'maxlength' => '50',
             ),
         ));
-     
+        
+        $this->add(array(
+            'type' => 'Zend\Form\Element\Select',
+            'name' => 'pais',
+            'required' => false,
+            'allow_empty' => true,
+            'options' => array(
+                                'label' => 'Pais:',
+                                'empty_option' => 'Seleccione....',
+                                'disable_inarray_validator' => true
+                                ),
+            'attributes' =>array(
+                                'class' => 'form-control',
+                                
+                         ) 
+            ));
+
+        $this->add(array(
+            'type' => 'Zend\Form\Element\Select',
+            'name' => 'provincia',
+            'required' => false,
+            'options' => array(
+                                'label' => 'Provincia:',
+                                'empty_option' => 'Seleccione....',
+                                'disable_inarray_validator' => true
+                                ),
+            'attributes' =>array(
+                                'class' => 'form-control',
+                                
+                         ) 
+            ));
+
+        $this->add(array(
+            'name' => 'telefono',
+            'options' => array(
+                'label' => 'Teléfono',
+            ),
+            'attributes' =>array(
+            'type'  => 'text',
+            'class' => 'form-control',
+            'maxlength' => '30',
+            ),
+        ));
 
         $this->add(array(
         'type' => 'Zend\Form\Element\Select',
@@ -98,6 +126,8 @@ namespace Cliente\Form;
         'value' => 'DNI'
         )
         ));
+        
+
 
         $this->add(array(
             'name' => 'documento',
@@ -151,16 +181,17 @@ namespace Cliente\Form;
         ));
  
         $this->add(array(
-            'name' => 'idAlimentoEspecial',
+            'type' => 'Zend\Form\Element\Select',
+            'name' => 'alimento',
             'options' => array(
-                'label' => 'Id Alimento Especial',
-            ),
+                                'label' => 'Alimento Especial:',
+                                'empty_option' => 'Seleccione....',
+                                'disable_inarray_validator' => true
+                                ),
             'attributes' =>array(
-            'type'  => 'text',
-            'class' => 'form-control',
-            'maxlength' => '10',
-            ),
-        ));
+                                'class' => 'form-control',
+                         ) 
+            ));
 
         $this->add(array(
             'name' => 'codigoPostal',
@@ -178,17 +209,31 @@ namespace Cliente\Form;
             'name' => 'idTarjetaPorCliente',
 
             'options' => array(
-                'label' => 'Tarjeta',
+                'label' => 'Numero de Tarjeta',
             ),
             'attributes' =>array(
             'type'  => 'text',
             'class' => 'form-control',
-            'id'    => 'tarjeta',
+            'id'    => 'idTarjetaPorCliente',
 
             'maxlength' => '16',
             ),
         ));
 
+        $this->add(array(
+            'type' => 'Zend\Form\Element\Select',
+            'name' => 'tarjeta',
+            'options' => array(
+                                'label' => 'Tarjeta:',
+                                'empty_option' => 'Seleccione....',
+                                'disable_inarray_validator' => true
+                                ),
+            'attributes' =>array(
+                                'class' => 'form-control',
+                         ) 
+            ));
+        
+        
         $this->add(array(
             'name' => 'fechaNacimiento',
             'options' => array(
@@ -201,16 +246,18 @@ namespace Cliente\Form;
         ));
 
         $this->add(array(
+            'type' => 'Zend\Form\Element\Select',
             'name' => 'idPadronAfiliado',
+            'required' => false,
             'options' => array(
-                'label' => 'Padron',
-            ),
+                                'label' => 'Tipo de Convenio:',
+                                'empty_option' => 'Seleccione....',
+                                'disable_inarray_validator' => true
+                                ),
             'attributes' =>array(
-            'type'  => 'text',
-            'class' => 'form-control',
-            'maxlength' => '10',
-            ),
-        ));
+                                'class' => 'form-control',
+                         ) 
+            ));
         
 
 

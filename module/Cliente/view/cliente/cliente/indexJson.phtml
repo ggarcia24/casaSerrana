@@ -1,0 +1,15 @@
+<?php 
+
+
+$res = array();
+
+foreach($clientes as $cliente) 
+
+{
+    $res[] = array(
+        'label' => $cliente->nombre . ' ' . $cliente->apellido,
+        'value' => json_encode($cliente)
+    );
+}
+
+die(json_encode($res));

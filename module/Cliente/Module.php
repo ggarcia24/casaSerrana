@@ -5,8 +5,17 @@ use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\Db\ResultSet\ResultSet;
 use Cliente\Model\Cliente;
 use Cliente\Model\ClienteTable;
-use Cliente\Model\Reserva;
-use Cliente\Model\ReservaTable;
+use Cliente\Model\Alimento;
+use Cliente\Model\AlimentoTable;
+use Cliente\Model\Banco;
+use Cliente\Model\BancoTable;
+use Cliente\Model\Tarjeta;
+use Cliente\Model\TarjetaTable;
+use Cliente\Model\ProvinciaTable;
+use Cliente\Model\PaisTable;
+use Cliente\Model\Convenio;
+use Cliente\Model\ConvenioTable;
+
 use Zend\Db\TableGateway\TableGateway;
 
  class Module implements AutoloaderProviderInterface, ConfigProviderInterface
@@ -48,19 +57,85 @@ use Zend\Db\TableGateway\TableGateway;
                                     return new TableGateway('clientes', $dbAdapter, null, $resultSetPrototype);
                                 },
 
-                                'Cliente\Model\ReservaTable' =>  function($sm) {
-                                $tableGateway = $sm->get('ReservaTableGateway');
-                                $table = new ReservaTable($tableGateway);
+                                'Cliente\Model\BancoTable' =>  function($sm) {
+                                $tableGateway = $sm->get('BancoTableGateway');
+                                $table = new BancoTable($tableGateway);
                                 return $table;
                                 },
-                                'ReservaTableGateway' => function ($sm) 
+                                'BancoTableGateway' => function ($sm) 
                                 {
                                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                                     $resultSetPrototype = new ResultSet();
-                                    $resultSetPrototype->setArrayObjectPrototype(new Reserva());                                 
-                                    return new TableGateway('reservas', $dbAdapter, null, $resultSetPrototype);
+                                    $resultSetPrototype->setArrayObjectPrototype(new Banco());                                 
+                                    return new TableGateway('bancos', $dbAdapter, null, $resultSetPrototype);
                                 },
-                                ),
+                                       
+                                'Cliente\Model\AlimentoTable' =>  function($sm) {
+                                $tableGateway = $sm->get('AlimentoTableGateway');
+                                $table = new AlimentoTable($tableGateway);
+                                return $table;
+                                },
+                                'AlimentoTableGateway' => function ($sm) 
+                                {
+                                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                                    $resultSetPrototype = new ResultSet();
+                                    $resultSetPrototype->setArrayObjectPrototype(new Alimento());
+                                    return new TableGateway('alimentos', $dbAdapter, null, $resultSetPrototype);
+                                },                                        
+         
+                                'Cliente\Model\TarjetaTable' =>  function($sm) {
+                                $tableGateway = $sm->get('TarjetaTableGateway');
+                                $table = new TarjetaTable($tableGateway);
+                                return $table;
+                                },
+                                'TarjetaTableGateway' => function ($sm) 
+                                {
+                                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                                    $resultSetPrototype = new ResultSet();
+                                    $resultSetPrototype->setArrayObjectPrototype(new Tarjeta());
+                                    return new TableGateway('tarjetas', $dbAdapter, null, $resultSetPrototype);
+                                },          
+                                        
+                                'Cliente\Model\PaisTable' =>  function($sm) {
+                                $tableGateway = $sm->get('PaisTableGateway');
+                                $table = new PaisTable($tableGateway);
+                                return $table;
+                                },
+                                'PaisTableGateway' => function ($sm) 
+                                {
+                                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                                    $resultSetPrototype = new ResultSet();
+                                    //$resultSetPrototype->setArrayObjectPrototype(new Pais());
+                                    return new TableGateway('paises', $dbAdapter, null, $resultSetPrototype);
+                                },                                         
+
+                                'Cliente\Model\ProvinciaTable' =>  function($sm) {
+                                $tableGateway = $sm->get('ProvinciaTableGateway');
+                                $table = new ProvinciaTable($tableGateway);
+                                return $table;
+                                },
+                                'ProvinciaTableGateway' => function ($sm) 
+                                {
+                                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                                    $resultSetPrototype = new ResultSet();
+                                    //$resultSetPrototype->setArrayObjectPrototype(new Pais());
+                                    return new TableGateway('provincias', $dbAdapter, null, $resultSetPrototype);
+                                },
+
+                                'Cliente\Model\ConvenioTable' =>  function($sm) {
+                                $tableGateway = $sm->get('ConvenioTableGateway');
+                                $table = new ConvenioTable($tableGateway);
+                                return $table;
+                                },
+                                'ConvenioTableGateway' => function ($sm) 
+                                {
+                                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                                    $resultSetPrototype = new ResultSet();
+                                    //$resultSetPrototype->setArrayObjectPrototype(new Pais());
+                                    return new TableGateway('tipoHuespedes', $dbAdapter, null, $resultSetPrototype);
+                                },   
+                                        
+                                ),                                        
 
 
 

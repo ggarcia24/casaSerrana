@@ -1,0 +1,87 @@
+<script language="JavaScript">
+    function doSearch() 
+    {
+        var tableReg = document.getElementById('datos');
+        var searchText = document.getElementById('buscador').value.toLowerCase();
+        for (var i = 1; i < tableReg.rows.length; i++)
+        {
+            var cellsOfRow = tableReg.rows[i].getElementsByTagName('td');
+            var found = false;
+            for (var j = 0; j < cellsOfRow.length && !found; j++)
+            {
+                var compareWith = cellsOfRow[j].innerHTML.toLowerCase();
+                if (searchText.length == 0 || (compareWith.indexOf(searchText) > -1))
+                {
+                    found = true;
+                }
+            }
+            if(found) 
+            {
+                tableReg.rows[i].style.display = '';
+            }else{
+                    tableReg.rows[i].style.display = 'none';
+                 }
+        }
+    }    
+</script>
+<div class="container">
+    <br>
+    <ol class="breadcrumb">
+        <li class="active">Alimento</li>    
+    </ol>
+    <h3><?php echo $this->titulo ?></h3>
+    <br>
+    <!-- desde aca -->
+    <div class="row">
+        <div class="col-sm-3">
+            <label for="buscador">Buscar Alimento</label>
+            <input type="text" onkeyup="doSearch()" id="buscador" class="form-control">
+        </div>  
+    </div>
+    <br>
+    <!-- hasta aca -->
+    <a href="<?php echo $this->url('alimento', array('controller'=> 'alimento', 'action' => 'add')) ?>">Nuevo Alimento (+)</a>
+    <br><br>
+    <table class="table" id="datos">
+        <tr>
+
+            <th>Nombre</th>
+            <th>Descripcion</th>
+            <th>Editar Alimento</th>
+            <th>Eliminar Alimento</th>
+
+        </tr>
+        <?php foreach($alimentos as $alimento) 
+        {
+        ?>
+        
+            <tr style="background-color:<?php echo $this->cycle(array("#F0F0F0","#FFFFFF"))->next() ?>">
+            
+
+                <td><?php echo $this->escapeHtml($alimento->nombre);?></td>
+                <td><?php echo $this->escapeHtml($alimento->descripcion);?></td>
+                <td>
+                    <a href="<?php echo $this->url('alimento', array('controller'=> 'alimento', 'action' => 
+                    'edit', 'id' =>$alimento->idAlimento)) ?>">Editar</a>
+                </td>
+                <td>
+                    <a onclick="return confirm('Esta seguro que desea eliminar a <?php echo $alimento->nombre ?>?')" 
+                    href="<?php echo $this->url('alimento', array('controller'=> 'alimento', 'action' => 'delete', 
+                    'id' => $alimento->idAlimento)) ?>">Eliminar</a>
+                </td>
+            </tr>
+        <?php
+        }       
+        ?>      
+        <?php
+            $this->cycle()->assign(array("#F0F0F0","#FFFFFF"));
+            $this->cycle()->prev();
+        ?>
+    </table>
+</div>
+
+
+
+
+
+

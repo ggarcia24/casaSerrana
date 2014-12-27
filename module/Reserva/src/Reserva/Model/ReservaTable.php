@@ -69,8 +69,9 @@ class ReservaTable
     public function saveReserva(Reserva $reserva)
     {
         $data = array(            
-           // 'idCliente'             =>$reserva->idCLiente,
+            
             'idHabitacion'          =>$reserva->idHabitacion,
+            'idCliente'             =>$reserva->idCliente,
             'idTarifa'              =>$reserva->idTarifa,
             'idEstado'              =>$reserva->idEstado,
             'idTipoHuesped'         =>$reserva->idTipoHuesped,
@@ -81,11 +82,9 @@ class ReservaTable
             //'idPago'                =>$reserva->idPago,
             'comentario'            =>$reserva->comentario, 
         );
-
         $id = (int) $reserva->idReserva;
         if($id == 0)
         {
-
             $this->tableGateway->insert($data);
         }else
         {
@@ -99,8 +98,8 @@ class ReservaTable
         }
     }
 
-     public function deleteReserva($id)
-     {
-         $this->tableGateway->delete(array('idReserva' => (int) $id));
-     }
- }
+    public function deleteReserva($id)
+    {
+        $this->tableGateway->delete(array('idReserva' => (int) $id));
+    }
+}

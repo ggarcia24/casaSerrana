@@ -1,0 +1,63 @@
+
+<div class="container">
+	<?php
+		$form = $this->form;
+		$form->setAttribute('action', $this->url('alimento', array('action' => 'add')));
+    	$form->prepare();
+		$formLabel = $this->plugin('formLabel');
+		echo $this->form()->openTag($form);
+	?>
+
+	<br>
+	<ol class="breadcrumb">
+  		<li><a href="<?php echo $this->url('home')?>alimento/index">Alimento</a></li>
+  		<li class="active">Edicion</li>  		
+	</ol>
+	<h3><?php echo $this->titulo ?></h3>	
+	<br>	
+	<div class="row">
+		
+		<?php echo $this->formHidden($form->get('idAlimento')); ?>
+		<h4>Datos Personales</h4><hr>
+		
+		<div class="col-sm-2">
+			<?php
+    			$nombre = $form->get('nombre');
+    			echo $formLabel->openTag() . $nombre->getLabel('label');  
+    			echo $formLabel->closeTag();
+    			echo $this->formInput($nombre);
+			?>
+                        <div style="color:red">
+                            <?php echo $this->formElementErrors($nombre); ?>
+                        </div>
+		</div>
+                <div class="col-sm-8">
+			<?php
+    			$descripcion = $form->get('descripcion');
+    			echo $formLabel->openTag() . $descripcion->getLabel('label');    			
+    			echo $formLabel->closeTag();
+    			echo $this->formInput($descripcion);
+			?>
+                        <div style="color:red">
+                            <?php echo $this->formElementErrors($descripcion); ?>
+                        </div>
+		</div>                
+        </div>
+        <br>
+	<div class="row">
+		
+		<div class="col-sm-12">
+			<?php echo $this->formElement($form->get('send')) ?> 
+		</div>		
+
+
+
+	</div>
+
+
+
+
+
+
+
+<?php  echo $this->form()->closeTag() ?>
