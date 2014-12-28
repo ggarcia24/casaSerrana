@@ -10,7 +10,13 @@
     "require": {
         "php": ">=5.3.3",
         "zendframework/zendframework": "2.3.*",
-        "snapshotpl/zf-snap-jquery": "dev-master"
+        "snapshotpl/zf-snap-jquery": "dev-master",
+        "rwoverdijk/assetmanager": "~1.4",
+        "mwillbanks/zfc-twitter-bootstrap": "dev-master",
+        "coogle/multidatabase": "dev-master",
+        "stefano/stefano-db-profiler": "*",
+        "bjyoungblood/bjy-profiler": "dev-master",
+        "ocramius/ocra-service-manager": "dev-master"
 
     }
 }

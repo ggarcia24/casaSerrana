@@ -1,0 +1,67 @@
+<script language="JavaScript">
+    function doSearch() 
+    {
+        var tableReg = document.getElementById('datos');
+        var searchText = document.getElementById('buscador').value.toLowerCase();
+        for (var i = 1; i < tableReg.rows.length; i++)
+        {
+            var cellsOfRow = tableReg.rows[i].getElementsByTagName('td');
+            var found = false;
+            for (var j = 0; j < cellsOfRow.length && !found; j++)
+            {
+                var compareWith = cellsOfRow[j].innerHTML.toLowerCase();
+                if (searchText.length == 0 || (compareWith.indexOf(searchText) > -1))
+                {
+                    found = true;
+                }
+            }
+            if(found) 
+            {
+                tableReg.rows[i].style.display = '';
+            }else{
+                    tableReg.rows[i].style.display = 'none';
+                 }
+        }
+    }    
+</script>
+<div class="container">
+    <ol class="breadcrumb">
+        <li class="active">Tipos de Convenios</li>    
+    </ol>
+    <h3><?php echo $this->translate('Listado de Tipos de Convenios') ?></h3>
+    <!-- desde aca -->
+    <div class="row">
+        <div class="col-sm-3">
+            <label for="buscador">Buscar Convenios</label>
+            <input type="text" onkeyup="doSearch()" id="buscador" class="form-control">
+        </div>  
+    </div>
+    <!-- hasta aca -->
+    <a href="<?php echo $this->url('tipo-convenio', array('action' => 'add')) ?>">Nuevo Tipo de Convenio (+)</a>
+    <table class="table" id="datos">
+        <thead>
+            <tr>
+                <th>Nombre Tipo de Convenio</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach($tipohuespedes as $tipohuesped):
+            /** @var \Reserva\Model\Tipohuesped $tipohuesped */?>
+            <tr style="background-color:<?php echo $this->cycle(array("#F0F0F0","#FFFFFF"))->next() ?>">
+                <td><?php echo $this->escapeHtml($tipohuesped->getNombre());?></td>
+                <td>
+                    <a href="<?php echo $this->url('tipo-convenio', array('action' => 'edit', 'id' => $tipohuesped->getId())) ?>">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                    &nbsp;
+                    <a onclick="return confirm('Esta seguro que desea eliminar a <?php echo $tipohuesped->getNombre() ?>?')"
+                    href="<?php echo $this->url('tipo-convenio', array('action' => 'delete', 'id' => $tipohuesped->getId())) ?>">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>

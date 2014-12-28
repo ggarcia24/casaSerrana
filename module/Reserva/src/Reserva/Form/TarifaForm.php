@@ -1,58 +1,61 @@
 <?php
 namespace Reserva\Form;
 
- use Zend\Form\Form;
-  use Zend\Form\Element;
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Form\Form;
+use Zend\Form\Element;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
- class TarifaForm extends Form
- {
-     public function __construct($name = null)
-     {
-         // we want to ignore the name passed
-         parent::__construct('tarifa');
+class TarifaForm extends Form {
 
-         $this->add(array(
+    protected $serviceManager;
+
+    public function __construct(ServiceLocatorInterface $sm) {
+
+        $this->serviceManager = $sm;
+
+        parent::__construct('tarifa');
+
+        $this->add(array(
             'name' => 'idTarifa',
             'type' => 'Hidden',
-         ));
+        ));
 
-         $this->add(array(
-             'type' => 'Zend\Form\Element\Select',
-             'name' => 'idCategoria',
-             'options' => array(
-                 'label' => 'Categoria:',
-                 'empty_option' => 'Seleccione....',
-                 'disable_inarray_validator' => true
+        $this->add(array(
+            'type' => 'Select',
+            'name' => 'idCategoria',
+            'options' => array(
+                'label' => 'Categoria:',
+                'empty_option' => 'Seleccione...',
+                'disable_inarray_validator' => true,
+                'value_options' => $this->getCategoriaOptions()
+            ),
+            'attributes' => array(
+                'class' => 'form-control',
+            ),
+        ));
 
+        $this->add(array(
+            'type' => 'Select',
+            'name' => 'idTipoHuesped',
+            'options' => array(
+                'label' => 'Tipo de Convenio:',
+                'empty_option' => 'Seleccione...',
+                'disable_inarray_validator' => true,
+                'value_options' => $this->getTipoHuespedOptions()
+            ),
+            'attributes' => array(
+                'class' => 'form-control',
+            ),
+        ));
 
-             ),
-             'attributes' =>array(
-                 'class' => 'form-control',
-             ),
-         ));
-         
-         $this->add(array(
-             'type' => 'Zend\Form\Element\Select',
-             'name' => 'idTipoHuesped',
-             'options' => array(
-                 'label' => 'Tipo de Convenio:',
-                 'empty_option' => 'Seleccione....',
-                 'disable_inarray_validator' => true
-
-
-             ),
-             'attributes' =>array(
-                 'class' => 'form-control',
-             ),
-         ));
-
-         $this->add(array(
+        $this->add(array(
             'name' => 'monto',
             'options' => array(
                 'label' => 'Monto:',
             ),
-            'attributes' =>array(
-                'type'  => 'text',
+            'attributes'   => array(
+                'type' => 'text',
                 'class' => 'form-control',
                 'maxlength' => '50',
             ),
@@ -63,21 +66,33 @@ namespace Reserva\Form;
             'options' => array(
                 'label' => 'Vigencia:',
             ),
-            'attributes' =>array(
-            'type'  => 'date',
-            'class' => 'form-control',
+            'attributes'   => array(
+                'type' => 'date',
+                'class' => 'form-control',
             ),
         ));
 
         $this->add(array(
-            'name' => 'send',            
+            'name' => 'send',
             'attributes' => array(
-                'type'  => 'submit',
+                'type' => 'submit',
                 'value' => 'Enviar',
                 'class' => 'btn btn-warning',
             ),
         ));
-            
+    }
 
-     }
- }
+    private function getCategoriaOptions() {
+        $categoriaTable = $this->serviceManager->get('Reserva\Model\CategoriaTable');
+        $categorias = $categoriaTable->fetchAllWithAlias();
+        $results = new ResultSet();
+        return $results->initialize($categorias)->toArray();
+    }
+
+    private function getTipoHuespedOptions() {
+        $convenioTable = $this->serviceManager->get('Cliente\Model\ConvenioTable');
+        $convenios = $convenioTable->fetchAllWithAlias();
+        $results = new ResultSet();
+        return $results->initialize($convenios)->toArray();
+    }
+}

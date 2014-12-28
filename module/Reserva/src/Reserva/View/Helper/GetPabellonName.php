@@ -38,18 +38,18 @@ class GetPabellonName extends AbstractHelper implements ServiceLocatorAwareInter
      */
     public function getServiceLocator()
     {
-        return $this->serviceLocator;
+        return $this->serviceLocator->getServiceLocator();
     }
 
 
     public function __invoke($id = 0)
     {
         $ret = 'Pabellon no encontrado';
-        $sm = $this->getServiceLocator()->getServiceLocator();
+        $sm = $this->getServiceLocator();
         /* @var PabellonTable $table */
         $table = $sm->get('Reserva\Model\PabellonTable');
         try {
-            $ret = $table->getPabellon($id)->nombre;
+            $ret = $table->getPabellon($id)->getNombre();
         } catch (\Exception $e) {
 
         }

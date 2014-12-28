@@ -2,78 +2,97 @@
 
 namespace Reserva\Model;
 
- // Add these import statements
- use Zend\InputFilter\InputFilter;
- use Zend\InputFilter\InputFilterAwareInterface;
- use Zend\InputFilter\InputFilterInterface;
+use Zend\InputFilter\InputFilter;
+use Zend\InputFilter\InputFilterAwareInterface;
+use Zend\InputFilter\InputFilterInterface;
 
- class Estado implements InputFilterAwareInterface
- {
-    public $idEstado;
-    public $nombre;   
-    
-    protected $inputFilter;                       // <-- Add this variable
+class Estado implements InputFilterAwareInterface {
 
-     public function exchangeArray($data)
-     {  
-        $this->idEstado  = (isset($data['idEstado']))  ? $data['idEstado']  : null;       
-        $this->nombre  = (isset($data['nombre']))  ? $data['nombre']  : null;
-       
+    /**
+     * @var int
+     */
+    protected $id;
+
+    /**
+     * @var string
+     */
+    protected $nombre;
+
+    /**
+     * @var InputFilter
+     */
+    protected $inputFilter;
+
+    /**
+     * @return int
+     */
+    public function getId() {
+        return $this->id;
     }
-     // Add content to these methods:
-     public function setInputFilter(InputFilterInterface $inputFilter)
-     {
-         throw new \Exception("Not used");
-     }
 
-     public function getInputFilter()
-     {
-         if (!$this->inputFilter) {
-             $inputFilter = new InputFilter();
+    /**
+     * @param int $id
+     */
+    public function setId($id) {
+        $this->id = $id;
+    }
 
-             $inputFilter->add(array(
-                 'name'     => 'artist',
-                 'required' => true,
-                 'filters'  => array(
-                     array('name' => 'StripTags'),
-                     array('name' => 'StringTrim'),
-                 ),
-                 'validators' => array(
-                     array(
-                         'name'    => 'StringLength',
-                         'options' => array(
-                             'encoding' => 'UTF-8',
-                             'min'      => 1,
-                             'max'      => 100,
-                         ),
-                     ),
-                 ),
-             ));
+    /**
+     * @return string
+     */
+    public function getNombre() {
+        return $this->nombre;
+    }
 
-             $inputFilter->add(array(
-                 'name'     => 'title',
-                 'required' => true,
-                 'filters'  => array(
-                     array('name' => 'StripTags'),
-                     array('name' => 'StringTrim'),
-                 ),
-                 'validators' => array(
-                     array(
-                         'name'    => 'StringLength',
-                         'options' => array(
-                             'encoding' => 'UTF-8',
-                             'min'      => 1,
-                             'max'      => 100,
-                         ),
-                     ),
-                 ),
-             ));
+    /**
+     * @param string $nombre
+     */
+    public function setNombre($nombre) {
+        $this->nombre = $nombre;
+    }
 
-             
+    public function exchangeArray($data) {
+        $this->id = (isset($data['idEstado'])) ? $data['idEstado'] : null;
+        $this->nombre = (isset($data['nombre'])) ? $data['nombre'] : null;
+    }
 
-             $this->inputFilter = $inputFilter;
-         }
+    // Add content to these methods:
+    public function setInputFilter(InputFilterInterface $inputFilter) {
+        throw new \Exception("Not used");
+    }
 
-         return $this->inputFilter;
-     }
- }
+    public function getInputFilter() {
+        if (!$this->inputFilter) {
+            $inputFilter = new InputFilter();
+
+            $inputFilter->add(array(
+                                  'name' => 'artist', 'required' => true, 'filters' => array(
+                    array('name' => 'StripTags'), array('name' => 'StringTrim'),
+                ), 'validators'          => array(
+                    array(
+                        'name' => 'StringLength', 'options' => array(
+                        'encoding' => 'UTF-8', 'min' => 1, 'max' => 100,
+                    ),
+                    ),
+                ),
+                              ));
+
+            $inputFilter->add(array(
+                                  'name' => 'title', 'required' => true, 'filters' => array(
+                    array('name' => 'StripTags'), array('name' => 'StringTrim'),
+                ), 'validators'          => array(
+                    array(
+                        'name' => 'StringLength', 'options' => array(
+                        'encoding' => 'UTF-8', 'min' => 1, 'max' => 100,
+                    ),
+                    ),
+                ),
+                              ));
+
+
+            $this->inputFilter = $inputFilter;
+        }
+
+        return $this->inputFilter;
+    }
+}

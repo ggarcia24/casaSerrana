@@ -16,8 +16,10 @@
                         ->prependStylesheet($this->basePath() . '/css/bootstrap-theme.min.css')
                         ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css') ?>
 
+
         <!-- Scripts -->
         <?php echo $this->headScript()
+            ->prependFile($this->basePath() . '/js/utils.js')
             ->prependFile($this->basePath() . '/js/bootstrap.min.js')
             ->prependFile($this->basePath() . '/js/jquery.min.js')
             ->prependFile($this->basePath() . '/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
@@ -45,12 +47,11 @@
                                 <?php echo $this->translate(' Reservas') ?>
                                 <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="<?php echo $this->url('home') ?>reserva/index">Consultar Reserva</a></li>
-                                    <li><a href="<?php echo $this->url('home') ?>reserva/indexhabitacion">Habitaciones</a></li>
-                                    <li><a href="<?php echo $this->url('home') ?>reserva/indexpabellon">Pabellones</a></li>
-                                    <li><a href="<?php echo $this->url('home') ?>reserva/indextarifa">Tarifas</a></li>
-                                    <li><a href="<?php echo $this->url('home') ?>reserva/indextipohuesped">Tipo Convenios</a></li>
-
+                                    <li><a href="<?php echo $this->url('reserva') ?>">Consultar Reserva</a></li>
+                                    <li><a href="<?php echo $this->url('habitacion') ?>">Habitaciones</a></li>
+                                    <li><a href="<?php echo $this->url('pabellon') ?>">Pabellones</a></li>
+                                    <li><a href="<?php echo $this->url('tarifa') ?>">Tarifas</a></li>
+                                    <li><a href="<?php echo $this->url('tipo-convenio') ?>">Tipo Convenios</a></li>
                                 </ul>
                             </a>
                         </li>

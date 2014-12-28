@@ -1,129 +1,28 @@
-
 <div class="container">
-	<?php
-		$form = $this->form;
-		$form->setAttribute('action', $this->url('reserva', array('action' => 'add')));
-    	$form->prepare();
-		$formLabel = $this->plugin('formLabel');
-		echo $this->form()->openTag($form);
-	?>
+<?php
+$form = $this->form;
+$form->setAttribute('action', $this->url('reserva', array('action' => 'add')));
+$form->prepare();
 
-	<br>
+echo $this->form()->openTag($form) ?>
 	<ol class="breadcrumb">
-  		<li><a href="<?php echo $this->url('home')?>reserva/index">Reservas</a></li>
-  		<li class="active">Alta</li>  		
+		<li><a href="<?php echo $this->url('home')?>reserva/index">Reservas</a></li>
+		<li class="active">Generar Reserva</li>
 	</ol>
-	<h3><?php echo $this->titulo ?></h3>	
-	<br>	
-	<div class="row">
-		<h4>Datos Reserva</h4><hr>
-		<div class="col-sm-2">
-			<?php
-    			$cuit = $form->get('cuit');
-    			echo $formLabel->openTag() . $cuit->getLabel('label');    			
-    			//echo $this->formElementErrors($cuit);
-    			echo $formLabel->closeTag();
-    			echo $this->formInput($cuit);
-			?>
-		</div>
-		<div class="col-sm-2">
-			<?php
-    			$nombre = $form->get('nombre');
-    			echo $formLabel->openTag() . $nombre->getLabel('label');    			
-    			//echo $this->formElementErrors($nombre);
-    			echo $formLabel->closeTag();
-    			echo $this->formInput($nombre);
-			?>
-		</div>
-		<div class="col-sm-2">
-			<?php
-    			$nombreContacto = $form->get('nombreContacto');
-    			echo $formLabel->openTag() . $nombreContacto->getLabel('label');    			
-    			//echo $this->formElementErrors($pass);
-    			echo $formLabel->closeTag();
-    			echo $this->formInput($nombreContacto);
-			?>
-		</div>
-		
-		<div class="col-sm-3">
-			<?php
-    			$telefonoFijo = $form->get('telefonoFijo');
-    			echo $formLabel->openTag() . $telefonoFijo->getLabel('label');    			
-    			//echo $this->formElementErrors($telFijo);
-    			echo $formLabel->closeTag();
-    			echo $this->formInput($telefonoFijo);
-			?>
-		</div>		
-		<div class="col-sm-3">
-			<?php
-    			$telefonoCelular = $form->get('telefonoCelular');
-    			echo $formLabel->openTag() . $telefonoCelular->getLabel('label');    			
-    			//echo $this->formElementErrors($telCelular);
-    			echo $formLabel->closeTag();
-    			echo $this->formInput($telefonoCelular);
-			?>
-		</div>
-	</div>
-	<br>
+	<h3><?php echo $this->translate('Agregar Reserva'); ?></h3>
+	<?php
+	echo $this->formCollection($this->form); ?>
 	<div class="row">
 		<div class="col-sm-2">
-			<?php
-    			$provincia = $form->get('provincia');
-    			echo $formLabel->openTag() . $provincia->getLabel('label');    			    			
-    			echo $formLabel->closeTag();
-    			echo $this->formSelect($provincia);
-    			//echo $this->formElementErrors($provincia);
-			?>  			
+			<a href="" class="btn btn-info">Imprimir</a>
 		</div>
 		<div class="col-sm-2">
-			<?php
-    			$localidad = $form->get('localidad');
-    			echo $formLabel->openTag() . $localidad->getLabel('label');    			    			
-    			echo $formLabel->closeTag();
-    			echo $this->formInput($localidad);
-    			//echo $this->formElementErrors($localidad);
-			?>  			
-		</div>
-		<div class="col-sm-4">
-			<?php
-    			$email = $form->get('email');
-    			echo $formLabel->openTag() . $email->getLabel('label');    			
-    			//echo $this->formElementErrors($email);
-    			echo $formLabel->closeTag();
-    			echo $this->formInput($email);
-			?>
-		</div>
-	</div>
-	<br>
-	<div class="row">
-		
-		<div class="col-sm-3">
-			<?php
-    			$domicilio = $form->get('domicilio');
-    			echo $formLabel->openTag() . $domicilio->getLabel('label');    			
-    			//echo $this->formElementErrors($domicilio);
-    			echo $formLabel->closeTag();
-    			echo $this->formInput($domicilio);
-			?>
+			<a href="" class="btn btn-info">Check Out</a>
 		</div>
 		<div class="col-sm-2">
-			<?php
-    			$idCodigoPostal = $form->get('codigoPostal');
-    			echo $formLabel->openTag() . $idCodigoPostal->getLabel('label');    			    			
-    			echo $formLabel->closeTag();
-    			echo $this->formInput($idCodigoPostal);
-    			//echo $this->formElementErrors($documento);
-			?>  			
-		</div>		
-	</div>
-	<br>
+			<a href="" class="btn btn-info">Generar Pago</a>
+		</div>
 
-	<br>	
-	<div class="row">
-		
-		<div class="col-sm-12">
-			<?php echo $this->formElement($form->get('send')) ?> 
-		</div>		
 
 
 
@@ -131,8 +30,48 @@
 
 </div>
 
+<br><br><br>
+<div class="row">
 
 
 
+
+
+
+</div>
+
+</div>
 
 <?php  echo $this->form()->closeTag() ?>
+
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		$('#agregarHuesped').on('click', function()
+		{
+			var nombre= $('#nombreHuesped').val();
+			var documento= $('#documentoHuesped').val();
+			if(nombre==='' || documento==='')
+			{
+				alert('Complete Nombre y Documento del Huesped');
+				return false;
+			}else
+			{
+
+				var huesped = '<div onclick="remover()" class="huesped">' + nombre + ' - ' +  documento + ' ' + '<a type="button" id="botonHuesped" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-remove-sign"></span></a></div>' + '<br><br>';
+				$('#listaHuesped').append(huesped);
+			}
+		});
+
+	});
+
+
+	function remover()
+	{
+		var huesped = $('.huesped');
+		var padre= $(this).parent();
+		huesped.remove();
+
+	}
+
+</script>

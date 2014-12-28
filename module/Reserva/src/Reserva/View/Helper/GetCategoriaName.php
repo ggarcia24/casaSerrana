@@ -25,10 +25,9 @@ class GetCategoriaName extends AbstractHelper implements ServiceLocatorAwareInte
      *
      * @param ServiceLocatorInterface $serviceLocator
      */
-    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
-    {
+    public function setServiceLocator(ServiceLocatorInterface $serviceLocator) {
         $this->serviceLocator = $serviceLocator;
-}
+    }
 
     /**
      * Get service locator
@@ -48,7 +47,8 @@ class GetCategoriaName extends AbstractHelper implements ServiceLocatorAwareInte
         /* @var CategoriaTable $table */
         $table = $sm->get('Reserva\Model\CategoriaTable');
         try {
-            $ret = $table->getCategoria($id)->nombre;
+            $cat = $table->getCategoria($id);
+            $ret = $cat->nombre;
         } catch (\Exception $e) {
 
         }

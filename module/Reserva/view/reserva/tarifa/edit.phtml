@@ -1,0 +1,62 @@
+
+<div class="container">
+	<?php
+		$form = $this->form;
+		$form->setAttribute('action', $this->url('tarifa', array('action' => 'edit', 'id' => $form->get('idTarifa')->getValue())));
+    	$form->prepare();
+		$formLabel = $this->plugin('formLabel');
+		echo $this->form()->openTag($form);
+	?>
+	<ol class="breadcrumb">
+    	<li><a href="<?php echo $this->url('tarifa')?>">Tarifa</a></li>
+  		<li class="active">Edicion</li>  		
+	</ol>
+	<h3><?php echo $this->translate('Editar Tarifa'); ?></h3>
+	<div class="row">
+                <?php echo $this->formHidden($form->get('idTarifa')); ?>
+		<div class="col-sm-3"><?php
+		    $categoria = $form->get('idCategoria');
+		    echo $formLabel->openTag() . $categoria->getLabel('label') . $formLabel->closeTag();
+		    echo $this->formElement($categoria);
+                    ?>
+    			<div style="color:red">
+    			    <?php echo $this->formElementErrors($categoria);?>	
+    			</div>
+		</div>
+
+		<div class="col-sm-3"><?php
+			$tipoHuesped = $form->get('idTipoHuesped');
+			echo $formLabel->openTag() . $tipoHuesped->getLabel('label') . $formLabel->closeTag();
+        		echo $this->formElement($tipoHuesped);
+                        ?>
+    			<div style="color:red">
+    			    <?php echo $this->formElementErrors($tipoHuesped);?>
+    			</div>
+		</div>
+		<div class="col-sm-3"><?php
+			$monto = $form->get('monto');
+			echo $formLabel->openTag() . $monto->getLabel('label') . $formLabel->closeTag();
+		        echo $this->formElement($monto);
+                        ?>
+    			<div style="color:red">
+    			    <?php echo $this->formElementErrors($monto);?>
+    			</div>
+		</div>
+		<div class="col-sm-3"><?php
+			$vigencia = $form->get('vigencia');
+			echo $formLabel->openTag() . $vigencia->getLabel('label') . $formLabel->closeTag();
+		        echo $this->formElement($vigencia);
+                        ?>
+    			<div style="color:red">
+    			    <?php echo $this->formElementErrors($vigencia);?>
+    			</div>                       
+		</div>
+	</div>
+        <br>
+	<div class="row">
+		<div class="col-sm-12">
+			<?php echo $this->formElement($form->get('send')) ?> 
+		</div>		
+	</div>
+	<?php  echo $this->form()->closeTag() ?>
+</div>

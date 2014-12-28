@@ -33,46 +33,26 @@ class TipohuespedTable
          return $row;
      }
 
-   /*       public function fetchAllWithAlias()
-     {
-        $adapter=$this->tableGateway->getAdapter();
-        $sql=new Sql($adapter);
-        $select=$sql->select();
-        $select->from('pabellones');
-        $select->columns(array('value'=>'idPabellon','label'=>'nombre'));
-
-         $statement = $sql->prepareStatementForSqlObject($select);
-         $result = $statement->execute(); 
-
-         return $result;
-     }
-    */
      public function saveTipohuesped(Tipohuesped $tipohuesped)
     {
         $data = array(            
-            'idTipoHuesped'           =>$tipohuesped->idTipoHuesped,            
-            'nombre'                  =>$tipohuesped->nombre,
+            'idTipoHuesped' =>$tipohuesped->getId(),
+            'nombre' =>$tipohuesped->getNombre(),
         );
 
-        $id = (int) $tipohuesped->idTipoHuesped;
-        if($id == 0)
-        {
+        $id = (int) $tipohuesped->getId();
+        if($id == 0) {
             $this->tableGateway->insert($data);
-        }else
-        {
-            if ($this->getTipohuesped($id))
-            {
-               
+        } else {
+            if ($this->getTipohuesped($id)) {
                 $this->tableGateway->update($data, array('idTipoHuesped' => $id));
-            }else 
-            {
+            } else {
                 throw new \Exception('El Tipo de huesped no existe');
             }
         }
     }
 
-     public function deleteTipohuesped($id)
-     {
+     public function deleteTipohuesped($id) {
          $this->tableGateway->delete(array('idTipoHuesped' => (int) $id));
      }
 

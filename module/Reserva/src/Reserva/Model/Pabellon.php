@@ -2,40 +2,72 @@
 
 namespace Reserva\Model;
 
- // Add these import statements
- use Zend\InputFilter\InputFilter;
- use Zend\InputFilter\InputFilterAwareInterface;
- use Zend\InputFilter\InputFilterInterface;
+use Zend\InputFilter\InputFilter;
+use Zend\InputFilter\InputFilterAwareInterface;
+use Zend\InputFilter\InputFilterInterface;
 
- class Pabellon implements InputFilterAwareInterface
- {
-    public $idPabellon;
-    public $nombre;    
-    protected $inputFilter;                       // <-- Add this variable
+class Pabellon implements InputFilterAwareInterface {
 
-     public function exchangeArray($data)
-     {         
-        $this->idPabellon = (!empty($data['idPabellon'])) ? $data['idPabellon'] : null;
+    /**
+     * @var int
+     */
+    protected $id;
+
+    /**
+     * @var string
+     */
+    protected $nombre;
+
+    /**
+     * @var InputFilter
+     */
+    protected $inputFilter;
+
+    /**
+     * @return int
+     */
+    public function getId() {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId($id) {
+        $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNombre() {
+        return $this->nombre;
+    }
+
+    /**
+     * @param string $nombre
+     */
+    public function setNombre($nombre) {
+        $this->nombre = $nombre;
+    }
+
+    public function exchangeArray($data) {
+        $this->id = (!empty($data['idPabellon'])) ? $data['idPabellon'] : null;
         $this->nombre = (!empty($data['nombre'])) ? $data['nombre'] : null;
-     }
+    }
 
-     // Add content to these methods:
-     public function setInputFilter(InputFilterInterface $inputFilter)
-     {
-         throw new \Exception("Not used");
-     }
+    // Add content to these methods:
+    public function setInputFilter(InputFilterInterface $inputFilter) {
+        throw new \Exception("Not used");
+    }
 
-      public function getArrayCopy()
-     {
-         return get_object_vars($this);
-     }
+    public function getArrayCopy() {
+        return get_object_vars($this);
+    }
 
-
-     public function getInputFilter()
-     {
-         if (!$this->inputFilter) {
-             $inputFilter = new InputFilter();
-
+    public function getInputFilter() {
+        if (!$this->inputFilter) {
+            $inputFilter = new InputFilter();
 
             $inputFilter->add(array(
                 'name' => 'nombre',
@@ -55,12 +87,9 @@ namespace Reserva\Model;
                     ),
                 ),
             ));
+            $this->inputFilter = $inputFilter;
+        }
 
-             
-
-             $this->inputFilter = $inputFilter;
-         }
-
-         return $this->inputFilter;
-     }
- }
+        return $this->inputFilter;
+    }
+}

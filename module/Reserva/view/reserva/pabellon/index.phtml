@@ -1,0 +1,69 @@
+<script type="text/javascript">
+    function doSearch() {
+        var tableReg = document.getElementById('datos');
+        var searchText = document.getElementById('buscador').value.toLowerCase();
+        for (var i = 1; i < tableReg.rows.length; i++) {
+            var cellsOfRow = tableReg.rows[i].getElementsByTagName('td');
+            var found = false;
+            for (var j = 0; j < cellsOfRow.length && !found; j++) {
+                var compareWith = cellsOfRow[j].innerHTML.toLowerCase();
+                if (searchText.length == 0 || (compareWith.indexOf(searchText) > -1)) {
+                    found = true;
+                }
+            }
+            if(found)  {
+                tableReg.rows[i].style.display = '';
+            } else {
+                tableReg.rows[i].style.display = 'none';
+            }
+        }
+    }    
+</script>
+<div class="container">
+    <ol class="breadcrumb">
+        <li class="active">Pabellones</li>    
+    </ol>
+    <h3><?php echo $this->translate('Listado de Pabellones') ?></h3>
+    <!-- desde aca -->
+    <div class="row">
+        <div class="col-sm-3">
+            <label for="buscador">Buscar Pabellon</label>
+            <input type="text" onkeyup="doSearch()" id="buscador" class="form-control">
+        </div>  
+    </div>
+    <br>
+    <!-- hasta aca -->
+    <a href="<?php echo $this->url('pabellon', array('action' => 'add')) ?>">Nuevo Pabellon (+)</a>
+    <table class="table" id="datos">
+        <thead>
+            <tr>
+                <th>Nombre Pabellon</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+    <?php foreach($this->pabellones as $pabellon):
+        /** @var \Reserva\Model\Pabellon $pabellon */?>
+            <tr style="background-color:<?php echo $this->cycle(array("#F0F0F0","#FFFFFF"))->next() ?>">
+                <td><?php echo $this->escapeHtml($pabellon->getNombre());?></td>
+                <td>
+                    <a href="<?php echo $this->url('pabellon', array('action' => 'edit', 'id' => $pabellon->getId())) ?>">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                    &nbsp;
+                    <a onclick="return confirm('Esta seguro que desea eliminar a <?php echo $pabellon->getNombre() ?>?')"
+                    href="<?php echo $this->url('pabellon', array('action' => 'delete', 'id' => $pabellon->getId())) ?>">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </a>
+                </td>
+            </tr>
+    <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+
