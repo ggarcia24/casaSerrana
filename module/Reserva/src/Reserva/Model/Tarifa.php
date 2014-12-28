@@ -22,7 +22,6 @@ namespace Reserva\Model;
         $this->idTarifa = (!empty($data['idTarifa'])) ? $data['idTarifa'] : null;
         $this->monto = (!empty($data['monto'])) ? $data['monto'] : null;
         $this->vigencia = (!empty($data['vigencia'])) ? $data['vigencia'] : null;
-        $this->vigencia = (!empty($data['vigencia'])) ? $data['vigencia'] : null;
         $this->idCategoria = (!empty($data['idCategoria'])) ? $data['idCategoria'] : null;
         $this->idTipoHuesped = (!empty($data['idTipoHuesped'])) ? $data['idTipoHuesped'] : null;
      }

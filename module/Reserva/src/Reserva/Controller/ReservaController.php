@@ -16,7 +16,12 @@ namespace Reserva\Controller;
  use Reserva\Model\TipohuespedTable;
  use Reserva\Form\HabitacionForm;
  use Reserva\Form\PabellonForm;
+ use Reserva\Form\TarifaForm;
  use Reserva\Form\TipohuespedForm;
+
+ use Zend\Db\ResultSet\ResultSet;
+
+
  use Reserva\Form\ReservaForm;
 
  class ReservaController extends AbstractActionController
@@ -200,7 +205,37 @@ namespace Reserva\Controller;
 
          }
          return array('form' => $form);
-     }  
+     }
+
+      public function addtarifaAction()
+     {
+         $form = new TarifaForm();
+         $form->get('submit')->setValue('Agregar');
+         $request = $this->getRequest();
+
+         $categorias=$this->getCategoriaTable()->fetchAllWithAlias();
+         if($categorias->count() > 0) {
+             $results = new ResultSet();
+             $form->get('idCategoria')->setValueOptions($results->initialize($categorias)->toArray());
+         }
+
+         if ($request->isPost()) {
+             $tarifa = new Tarifa();
+             $form->setInputFilter($tarifa->getInputFilter());
+             $form->setData($request->getPost());
+
+             if ($form->isValid())
+             {
+
+                 $tarifa->exchangeArray($form->getData());
+                 $this->getTarifaTable()->saveTarifa($tarifa);
+                 return $this->redirect()->toRoute('reserva', array('controller'=>'ReservaController',
+        'action' => 'indextarifa'));
+             }
+
+         }
+         return array('form' => $form);
+     }
 
      public function addtipohuespedAction()
      {
@@ -312,6 +347,51 @@ namespace Reserva\Controller;
                  $this->getTipohuespedTable()->saveTipohuesped($tipohuesped);
                  return $this->redirect()->toRoute('reserva', array('controller'=>'ReservaController',
         'action' => 'indextipohuesped'));
+             }
+         }
+
+         return array(
+             'id' => $id,
+             'form' => $form,
+         );
+    }
+
+    public function edittarifaAction()
+    {
+        $id = (int) $this->params()->fromRoute('id', 0);
+         if (!$id) {
+             return $this->redirect()->toRoute('reserva', array(
+                 'action' => 'addtarifa'
+             ));
+         }
+         try {
+             $tarifa = $this->getTarifaTable()->getTarifa($id);
+         }
+         catch (\Exception $ex) {
+             return $this->redirect()->toRoute('reserva', array(
+                 'action' => 'indextarifa'
+             ));
+         }
+         $form  = new TarifaForm();
+
+         $form->bind($tarifa);
+
+         $form->get('submit')->setAttribute('value', 'Editar');
+
+         $request = $this->getRequest();
+
+
+         if ($request->isPost()) {
+
+             $form->setInputFilter($tarifa->getInputFilter());
+             $form->setData($request->getPost());
+
+             if ($form->isValid()) {
+
+
+                 $this->getTarifaTable()->saveTarifa($tarifa);
+                 return $this->redirect()->toRoute('reserva', array('controller'=>'ReservaController',
+        'action' => 'indextarifa'));
              }
          }
 
@@ -525,6 +605,9 @@ namespace Reserva\Controller;
         return $this->pabellonTable;
     }
 
+     /**
+      * @return TarifaTable
+      */
     public function getTarifaTable()
     {
         if (!$this->tarifaTable) {

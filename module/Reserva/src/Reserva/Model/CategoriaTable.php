@@ -14,10 +14,20 @@ class CategoriaTable
          $this->tableGateway = $tableGateway;
      }
 
-     public function fetchAll()
+    public function getCategoria($id)
+    {
+        $id  = (int) $id;
+        $rowset = $this->tableGateway->select(array('idCategoria' => $id));
+        $row = $rowset->current();
+        if (!$row) {
+            throw new \Exception("Could not find row $id");
+        }
+        return $row;
+    }
+
+    public function fetchAll()
      {
          $resultSet = $this->tableGateway->select();
-         
          return $resultSet;
      }
 
@@ -30,7 +40,7 @@ class CategoriaTable
         $select->columns(array('value'=>'idCategoria','label'=>'nombre'));
 
          $statement = $sql->prepareStatementForSqlObject($select);
-         $result = $statement->execute(); 
+         $result = $statement->execute();
 
          return $result;
      }

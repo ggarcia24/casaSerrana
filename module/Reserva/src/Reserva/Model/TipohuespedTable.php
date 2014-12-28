@@ -54,7 +54,7 @@ class TipohuespedTable
             'nombre'                  =>$tipohuesped->nombre,
         );
 
-        $id = (int) $tipohuesped->idPabellon;
+        $id = (int) $tipohuesped->idTipoHuesped;
         if($id == 0)
         {
             $this->tableGateway->insert($data);
