@@ -161,7 +161,12 @@ use Zend\Db\TableGateway\TableGateway;
                      $helper = new View\Helper\GetPabellonName() ;
                      $helper->setServiceLocator($sm->getServiceLocator());
                      return $helper;
-                 }
+                 },
+                 'getReserva' => function($sm) {
+                     $helper = new View\Helper\GetReserva() ;
+                     $helper->setServiceLocator($sm->getServiceLocator());
+                     return $helper;
+                 },
              )
          );
      }

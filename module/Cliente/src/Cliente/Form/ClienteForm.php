@@ -55,7 +55,7 @@ namespace Cliente\Form;
         ));
         
         $this->add(array(
-            'name' => 'ciudad',
+            'name' => 'localidad',
             'options' => array(
                 'label' => 'Ciudad',
             ),
@@ -68,7 +68,7 @@ namespace Cliente\Form;
         
         $this->add(array(
             'type' => 'Zend\Form\Element\Select',
-            'name' => 'pais',
+            'name' => 'idPais',
             'required' => false,
             'allow_empty' => true,
             'options' => array(
@@ -84,7 +84,7 @@ namespace Cliente\Form;
 
         $this->add(array(
             'type' => 'Zend\Form\Element\Select',
-            'name' => 'provincia',
+            'name' => 'idProvincia',
             'required' => false,
             'options' => array(
                                 'label' => 'Provincia:',
@@ -141,18 +141,20 @@ namespace Cliente\Form;
             ),
         ));
 
+
         $this->add(array(
+            'type' => 'Zend\Form\Element\Select',
             'name' => 'idBancoPorCliente',
             'options' => array(
-                'label' => 'Id Banco por Cliente',
-            ),
+                                'label' => 'Banco:',
+                                'empty_option' => 'Seleccione....',
+                                'disable_inarray_validator' => true
+                                ),
             'attributes' =>array(
-            'type'  => 'text',
-            'class' => 'form-control',
-            'maxlength' => '10',
-            ),
-        ));
-
+                                'class' => 'form-control',
+                         ) 
+            ));
+        
         $this->add(array(
             'name' => 'email',            
             'options' => array(
@@ -182,7 +184,7 @@ namespace Cliente\Form;
  
         $this->add(array(
             'type' => 'Zend\Form\Element\Select',
-            'name' => 'alimento',
+            'name' => 'idAlimentoEspecial',
             'options' => array(
                                 'label' => 'Alimento Especial:',
                                 'empty_option' => 'Seleccione....',
@@ -247,7 +249,7 @@ namespace Cliente\Form;
 
         $this->add(array(
             'type' => 'Zend\Form\Element\Select',
-            'name' => 'idPadronAfiliado',
+            'name' => 'idTipoHuesped',
             'required' => false,
             'options' => array(
                                 'label' => 'Tipo de Convenio:',

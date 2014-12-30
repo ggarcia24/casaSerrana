@@ -21,6 +21,18 @@ class BancoTable
          return $resultSet;
      }
      
+    public function fetchAllWithAlias()
+    {
+        $adapter=$this->tableGateway->getAdapter();
+        $sql=new Sql($adapter);
+        $select=$sql->select();
+        $select->from('bancos');
+        $select->columns(array('value'=>'idBanco','label'=>'nombre'));
+        $statement = $sql->prepareStatementForSqlObject($select);
+        $result = $statement->execute();
+        return $result;
+    } 
+     
      public function getBanco($id)
      {
          $id  = (int) $id;

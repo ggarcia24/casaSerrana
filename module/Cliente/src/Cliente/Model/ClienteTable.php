@@ -93,19 +93,29 @@ class ClienteTable
             'idBancoPorCliente'     =>$cliente->idBancoPorCliente,
             'titular'               =>$cliente->titular,
             'email'                 =>$cliente->email,
-            'idAlimentoEspecial'    =>$cliente->alimento,
+            'idAlimentoEspecial'    =>$cliente->idAlimentoEspecial,
             'codigoPostal'          =>$cliente->codigoPostal,
             'idTarjetaPorCliente'   =>$cliente->idTarjetaPorCliente,
             'fechaNacimiento'       =>$cliente->fechaNacimiento,
-            'idTipoHuesped'         =>$cliente->idPadronAfiliado,
-            'idProvincia'           =>$cliente->provincia,
-            'idPais'                =>$cliente->pais,
+            'idTipoHuesped'         =>$cliente->idTipoHuesped,
+            'idProvincia'           =>$cliente->idProvincia,
+            'idPais'                =>$cliente->idPais,
+            'localidad'             =>$cliente->localidad,
         );
 
         $id = (int) $cliente->idCliente;
         if($id == 0)
         {
-            $this->tableGateway->insert($data);
+            try 
+            {
+                $this->tableGateway->insert($data);
+            }catch (\Exception $ex) 
+            {
+                $this->flashMessenger()->addMessage('probando el mensajes');
+                return $this->redirect()->toRoute('cliente', array('action' => 'index'));
+                //throw new \Exception('Cliente id does not exist');
+                
+            }
         }else
         {
             if ($this->getCliente($id))

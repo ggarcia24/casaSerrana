@@ -6,63 +6,85 @@ use Zend\Db\Sql\Where;
 use Zend\Db\Adapter\Adapter;
 class ReservaTable
 {
-     protected $tableGateway;
+    protected $tableGateway;
 
-     public function __construct(TableGateway $tableGateway)
-     {
-         $this->tableGateway = $tableGateway;
-     }
+    public function __construct(TableGateway $tableGateway)
+    {
+        $this->tableGateway = $tableGateway;
+    }
 
-     public function fetchAll()
-     {
-         $resultSet = $this->tableGateway->select();
-         return $resultSet;
-     }
+    public function fetchAll()
+    {
+        $resultSet = $this->tableGateway->select();
+        return $resultSet;
+    }
 
 
-     public function getReserva($id)
-     {
-         $id  = (int) $id;
-         $rowset = $this->tableGateway->select(array('idReserva' => $idReserva));
-         $row = $rowset->current();
-         if (!$row) {
-             throw new \Exception("Could not find row $id");
-         }
-         return $row;
-     }
+    public function getReserva($id)
+    {
+        $id  = (int) $id;
+        $rowset = $this->tableGateway->select(array('idReserva' => $id));
+        $row = $rowset->current();
+        if (!$row) {
+            throw new \Exception("Could not find row $id");
+        }
+        return $row;
+    }
+    
+    public function getReservacliente($id, $fecha)
+    {
+       //$fecha=str_replace("-", "", $fecha);
+        $adapter=$this->tableGateway->getAdapter();
+        $sql=new Sql($adapter);
+        $select=$sql->select();
+        $select->from('reservas');
+        $select->where('fechaIn <='."'".$fecha."'");
+        $select->where('fechaOut >='."'". $fecha ."'");
+        $select->where('idHabitacion ='.$id);
 
-     public function getReservaPorFechas($fechaDesde,$fechaHasta)
-     {        
-         $adapter=$this->tableGateway->getAdapter();
-         $sql=new Sql($adapter);
-         $select=$sql->select();
-         $select->from('reservas'); 
-         $fechaDesde=str_replace("-", "", $fechaDesde);
-         $fechaHasta=str_replace("-", "", $fechaHasta);
-         $select->where('fechaIn >='."'".$fechaDesde."'" OR 'fechaOut <='."'". $fechaHasta ."'" );
-         //$select->where('fechaOut <='."'". $fechaHasta ."'");
-         //$select->where('idReserva='."'". "1" ."'");
-
-         $statement = $sql->prepareStatementForSqlObject($select);
-         $result = $statement->execute();
-         return $result;        
-     }
-
-     public function getReservaPorFecha($fecha)
-     {
-
-        //$fecha=str_replace("-", "", $fecha);
-         $adapter=$this->tableGateway->getAdapter();
-         $sql=new Sql($adapter);
-         $select=$sql->select();
-         $select->from('reservas');
-         $select->where('fechaIn <='."'".$fecha."'");
-         $select->where('fechaOut >='."'". $fecha ."'");
-         $statement = $sql->prepareStatementForSqlObject($select);
-         $result = $statement->execute(); 
-         return $result;
+        $statement = $sql->prepareStatementForSqlObject($select);
+        echo $select->getSqlString();
+        exit;
+        $result = $statement->execute();
         
-     }
+        
+        return $result;
+        
+    }
+
+    public function getReservaPorFechas($fechaDesde,$fechaHasta)
+    {        
+        $adapter=$this->tableGateway->getAdapter();
+        $sql=new Sql($adapter);
+        $select=$sql->select();
+        $select->from('reservas'); 
+        $fechaDesde=str_replace("-", "", $fechaDesde);
+        $fechaHasta=str_replace("-", "", $fechaHasta);
+        $select->where('fechaIn >='."'".$fechaDesde."'" OR 'fechaOut <='."'". $fechaHasta ."'" );
+        //$select->where('fechaOut <='."'". $fechaHasta ."'");
+        //$select->where('idReserva='."'". "1" ."'");
+
+        $statement = $sql->prepareStatementForSqlObject($select);
+
+        $result = $statement->execute();
+        return $result;        
+    }
+
+    public function getReservaPorFecha($fecha)
+    {
+
+       //$fecha=str_replace("-", "", $fecha);
+        $adapter=$this->tableGateway->getAdapter();
+        $sql=new Sql($adapter);
+        $select=$sql->select();
+        $select->from('reservas');
+        $select->where('fechaIn <='."'".$fecha."'");
+        $select->where('fechaOut >='."'". $fecha ."'");
+        $statement = $sql->prepareStatementForSqlObject($select);
+        $result = $statement->execute(); 
+        return $result;
+
+    }
 
 
 

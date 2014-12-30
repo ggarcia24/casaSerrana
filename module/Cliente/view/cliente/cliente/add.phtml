@@ -57,7 +57,11 @@
   		<li class="active">Alta</li>  		
 	</ol>
 	<h3><?php echo $this->titulo ?></h3>	
-	<br>	
+	<br>
+        <?php 
+            //$this->_helper->flashMessenger('sdasd');
+        ?>
+        
 	<div class="row">
 		<?php echo $this->formHidden($form->get('idCliente')); ?>
 		<h4>Datos Personales</h4><hr>
@@ -155,11 +159,11 @@
 		</div>
 		<div class="col-sm-3">
 			<?php
-    			$ciudad = $form->get('ciudad');
-    			echo $formLabel->openTag() . $ciudad->getLabel('label');    			
+    			$localidad = $form->get('localidad');
+    			echo $formLabel->openTag() . $localidad->getLabel('label');    			
     			//echo $this->formElementErrors($direccion);
     			echo $formLabel->closeTag();
-    			echo $this->formInput($ciudad);
+    			echo $this->formInput($localidad);
 			?>
 		</div>
 		<div class="col-sm-2">
@@ -173,27 +177,27 @@
 		</div>
 		<div class="col-sm-2">
 			<?php				
-    			$provincia = $form->get('provincia');
-    			echo $formLabel->openTag() . $provincia->getLabel('label');
+    			$idProvincia = $form->get('idProvincia');
+    			echo $formLabel->openTag() . $idProvincia->getLabel('label');
     			echo $formLabel->closeTag(); 
-    			echo $this->formSelect($provincia);
+    			echo $this->formSelect($idProvincia);
     			?>
     			<div style="color:red">
 
-    				<?php echo $this->formElementErrors($provincia);?>
+    				<?php echo $this->formElementErrors($idProvincia);?>
     			</div>	
 		</div>                
 		<div class="col-sm-2">
 			<?php
 				
-    			$pais = $form->get('pais');
-    			echo $formLabel->openTag() . $pais->getLabel('label');
+    			$idPais = $form->get('idPais');
+    			echo $formLabel->openTag() . $idPais->getLabel('label');
     			echo $formLabel->closeTag(); 
-    			echo $this->formSelect($pais);
+    			echo $this->formSelect($idPais);
     			?>
     			<div style="color:red">
 
-    				<?php echo $this->formElementErrors($pais);?>
+    				<?php echo $this->formElementErrors($idPais);?>
     			</div>	
 		</div>
 
@@ -212,23 +216,15 @@
     			?>			
     		</div>
 		</div>
-		<div class="col-sm-2">
-			<?php
-    			$idBancoPorCliente = $form->get('idBancoPorCliente');
-    			echo $formLabel->openTag() . $idBancoPorCliente->getLabel('label');    			    			
-    			echo $formLabel->closeTag();
-    			echo $this->formInput($idBancoPorCliente);
-    			echo $this->formElementErrors($idBancoPorCliente);
-			?>  			
-		</div>
+
 		
 		<div class="col-sm-3">
 			<?php
-                            $alimento = $form->get('alimento');
-                            echo $formLabel->openTag() . $alimento->getLabel('label');
+                            $idAlimentoEspecial = $form->get('idAlimentoEspecial');
+                            echo $formLabel->openTag() . $idAlimentoEspecial->getLabel('label');
                             echo $formLabel->closeTag(); 
-                            echo $this->formSelect($alimento);
-                            echo $this->formElementErrors($alimento);
+                            echo $this->formSelect($idAlimentoEspecial);
+                            echo $this->formElementErrors($idAlimentoEspecial);
 			?>  			
 		</div>
 		
@@ -236,11 +232,11 @@
 		
 		<div class="col-sm-3">
 			<?php
-    			$idPadronAfiliado = $form->get('idPadronAfiliado');
-    			echo $formLabel->openTag() . $idPadronAfiliado->getLabel('label');    			    			
+    			$idTipoHuesped = $form->get('idTipoHuesped');
+    			echo $formLabel->openTag() . $idTipoHuesped->getLabel('label');    			    			
     			echo $formLabel->closeTag();
-    			echo $this->formSelect($idPadronAfiliado);
-    		        echo $this->formElementErrors($idPadronAfiliado);
+    			echo $this->formSelect($idTipoHuesped);
+    		        echo $this->formElementErrors($idTipoHuesped);
 			?>  			
 		</div>
 	</div>	
@@ -266,6 +262,15 @@
                                 echo $formLabel->closeTag(); 
                                 echo $this->formSelect($tarjeta);
                                 ?>
+                        </div>
+                        <div class="col-sm-2">
+                                <?php
+                                $idBancoPorCliente = $form->get('idBancoPorCliente');
+                                echo $formLabel->openTag() . $idBancoPorCliente->getLabel('label');    			    			
+                                echo $formLabel->closeTag();
+                                echo $this->formSelect($idBancoPorCliente);
+                                echo $this->formElementErrors($idBancoPorCliente);
+                                ?>  			
                         </div>
                         
                 

@@ -30,18 +30,15 @@ namespace Reserva\Form;
                  'class' => 'form-control',
              ),
          ));
-
+         
          $this->add(array(
              'type' => 'Zend\Form\Element\Select',
              'name' => 'idTipoHuesped',
              'options' => array(
-                 'label' => 'Tipo de Convenio',
-                 //'empty_option' => 'Seleccione....',
-                 'value_options' => array(
-                     '1' => 'Afiliado',
-                     '2' => 'Particular',
-                     '3' => 'Congreso',
-                 ),
+                 'label' => 'Tipo de Convenio:',
+                 'empty_option' => 'Seleccione....',
+                 'disable_inarray_validator' => true
+
 
              ),
              'attributes' =>array(
@@ -55,7 +52,6 @@ namespace Reserva\Form;
                 'label' => 'Monto:',
             ),
             'attributes' =>array(
-                'required' => 'required',
                 'type'  => 'text',
                 'class' => 'form-control',
                 'maxlength' => '50',
@@ -74,11 +70,14 @@ namespace Reserva\Form;
         ));
 
         $this->add(array(
-            'name' => 'submit',
+            'name' => 'send',            
             'attributes' => array(
                 'type'  => 'submit',
-                'value' => 'Submit ZfSnapJquery form!',
+                'value' => 'Enviar',
+                'class' => 'btn btn-warning',
             ),
         ));
+            
+
      }
  }

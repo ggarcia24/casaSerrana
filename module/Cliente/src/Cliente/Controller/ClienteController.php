@@ -8,6 +8,7 @@ namespace Cliente\Controller;
  use Cliente\Model\PaisTable;
  use Cliente\Model\ProvinciaTable;
  use Cliente\Model\ConvenioTable;
+ use Cliente\Model\BancoTable;
  use Cliente\Form\ClienteForm;
  use Zend\ViewModel\JsonModel;
 
@@ -19,6 +20,7 @@ namespace Cliente\Controller;
      protected $provinciaTable;
      protected $tarjetaTable;
      protected $alimentoTable;
+     protected $bancoTable;
      protected $convenioTable;
 
      public function indexAction()
@@ -50,7 +52,7 @@ namespace Cliente\Controller;
                     'cliente' =>  $clienteBuscado["idCliente"],
                     'email' => $clienteBuscado["email"], 
                     'telefono' => $clienteBuscado["telefono"],
-                    'idPadronAfiliado' => $clienteBuscado["idPadronAfiliado"],
+                    'idTipoHuesped' => $clienteBuscado["idTipoHuesped"],
                     'value' => json_encode($clientesBuscados)
                 );
             }                
@@ -70,7 +72,7 @@ namespace Cliente\Controller;
         {
             $vectorPais[]=$pais;
         }
-        $form->get('pais')->setValueOptions($vectorPais); 
+        $form->get('idPais')->setValueOptions($vectorPais); 
         //fin paises//
         //provincias//
         $provincias=$this->getProvinciaTable()->fetchAllWithAlias();
@@ -79,7 +81,7 @@ namespace Cliente\Controller;
         {
             $vectorProvincia[]=$provincia;
         }
-        $form->get('provincia')->setValueOptions($vectorProvincia); 
+        $form->get('idProvincia')->setValueOptions($vectorProvincia); 
         //fin provincias//
         //tarjetas 
         $tarjetas=$this->getTarjetaTable()->fetchAllWithAlias();
@@ -97,7 +99,7 @@ namespace Cliente\Controller;
         {
             $vectorAlimento[]=$alimento;
         }
-        $form->get('alimento')->setValueOptions($vectorAlimento);         
+        $form->get('idAlimentoEspecial')->setValueOptions($vectorAlimento);         
         //fin alimentos
         //bancos
         $bancos=$this->getBancoTable()->fetchAllWithAlias();
@@ -106,7 +108,7 @@ namespace Cliente\Controller;
         {
             $vectorBanco[]=$banco;
         }
-        $form->get('banco')->setValueOptions($vectorBanco);         
+        $form->get('idBancoPorCliente')->setValueOptions($vectorBanco);         
         //fin bancos
 
         //convenios
@@ -117,7 +119,7 @@ namespace Cliente\Controller;
         {
             $vectorConvenio[]=$convenio;
         }
-        $form->get('idPadronAfiliado')->setValueOptions($vectorConvenio);         
+        $form->get('idTipoHuesped')->setValueOptions($vectorConvenio);         
         //fin convenios
 
 
@@ -136,15 +138,15 @@ namespace Cliente\Controller;
                  $this->getClienteTable()->saveCliente($cliente);
                  
                  //viendo tarjetas
-                 $tarjetaPorCliente= new TarjetaPorCliente();
-                 $tarjetaPorCliente->exchangeArray($form->getData());
-                 $i=1;
-                 while($i <= 10)
-                 {
-                     $this->getTarjetaTable()->saveTarjeta($tarjetaPorCliente);
-                     $i++;
-                     
-                 }
+//                 $tarjetaPorCliente= new TarjetaPorCliente();
+//                 $tarjetaPorCliente->exchangeArray($form->getData());
+//                 $i=1;
+//                 while($i <= 10)
+//                 {
+//                     $this->getTarjetaTable()->saveTarjeta($tarjetaPorCliente);
+//                     $i++;
+//                     
+//                 }
                  
                  
 
@@ -154,7 +156,12 @@ namespace Cliente\Controller;
              }
 
          }
-         return array('form' => $form);
+        $return = array('success' => true);
+        $flashMessenger = $this->flashMessenger();
+        if ($flashMessenger->hasMessages()) {
+            $return['messages'] = $flashMessenger->getMessages();
+        }
+        return array('form' => $form);
      }  
 
       public function editAction()
@@ -175,7 +182,7 @@ namespace Cliente\Controller;
                  'action' => 'index'
              ));
          }
-         $form  = new ClienteForm();
+        $form  = new ClienteForm();
         //paises//
         $paises=$this->getPaisTable()->fetchAllWithAlias();
         $vectorPais=array();         
@@ -183,7 +190,7 @@ namespace Cliente\Controller;
         {
             $vectorPais[]=$pais;
         }
-        $form->get('pais')->setValueOptions($vectorPais); 
+        $form->get('idPais')->setValueOptions($vectorPais); 
         //fin paises//
         //provincias//
         $provincias=$this->getProvinciaTable()->fetchAllWithAlias();
@@ -192,9 +199,49 @@ namespace Cliente\Controller;
         {
             $vectorProvincia[]=$provincia;
         }
-        $form->get('provincia')->setValueOptions($vectorProvincia); 
+        $form->get('idProvincia')->setValueOptions($vectorProvincia); 
         //fin provincias//
+        //tarjetas 
+        $tarjetas=$this->getTarjetaTable()->fetchAllWithAlias();
+        $vectorTarjeta=array();         
+        foreach ($tarjetas as $tarjeta) 
+        {
+            $vectorTarjeta[]=$tarjeta;
+        }
+        $form->get('tarjeta')->setValueOptions($vectorTarjeta);         
+        //fin tarjetas
+        //alimentos
+        $alimentos=$this->getAlimentoTable()->fetchAllWithAlias();
+        $vectorAlimento=array();         
+        foreach ($alimentos as $alimento) 
+        {
+            $vectorAlimento[]=$alimento;
+        }
+        $form->get('idAlimentoEspecial')->setValueOptions($vectorAlimento);         
+        //fin alimentos
+
+        //bancos
+        $bancos=$this->getBancoTable()->fetchAllWithAlias();
+        $vectorBanco=array();         
+        foreach ($bancos as $banco) 
+        {
+            $vectorBanco[]=$banco;
+        }
+        $form->get('idBancoPorCliente')->setValueOptions($vectorBanco);         
+        //fin bancos
+
+        //convenios
+        
+        $convenios=$this->getConvenioTable()->fetchAllWithAlias();
+        $vectorConvenio=array();
+        foreach ($convenios as $convenio) 
+        {
+            $vectorConvenio[]=$convenio;
+        }
+        $form->get('idTipoHuesped')->setValueOptions($vectorConvenio);         
+        //fin convenios
          $form->bind($cliente);
+         
          $form->get('send')->setAttribute('value', 'Edit');
          $request = $this->getRequest();
          
@@ -270,6 +317,15 @@ namespace Cliente\Controller;
          }
          return $this->alimentoTable;
      }  
+     
+    public function getBancoTable()
+    {
+        if (!$this->bancoTable) {
+            $sm = $this->getServiceLocator();
+            $this->bancoTable = $sm->get('Cliente\Model\BancoTable');
+        }
+        return $this->bancoTable;
+    }     
 
     public function getConvenioTable()
     {   

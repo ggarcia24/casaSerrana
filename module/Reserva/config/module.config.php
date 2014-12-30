@@ -8,7 +8,6 @@ return array(
     'view_helpers' => array(
          'invokables' => array(
              'test_helper' => 'Reserva\View\Helper\Testhelper',
-             'test_habitacion' => 'Reserva\View\Helper\Habitacionhelper',
          ),
      ),
      'router' => array(

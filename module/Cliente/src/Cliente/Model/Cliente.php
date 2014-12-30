@@ -22,13 +22,14 @@ namespace Cliente\Model;
     public $idBancoPorCliente;
     public $titular;
     public $email;
-    public $alimento;
+    public $idAlimentoEspecial;
     public $codigoPostal;
     public $idTarjetaPorCliente;
     public $fechaNacimiento;
-    public $idPadronAfiliado;
-    public $provincia;
-    public $pais;
+    public $idTipoHuesped;
+    public $idProvincia;
+    public $idPais;
+    public $localidad;
 
     protected $inputFilter;
 
@@ -45,13 +46,14 @@ namespace Cliente\Model;
         $this->idBancoPorCliente = (!empty($data['idBancoPorCliente'])) ? $data['idBancoPorCliente'] : null;
         $this->titular = (!empty($data['titular'])) ? $data['titular'] : null;
         $this->email = (!empty($data['email'])) ? $data['email'] : null;
-        $this->alimento = (!empty($data['alimento'])) ? $data['alimento'] : null;
+        $this->idAlimentoEspecial = (!empty($data['idAlimentoEspecial'])) ? $data['idAlimentoEspecial'] : null;
         $this->codigoPostal = (!empty($data['codigoPostal'])) ? $data['codigoPostal'] : null;
         $this->idTarjetaPorCliente = (!empty($data['idTarjetaPorCliente'])) ? $data['idTarjetaPorCliente'] : null;         
         $this->fechaNacimiento = (!empty($data['fechaNacimiento'])) ? $data['fechaNacimiento'] : null;
-        $this->idPadronAfiliado = (!empty($data['idPadronAfiliado'])) ? $data['idPadronAfiliado'] : null;
-        $this->provincia = (!empty($data['provincia'])) ? $data['provincia'] : null;
-        $this->pais = (!empty($data['pais'])) ? $data['pais'] : null;
+        $this->idTipoHuesped = (!empty($data['idTipoHuesped'])) ? $data['idTipoHuesped'] : null;
+        $this->idProvincia = (!empty($data['idProvincia'])) ? $data['idProvincia'] : null;
+        $this->idPais = (!empty($data['idPais'])) ? $data['idPais'] : null;
+        $this->localidad = (!empty($data['localidad'])) ? $data['localidad'] : null;
 
      }
 
@@ -149,28 +151,33 @@ namespace Cliente\Model;
             ));
             
             $inputFilter->add(array(
-                'name'     => 'pais',
+                'name'     => 'idPais',
                 'required' => false,
             ));
             
             $inputFilter->add(array(
-                'name'     => 'provincia',
+                'name'     => 'idProvincia',
                 'required' => false,
             ));
 
             
             $inputFilter->add(array(
-                'name'     => 'idPadronAfiliado',
+                'name'     => 'idTipoHuesped',
                 'required' => false,
             ));
             
             $inputFilter->add(array(
-                'name'     => 'alimento',
+                'name'     => 'idAlimentoEspecial',
                 'required' => false,
             ));
             
             $inputFilter->add(array(
                 'name'     => 'tarjeta',
+                'required' => false,
+            ));
+
+            $inputFilter->add(array(
+                'name'     => 'idBancoPorCliente',
                 'required' => false,
             ));
              

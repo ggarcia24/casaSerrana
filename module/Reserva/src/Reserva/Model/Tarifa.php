@@ -42,26 +42,82 @@ namespace Reserva\Model;
      {
          if (!$this->inputFilter) {
              $inputFilter = new InputFilter();
-
-
-             $inputFilter->add(array(
-                 'name'     => 'monto',
-                 'required' => true,
-                 'filters'  => array(
-                     array('name' => 'StripTags'),
-                     array('name' => 'StringTrim'),
-                 ),
-                 'validators' => array(
-                     array(
-                         'name'    => 'StringLength',
-                         'options' => array(
-                             'encoding' => 'UTF-8',
-                             'min'      => 1,
-                             'max'      => 100,
-                         ),
-                     ),
-                 ),
-             ));
+             
+            $inputFilter->add(array(
+                'name' => 'idCategoria',
+                'required' => true,
+                'filters' => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                      'name' =>'NotEmpty', 
+                        'options' => array(
+                            'messages' => array(
+                                \Zend\Validator\NotEmpty::IS_EMPTY => 'Por favor introducir la categoria de habitacion' 
+                            ),
+                        ),
+                    ),
+                ),
+            ));
+            
+            $inputFilter->add(array(
+                'name' => 'idTipoHuesped',
+                'required' => true,
+                'filters' => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                      'name' =>'NotEmpty', 
+                        'options' => array(
+                            'messages' => array(
+                                \Zend\Validator\NotEmpty::IS_EMPTY => 'Por favor introducir el tipo de convenio' 
+                            ),
+                        ),
+                    ),
+                ),
+            ));
+            
+            $inputFilter->add(array(
+                'name' => 'monto',
+                'required' => true,
+                'filters' => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                      'name' =>'NotEmpty', 
+                        'options' => array(
+                            'messages' => array(
+                                \Zend\Validator\NotEmpty::IS_EMPTY => 'Por favor introducir el monto diario' 
+                            ),
+                        ),
+                    ),
+                ),
+            ));
+            
+            $inputFilter->add(array(
+                'name' => 'vigencia',
+                'required' => true,
+                'filters' => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                      'name' =>'NotEmpty', 
+                        'options' => array(
+                            'messages' => array(
+                                \Zend\Validator\NotEmpty::IS_EMPTY => 'Por favor introducir la vigencia' 
+                            ),
+                        ),
+                    ),
+                ),
+            ));
 
              
 
