@@ -34,14 +34,24 @@ namespace Cliente\Controller;
             $form->setInputFilter($banco->getInputFilter());
             $form->setData($request->getPost());
             if ($form->isValid()) {            
-                $banco->exchangeArray($form->getData());                 
-                $this->getBancoTable()->saveBanco($banco);
+                $banco->exchangeArray($form->getData());
+                try 
+                {
+                    $this->getBancoTable()->saveBanco($banco);
+                }catch (\Exception $ex) 
+                {
+                    
+                    $this->flashMessenger()->addMessage('Banco Existente, Ingrese otro Banco');
+                    return $this->redirect()->toRoute('banco', array('action' => 'add'));
+                }
+                
                 return $this->redirect()->toRoute('banco');
             }
         }
 
         
-        return array('form' => $form);
+        return array('form' => $form,
+            'flashMessages' => $this->flashMessenger()->getMessages(),);
     }  
 
     public function editAction()
@@ -76,6 +86,7 @@ namespace Cliente\Controller;
         return array(
                         'id' => $id,
                         'form' => $form,
+                        'flashMessages' => $this->flashMessenger()->getMessages(),
         );
     }
 

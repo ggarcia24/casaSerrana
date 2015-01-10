@@ -46,7 +46,7 @@
 	<?php
 		$form = $this->form;
 		$form->setAttribute('action', $this->url('cliente', array('action' => 'add')));
-    	$form->prepare();
+                $form->prepare();
 		$formLabel = $this->plugin('formLabel');
 		echo $this->form()->openTag($form);
 	?>
@@ -54,10 +54,29 @@
 	<br>
 	<ol class="breadcrumb">
   		<li><a href="<?php echo $this->url('home')?>cliente/index">Clientes</a></li>
-  		<li class="active">Alta</li>  		
+  		<li class="active">Edicion</li>
 	</ol>
 	<h3><?php echo $this->titulo ?></h3>	
-	<br>	
+	<br>
+
+        <?php if(count($flashMessages)) : ?>
+        <ul>
+            <?php foreach ($flashMessages as $msg) : ?>
+            <li>
+                <?php
+                    ?>
+                        <p class="text-danger">
+                            <?php
+                                echo $msg; 
+                            ?>
+                        </p>
+                    <?php           
+                    
+                ?>
+            </li>
+            <?php endforeach; ?>
+        </ul>
+        <?php endif; ?>        
 	<div class="row">
 		<?php echo $this->formHidden($form->get('idCliente')); ?>
 		<h4>Datos Personales</h4><hr>

@@ -32,12 +32,22 @@ namespace Cliente\Controller;
             $form->setInputFilter($tarjeta->getInputFilter());
             $form->setData($request->getPost());
             if ($form->isValid()) {            
-                $tarjeta->exchangeArray($form->getData());                 
-                $this->getTarjetaTable()->saveTarjeta($tarjeta);
+                $tarjeta->exchangeArray($form->getData());
+                try 
+                {
+                    $this->getTarjetaTable()->saveTarjeta($tarjeta);
+                }catch (\Exception $ex) 
+                {
+                    
+                    $this->flashMessenger()->addMessage('Tarjeta Existente, Ingrese otra Tarjeta');
+                    return $this->redirect()->toRoute('tarjeta', array('action' => 'add'));
+                }
+                
                 return $this->redirect()->toRoute('tarjeta');
             }
         }        
-        return array('form' => $form);
+        return array('form' => $form,
+            'flashMessages' => $this->flashMessenger()->getMessages(),);
     }  
 
     public function editAction()
@@ -65,13 +75,22 @@ namespace Cliente\Controller;
             $form->setData($request->getPost());
             if ($form->isValid()) 
             {
-                $this->getAlbumTable()->saveBanco($tarjeta);
+                try 
+                {
+                    $this->getTarjetaTable()->saveTarjeta($tarjeta);
+                }catch (\Exception $ex) 
+                {
+                    
+                    $this->flashMessenger()->addMessage('Tarjeta Existente, Ingrese otra Tarjeta');
+                    return $this->redirect()->toRoute('tarjeta', array('action' => 'add'));
+                }
                 return $this->redirect()->toRoute('tarjeta');
             }
         }
         return array(
                         'id' => $id,
                         'form' => $form,
+                        'flashMessages' => $this->flashMessenger()->getMessages(),
         );
     }
 

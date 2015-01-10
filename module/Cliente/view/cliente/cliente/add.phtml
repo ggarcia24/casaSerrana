@@ -46,7 +46,7 @@
 	<?php
 		$form = $this->form;
 		$form->setAttribute('action', $this->url('cliente', array('action' => 'add')));
-    	$form->prepare();
+                $form->prepare();
 		$formLabel = $this->plugin('formLabel');
 		echo $this->form()->openTag($form);
 	?>
@@ -58,10 +58,28 @@
 	</ol>
 	<h3><?php echo $this->titulo ?></h3>	
 	<br>
-        <?php 
-            //$this->_helper->flashMessenger('sdasd');
-        ?>
         
+            <?php if(count($flashMessages)) : ?>
+                <div class="alert alert-danger hidden-print">
+                <ul>
+                    <?php foreach ($flashMessages as $msg) : ?>
+                    <li>
+                        <?php
+                            ?>
+
+                                <p class="text-danger">
+                                    <?php
+                                        echo $msg; 
+                                    ?>
+                                </p>
+                            <?php           
+
+                        ?>
+                    </li>
+                    <?php endforeach; ?>
+                </ul>
+                </div>
+            <?php endif; ?>        
 	<div class="row">
 		<?php echo $this->formHidden($form->get('idCliente')); ?>
 		<h4>Datos Personales</h4><hr>
@@ -236,8 +254,11 @@
     			echo $formLabel->openTag() . $idTipoHuesped->getLabel('label');    			    			
     			echo $formLabel->closeTag();
     			echo $this->formSelect($idTipoHuesped);
-    		        echo $this->formElementErrors($idTipoHuesped);
-			?>  			
+                        ?>
+    			<div style="color:red">
+
+    				<?php echo $this->formElementErrors($idTipoHuesped);?>
+    			</div>
 		</div>
 	</div>	
         <br>

@@ -63,8 +63,7 @@ namespace Cliente\Controller;
 
      public function addAction()
      {
-         $form = new ClienteForm();
-         
+         $form = new ClienteForm();         
         //paises//
         $paises=$this->getPaisTable()->fetchAllWithAlias();
         $vectorPais=array();         
@@ -134,8 +133,16 @@ namespace Cliente\Controller;
              $form->setInputFilter($cliente->getInputFilter());
              $form->setData($request->getPost());
              if ($form->isValid()) {            
-                 $cliente->exchangeArray($form->getData());                 
-                 $this->getClienteTable()->saveCliente($cliente);
+                $cliente->exchangeArray($form->getData()); 
+                try 
+                {
+                    $this->getClienteTable()->saveCliente($cliente);
+                }catch (\Exception $ex) 
+                {
+                    
+                    $this->flashMessenger()->addMessage('Documento Existente, Ingrese otro Documento');
+                    return $this->redirect()->toRoute('cliente', array('action' => 'add'));
+                }
                  
                  //viendo tarjetas
 //                 $tarjetaPorCliente= new TarjetaPorCliente();
@@ -147,21 +154,16 @@ namespace Cliente\Controller;
 //                     $i++;
 //                     
 //                 }
-                 
-                 
-
-
-                 // Redirect to list of albums
-                 return $this->redirect()->toRoute('cliente');
+                return $this->redirect()->toRoute('cliente');
              }
 
          }
-        $return = array('success' => true);
-        $flashMessenger = $this->flashMessenger();
-        if ($flashMessenger->hasMessages()) {
-            $return['messages'] = $flashMessenger->getMessages();
-        }
-        return array('form' => $form);
+
+        return array(
+                      'form' => $form,
+                      'flashMessages' => $this->flashMessenger()->getMessages(),
+                
+                    );
      }  
 
       public function editAction()
@@ -231,7 +233,6 @@ namespace Cliente\Controller;
         //fin bancos
 
         //convenios
-        
         $convenios=$this->getConvenioTable()->fetchAllWithAlias();
         $vectorConvenio=array();
         foreach ($convenios as $convenio) 
@@ -240,30 +241,34 @@ namespace Cliente\Controller;
         }
         $form->get('idTipoHuesped')->setValueOptions($vectorConvenio);         
         //fin convenios
-         $form->bind($cliente);
-         
-         $form->get('send')->setAttribute('value', 'Edit');
-         $request = $this->getRequest();
-         
-         if ($request->isPost()) {
+        $form->bind($cliente);
 
-             $form->setInputFilter($cliente->getInputFilter());
-             $form->setData($request->getPost());
-             
-             if ($form->isValid()) {
-                
-                
-                 $this->getAlbumTable()->saveCliente($cliente);
+        $form->get('send')->setAttribute('value', 'Edit');
+        $request = $this->getRequest();
+        if ($request->isPost()) {
 
-                 // Redirect to list of albums
-                 return $this->redirect()->toRoute('cliente');
-             }
-         }
+            $form->setInputFilter($cliente->getInputFilter());
+            $form->setData($request->getPost());
 
-         return array(
-             'id' => $id,
-             'form' => $form,
-         );
+            if ($form->isValid()) {
+                try 
+                {
+                    $this->getClienteTable()->saveCliente($cliente);
+                }catch (\Exception $ex) 
+                {
+                    
+                    $this->flashMessenger()->addMessage('Documento Existente, Ingrese otro Documento');
+                    return $this->redirect()->toRoute('cliente', array('action' => 'edit'));
+                }
+               return $this->redirect()->toRoute('cliente');
+            }
+        }
+
+        return array(
+            'id' => $id,
+            'form' => $form,
+            'flashMessages' => $this->flashMessenger()->getMessages(),
+        );
     }
 
      public function deleteAction()

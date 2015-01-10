@@ -5,6 +5,9 @@ use Zend\Db\Sql\Sql;
 use Zend\Db\Sql\Where;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\Sql\Predicate;
+
+use Cliente\Exception\TestException;
+
 class ClienteTable
 {
      protected $tableGateway;
@@ -106,16 +109,8 @@ class ClienteTable
         $id = (int) $cliente->idCliente;
         if($id == 0)
         {
-            try 
-            {
-                $this->tableGateway->insert($data);
-            }catch (\Exception $ex) 
-            {
-                $this->flashMessenger()->addMessage('probando el mensajes');
-                return $this->redirect()->toRoute('cliente', array('action' => 'index'));
-                //throw new \Exception('Cliente id does not exist');
-                
-            }
+            $this->tableGateway->insert($data);
+
         }else
         {
             if ($this->getCliente($id))
@@ -124,7 +119,7 @@ class ClienteTable
                 $this->tableGateway->update($data, array('idCliente' => $id));
             }else 
             {
-                throw new \Exception('Cliente id does not exist');
+                throw new \InvalidArgumentException('Cliente id does not exist');
             }
         }
     }

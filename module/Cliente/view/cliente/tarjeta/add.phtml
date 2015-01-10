@@ -15,7 +15,28 @@
   		<li class="active">Alta</li>  		
 	</ol>
 	<h3><?php echo $this->titulo ?></h3>	
-	<br>	
+        <br>
+            <?php if(count($flashMessages)) : ?>
+                <div class="alert alert-danger hidden-print">
+                <ul>
+                    <?php foreach ($flashMessages as $msg) : ?>
+                    <li>
+                        <?php
+                            ?>
+
+                                <p class="text-danger">
+                                    <?php
+                                        echo $msg; 
+                                    ?>
+                                </p>
+                            <?php           
+
+                        ?>
+                    </li>
+                    <?php endforeach; ?>
+                </ul>
+                </div>
+            <?php endif; ?>  
 	<div class="row">
 		<?php echo $this->formHidden($form->get('idTarjeta')); ?>
 		<h4>Datos</h4><hr>

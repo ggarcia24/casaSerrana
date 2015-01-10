@@ -34,12 +34,22 @@ namespace Cliente\Controller;
             $form->setInputFilter($alimento->getInputFilter());
             $form->setData($request->getPost());
             if ($form->isValid()) {            
-                $alimento->exchangeArray($form->getData());                 
-                $this->getAlimentoTable()->saveAlimento($alimento);
+                $alimento->exchangeArray($form->getData());        
+                try 
+                {
+                    $this->getAlimentoTable()->saveAlimento($alimento);
+                }catch (\Exception $ex) 
+                {
+                    
+                    $this->flashMessenger()->addMessage('Alimento Existente, Ingrese otro Alimento');
+                    return $this->redirect()->toRoute('alimento', array('action' => 'add'));
+                }
+
                 return $this->redirect()->toRoute('alimento');
             }
         }
-        return array('form' => $form);
+        return array('form' => $form,
+            'flashMessages' => $this->flashMessenger()->getMessages(),);
     }  
 
     public function editAction()
@@ -67,13 +77,23 @@ namespace Cliente\Controller;
             $form->setData($request->getPost());
             if ($form->isValid()) 
             {
-                $this->getAlbumTable()->saveAlimento($alimento);
+                
+                try 
+                {
+                    $this->getAlbumTable()->saveAlimento($alimento);
+                }catch (\Exception $ex) 
+                {
+                    
+                    $this->flashMessenger()->addMessage('Alimento Existente, Ingrese otro Alimento');
+                    return $this->redirect()->toRoute('alimento', array('action' => 'add'));
+                }
                 return $this->redirect()->toRoute('alimento');
             }
         }
         return array(
                         'id' => $id,
                         'form' => $form,
+            'flashMessages' => $this->flashMessenger()->getMessages(),
         );
     }
 
