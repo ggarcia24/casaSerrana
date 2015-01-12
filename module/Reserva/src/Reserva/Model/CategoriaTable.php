@@ -36,7 +36,7 @@ class CategoriaTable
         $adapter=$this->tableGateway->getAdapter();
         $sql=new Sql($adapter);
         $select=$sql->select();
-        $select->from('categoriaHabitaciones');
+        $select->from('categoriahabitaciones');
         $select->columns(array('value'=>'idCategoria','label'=>'nombre'));
 
          $statement = $sql->prepareStatementForSqlObject($select);

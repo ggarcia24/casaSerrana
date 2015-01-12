@@ -111,7 +111,7 @@ class Module implements
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     $resultSetPrototype = new ResultSet();
                     $resultSetPrototype->setArrayObjectPrototype(new Categoria());
-                    return new TableGateway('categoriaHabitaciones', $dbAdapter, null, $resultSetPrototype);
+                    return new TableGateway('categoriahabitaciones', $dbAdapter, null, $resultSetPrototype);
                 },
                 'Reserva\Model\EstadoTable' =>  function($sm) {
                     $tableGateway = $sm->get('EstadoTableGateway');
