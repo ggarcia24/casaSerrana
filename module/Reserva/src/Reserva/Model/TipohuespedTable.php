@@ -61,7 +61,7 @@ class TipohuespedTable
         $adapter=$this->tableGateway->getAdapter();
         $sql=new Sql($adapter);
         $select=$sql->select();
-        $select->from('tipoHuespedes');
+        $select->from('tipohuespedes');
         $select->columns(array('value'=>'idTipoHuesped','label'=>'nombre'));
 
          $statement = $sql->prepareStatementForSqlObject($select);
