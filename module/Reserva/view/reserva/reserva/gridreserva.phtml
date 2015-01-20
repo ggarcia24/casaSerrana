@@ -65,7 +65,7 @@
 					 			<?php
 					 				foreach ($disponibles as $disponible) 
 			            			{
-			            				if($habitacion->idHabitacion == $disponible["idHabitacion"])
+			            				if($habitacion->getId() == $disponible["idHabitacion"])
 			            				{
 			            					
 
@@ -74,7 +74,8 @@
 					 							?>
 			            						<a href="" class="btn" style="background-color:#FD5E5E;color:black"> 
 			            						<?php
-			            							echo $habitacion->numero;
+												/** @var \Reserva\Model\Habitacion $habitacion */
+			            							echo $habitacion->getNumero();
 			            						?>
 				            					</a>		            					
 			            						<?php

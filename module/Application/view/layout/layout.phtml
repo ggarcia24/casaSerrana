@@ -112,6 +112,7 @@
                                 Proveedores
                                 <span class="caret"></span>
                                 <ul class="dropdown-menu" role="menu">
+                                    <li><a href="<?php echo $this->url('facturascripts') ?>?page=compras_proveedores">Proveedores</a></li>
                                     <li><a href="<?php echo $this->url('facturascripts') ?>?page=ventas_articulos">Articulos</a></li>
                                     <li><a href="<?php echo $this->url('facturascripts') ?>?page=compras_albaranes">Compra a Proveedores</a></li>
                                 </ul>
@@ -141,7 +142,7 @@
             <?php echo $this->content; ?>
             <hr>
             <footer>
-                <p>&copy; 2014 - <?php echo date('Y') ?> by LOOP Desarrollo <?php echo $this->translate('All rights reserved.') ?></p>
+                <p>&copy; 2014 - <?php echo date('Y') ?> by Cruzero Group <?php echo $this->translate('All rights reserved.') ?></p>
             </footer>
         </div> <!-- /container -->
         <?php echo $this->inlineScript() ?>
