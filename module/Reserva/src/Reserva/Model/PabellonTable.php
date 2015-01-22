@@ -53,7 +53,7 @@ class PabellonTable {
             'nombre' => $pabellon->getNombre(),
         );
 
-        $id = (int) $pabellon->idPabellon;
+        $id = (int) $pabellon->getId();
         if($id == 0) {
             $this->tableGateway->insert($data);
         } else {

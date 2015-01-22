@@ -61,8 +61,23 @@ class Tarifa implements InputFilterAwareInterface {
      * @return Tarifa
      */
     public function setId($id) {
-        $this->id = $id;
-        return $this;
+        // This is an ugly thing use an Hydrator insted
+        if(is_int($id)) {
+            $this->id = $id;
+            return $this;
+        }
+
+        if(is_array($id)) {
+            if(isset($id['idTarifa'])) {
+                $this->id = $id['idTarifa'];
+                return $this;
+            }
+
+            if(isset($id['id'])) {
+                $this->id = $id['id'];
+                return $this;
+            }
+        }
     }
 
     /**
@@ -162,7 +177,7 @@ class Tarifa implements InputFilterAwareInterface {
     }
 
     public function exchangeArray($data) {
-        $this->id = (!empty($data['idTarifa'])) ? $data['idTarifa'] : null;
+        $this->setId($data);
         $this->monto = (!empty($data['monto'])) ? $data['monto'] : null;
         $this->vigencia = (!empty($data['vigencia'])) ? $data['vigencia'] : null;
         $this->idCategoria = (!empty($data['idCategoria'])) ? $data['idCategoria'] : null;

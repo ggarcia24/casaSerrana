@@ -46,7 +46,6 @@ class HabitacionTable {
         }
         $row->setPabellon($this->pabellonTable->getPabellon($row->getIdPabellon()));
         $row->setCategoria($this->categoriaTable->getCategoria($row->getIdCategoria()));
-        $row->setEstado($this->estadoTable->getEstado($row->getIdEstado()));
         return $row;
     }
 
@@ -55,20 +54,19 @@ class HabitacionTable {
         $data = array(
             'idHabitacion' => $habitacion->getId(),
             'numero' => $habitacion->getNumero(),
-            'idPabellon' => $habitacion->getPabellon()->getId(),
+            'idPabellon' => $habitacion->getIdPabellon(),
             'plazaMaxima' => $habitacion->getPlazaMaxima(),
-            'idCategoria'  => $habitacion->getCategoria()->getId(),
-            'idEstado' => $habitacion->getEstado()->getId(),
+            'idCategoria'  => $habitacion->getIdCategoria(),
         );
 
-        $id = (int)$habitacion->idHabitacion;
+        $id = (int)$habitacion->getId();
         if ($id == 0) {
             $this->tableGateway->insert($data);
         } else {
             if ($this->getHabitacion($id)) {
                 $this->tableGateway->update($data, array('idHabitacion' => $id));
             } else {
-                throw new \Exception('Reserva id does not exist');
+                throw new \Exception('Habitacion id does not exist');
             }
         }
     }

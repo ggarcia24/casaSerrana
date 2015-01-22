@@ -1,7 +1,7 @@
 
 <div class="container"><?php
 		$form = $this->form;
-		$form->setAttribute('action', $this->url('habitacion', array('action' => 'edit', 'id' => $form->get('idHabitacion')->getValue())));
+		$form->setAttribute('action', $this->url('habitacion', array('action' => 'edit', 'id' => $id)));
     	$form->prepare();
 		$formLabel = $this->plugin('formLabel');
 		echo $this->form()->openTag($form);
@@ -13,7 +13,7 @@
 	<h3><?php echo $this->translate('Editar Habitacion') ?></h3>
 	<div class="row">
 		<h4>Datos habitacion</h4><hr>
-		<?php echo $this->formHidden($form->get('idHabitacion')); ?>
+		<?php echo $this->formHidden($form->get('id')); ?>
 		<div class="col-sm-2"><?php
 			$numeroHabitacion = $form->get('numero');
 			echo $formLabel->openTag() . $numeroHabitacion->getLabel('label') . $formLabel->closeTag();
@@ -56,18 +56,6 @@
 			if($categoriaErrors):?>
 				<div class="alert alert-warning" role="alert">
 					<?php echo $categoriaErrors;?>
-				</div>
-			<?php endif; ?>
-		</div>
-		<div class="col-sm-3"><?php
-			$idEstado = $form->get('idEstado');
-			echo $formLabel->openTag() . $idEstado->getLabel('label');
-			echo $formLabel->closeTag();
-			echo $this->formSelect($idEstado);
-			$estadoErrors = $this->formElementErrors($idEstado);
-			if($estadoErrors):?>
-				<div class="alert alert-warning" role="alert">
-					<?php echo $estadoErrors;?>
 				</div>
 			<?php endif; ?>
 		</div>

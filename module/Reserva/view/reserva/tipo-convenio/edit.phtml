@@ -1,6 +1,6 @@
 <div class="container"><?php
 		$form = $this->form;
-		$form->setAttribute('action', $this->url('tipo-convenio', array('action' => 'edit', 'id' => $form->get('idTipoHuesped')->getValue())));
+		$form->setAttribute('action', $this->url('tipo-convenio', array('action' => 'edit', 'id' => $id)));
     	$form->prepare();
 		$formLabel = $this->plugin('formLabel');
 		echo $this->form()->openTag($form);
@@ -12,7 +12,7 @@
 	<h3><?php echo $this->translate('Editar Tipo de Convenio') ?></h3>
 	<br>	
 	<div class="row">
-		<?php echo $this->formHidden($form->get('idTipoHuesped')); ?>
+		<?php echo $this->formHidden($form->get('id')); ?>
 		<div class="col-sm-2">
 			<?php
     			$nombre = $form->get('nombre');

@@ -17,7 +17,7 @@ class TarifaForm extends Form {
         parent::__construct('tarifa');
 
         $this->add(array(
-            'name' => 'idTarifa',
+            'name' => 'id',
             'type' => 'Hidden',
         ));
 

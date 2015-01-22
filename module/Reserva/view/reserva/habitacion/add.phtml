@@ -59,18 +59,6 @@
 			</div>
 			<?php endif; ?>
 		</div>
-		<div class="col-sm-3"><?php
-			$idEstado = $form->get('idEstado');
-			echo $formLabel->openTag() . $idEstado->getLabel('label');
-			echo $formLabel->closeTag();
-			echo $this->formSelect($idEstado);
-			$estadoErrors = $this->formElementErrors($idEstado);
-			if($estadoErrors):?>
-			<div class="alert alert-warning" role="alert">
-				<?php echo $estadoErrors;?>
-			</div>
-			<?php endif; ?>
-		</div>
 	</div>
 	<div class="row">
 		<div class="col-sm-12">

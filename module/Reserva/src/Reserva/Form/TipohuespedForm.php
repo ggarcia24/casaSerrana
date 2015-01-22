@@ -14,7 +14,7 @@ namespace Reserva\Form;
         $form = new Form('my-form');
 
         $this->add(array(
-            'name' => 'idTipoHuesped',
+            'name' => 'id',
             'type' => 'Hidden',
         )); 
          

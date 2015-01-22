@@ -20,7 +20,7 @@ class HabitacionForm extends Form {
         parent::__construct('habitacion');
 
         $this->add(array(
-            'name' => 'idHabitacion',
+            'name' => 'id',
             'type' => 'Hidden',
         ));
 
@@ -77,20 +77,6 @@ class HabitacionForm extends Form {
         ));
 
         $this->add(array(
-            'type' => 'Select',
-            'name' => 'idEstado',
-            'options' => array(
-                'label' => 'Estado:',
-                'empty_option' => 'Seleccione....',
-                'disable_inarray_validator' => true,
-                'value_options' => $this->getEstadoOptions()
-            ),
-            'attributes' =>array(
-                'class' => 'form-control',
-            ),
-        ));
-
-        $this->add(array(
             'name' => 'send',
             'attributes' => array(
                 'type'  => 'submit',
@@ -112,13 +98,6 @@ class HabitacionForm extends Form {
         $categorias = $categoriaTable->fetchAllWithAlias();
         $results = new ResultSet();
         return $results->initialize($categorias)->toArray();
-    }
-
-    private function getEstadoOptions() {
-        $estadoTable = $this->serviceManager->get('Cliente\Model\ConvenioTable');
-        $estados = $estadoTable->fetchAllWithAlias();
-        $results = new ResultSet();
-        return $results->initialize($estados)->toArray();
     }
 
 }

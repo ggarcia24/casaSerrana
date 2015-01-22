@@ -45,16 +45,6 @@ class Habitacion implements InputFilterAwareInterface {
     protected $idCategoria;
 
     /**
-     * @var Estado $estado
-     */
-    protected $estado;
-
-    /**
-     * @var int $idEstado
-     */
-    protected $idEstado;
-
-    /**
      * @var InputFilter $inputFilter
      */
     protected $inputFilter;
@@ -77,8 +67,23 @@ class Habitacion implements InputFilterAwareInterface {
      * @return Habitacion
      */
     public function setId($id) {
-        $this->id = $id;
-        return $this;
+        // This is an ugly thing use an Hydrator insted
+        if(is_int($id)) {
+            $this->id = $id;
+            return $this;
+        }
+
+        if(is_array($id)) {
+            if(isset($id['idHabitacion'])) {
+                $this->id = $id['idHabitacion'];
+                return $this;
+            }
+
+            if(isset($id['id'])) {
+                $this->id = $id['id'];
+                return $this;
+            }
+        }
     }
 
     /**
@@ -110,6 +115,7 @@ class Habitacion implements InputFilterAwareInterface {
      */
     public function setPabellon($pabellon) {
         $this->pabellon = $pabellon;
+        $this->idPabellon = $pabellon->getId();
         return $this;
     }
 
@@ -156,6 +162,7 @@ class Habitacion implements InputFilterAwareInterface {
      */
     public function setCategoria($categoria) {
         $this->categoria = $categoria;
+        $this->idCategoria = $categoria->getId();
         return $this;
     }
 
@@ -173,48 +180,17 @@ class Habitacion implements InputFilterAwareInterface {
         $this->idCategoria = $idCategoria;
     }
 
-    /**
-     * @return Estado
-     */
-    public function getEstado() {
-        return $this->estado;
-    }
-
-    /**
-     * @param Estado $estado
-     * @return Habitacion
-     */
-    public function setEstado($estado) {
-        $this->estado = $estado;
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getIdEstado() {
-        return $this->idEstado;
-    }
-
-    /**
-     * @param int $idEstado
-     */
-    public function setIdEstado($idEstado) {
-        $this->idEstado = $idEstado;
-    }
-
     // Add content to these methods:
     public function setInputFilter(InputFilterInterface $inputFilter) {
         throw new \Exception("Not used");
     }
 
     public function exchangeArray($data) {
-        $this->id = (isset($data['idHabitacion'])) ? $data['idHabitacion'] : null;
+        $this->setId($data);
         $this->numero = (isset($data['numero'])) ? $data['numero'] : null;
         $this->plazaMaxima = (isset($data['plazaMaxima'])) ? $data['plazaMaxima'] : null;
         $this->idPabellon = (isset($data['idPabellon'])) ? $data['idPabellon'] : null;
         $this->idCategoria = (isset($data['idCategoria'])) ? $data['idCategoria'] : null;
-        $this->idEstado = (isset($data['idEstado'])) ? $data['idEstado'] : null;
     }
 
     public function getArrayCopy() {
@@ -225,77 +201,81 @@ class Habitacion implements InputFilterAwareInterface {
         if (!$this->inputFilter) {
             $inputFilter = new InputFilter();
 
-
             $inputFilter->add(array(
-                                  'name' => 'numero', 'required' => true, 'filters' => array(
-                    array('name' => 'StripTags'), array('name' => 'StringTrim'),
-                ), 'validators'          => array(
+                'name' => 'numero',
+                'required' => true,
+                'filters' => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
                     array(
-                        'name' => 'NotEmpty', 'options' => array(
-                        'messages' => array(
-                            \Zend\Validator\NotEmpty::IS_EMPTY => 'Por favor introducir el numero de habitacion'
+                        'name' => 'NotEmpty',
+                        'options' => array(
+                            'messages' => array(
+                                \Zend\Validator\NotEmpty::IS_EMPTY => 'Por favor introducir el numero de habitacion'
+                            ),
                         ),
                     ),
-                    ),
                 ),
-                              ));
+            ));
 
             $inputFilter->add(array(
-                                  'name' => 'plazaMaxima', 'required' => true, 'filters' => array(
-                    array('name' => 'StripTags'), array('name' => 'StringTrim'),
-                ), 'validators'          => array(
+                'name' => 'plazaMaxima',
+                'required' => true,
+                'filters' => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
                     array(
-                        'name' => 'NotEmpty', 'options' => array(
-                        'messages' => array(
-                            \Zend\Validator\NotEmpty::IS_EMPTY => 'Por favor introducir las plazas maximas'
+                        'name' => 'NotEmpty',
+                        'options' => array(
+                            'messages' => array(
+                                \Zend\Validator\NotEmpty::IS_EMPTY => 'Por favor introducir las plazas maximas'
+                            ),
                         ),
                     ),
-                    ),
                 ),
-                              ));
+            ));
 
             $inputFilter->add(array(
-                                  'name' => 'idPabellon', 'required' => true, 'filters' => array(
-                    array('name' => 'StripTags'), array('name' => 'StringTrim'),
-                ), 'validators'          => array(
+                'name' => 'idPabellon',
+                'required' => true,
+                'filters' => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
                     array(
-                        'name' => 'NotEmpty', 'options' => array(
-                        'messages' => array(
-                            \Zend\Validator\NotEmpty::IS_EMPTY => 'Por favor introducir el pabellon'
+                        'name' => 'NotEmpty',
+                        'options' => array(
+                            'messages' => array(
+                                \Zend\Validator\NotEmpty::IS_EMPTY => 'Por favor introducir el pabellon'
+                            ),
                         ),
                     ),
-                    ),
                 ),
-                              ));
+            ));
 
             $inputFilter->add(array(
-                                  'name' => 'idCategoria', 'required' => true, 'filters' => array(
-                    array('name' => 'StripTags'), array('name' => 'StringTrim'),
-                ), 'validators'          => array(
+                'name' => 'idCategoria',
+                'required' => true,
+                'filters' => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
                     array(
-                        'name' => 'NotEmpty', 'options' => array(
-                        'messages' => array(
-                            \Zend\Validator\NotEmpty::IS_EMPTY => 'Por favor introducir la categoria de habitacion'
+                        'name' => 'NotEmpty',
+                        'options' => array(
+                            'messages' => array(
+                                \Zend\Validator\NotEmpty::IS_EMPTY => 'Por favor introducir la categoria de habitacion'
+                            ),
                         ),
                     ),
-                    ),
                 ),
-                              ));
-
-            $inputFilter->add(array(
-                                  'name' => 'idEstado', 'required' => true, 'filters' => array(
-                    array('name' => 'StripTags'), array('name' => 'StringTrim'),
-                ), 'validators'          => array(
-                    array(
-                        'name' => 'NotEmpty', 'options' => array(
-                        'messages' => array(
-                            \Zend\Validator\NotEmpty::IS_EMPTY => 'Por favor introducir el estado de la habitacion'
-                        ),
-                    ),
-                    ),
-                ),
-                              ));
-
+            ));
 
             $this->inputFilter = $inputFilter;
         }

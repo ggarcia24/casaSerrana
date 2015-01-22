@@ -33,9 +33,26 @@ class Tipohuesped implements InputFilterAwareInterface {
 
     /**
      * @param int $id
+     * @return Tipohuesped
      */
     public function setId($id) {
-        $this->id = $id;
+        // This is an ugly thing use an Hydrator insted
+        if(is_int($id)) {
+            $this->id = $id;
+            return $this;
+        }
+
+        if(is_array($id)) {
+            if(isset($id['idTipoHuesped'])) {
+                $this->id = $id['idTipoHuesped'];
+                return $this;
+            }
+
+            if(isset($id['id'])) {
+                $this->id = $id['id'];
+                return $this;
+            }
+        }
     }
 
     /**
@@ -57,7 +74,7 @@ class Tipohuesped implements InputFilterAwareInterface {
     }
 
     public function exchangeArray($data) {
-        $this->id = (!empty($data['idTipoHuesped'])) ? $data['idTipoHuesped'] : null;
+        $this->setId($data);
         $this->nombre = (!empty($data['nombre'])) ? $data['nombre'] : null;
     }
     // Add content to these methods:

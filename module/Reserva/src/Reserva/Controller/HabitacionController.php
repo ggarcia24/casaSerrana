@@ -49,8 +49,7 @@ class HabitacionController extends AbstractActionController {
         }
         try {
             $habitacion = $this->getHabitacionTable()->getHabitacion($id);
-        }
-        catch (\Exception $ex) {
+        } catch (\Exception $ex) {
             return $this->redirect()->toRoute('habitacion', array('action' => 'index'));
         }
         $form  = new HabitacionForm($this->getServiceLocator());
