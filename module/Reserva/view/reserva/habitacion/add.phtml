@@ -13,7 +13,6 @@
 	<h3><?php echo $this->translate('Agregar Habitacion') ?></h3>
 	<div class="row">
 		<h4>Datos habitacion</h4><hr>
-		<?php echo $this->formHidden($form->get('idHabitacion')); ?>
 		<div class="col-sm-2"><?php
 			$numeroHabitacion = $form->get('numero');
 			echo $formLabel->openTag() . $numeroHabitacion->getLabel('label') . $formLabel->closeTag();

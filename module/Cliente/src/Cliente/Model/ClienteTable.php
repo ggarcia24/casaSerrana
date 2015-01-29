@@ -89,14 +89,10 @@ class ClienteTable {
             try {
                 $this->tableGateway->insert($data);
             } catch (\Exception $ex) {
-                $this->flashMessenger()->addMessage('probando el mensajes');
-                return $this->redirect()->toRoute('cliente', array('action' => 'index'));
-                //throw new \Exception('Cliente id does not exist');
-
+                throw new \InvalidArgumentException('Problem saving record:' . $ex->getMessage());
             }
         } else {
             if ($this->getCliente($id)) {
-
                 $this->tableGateway->update($data, array('idCliente' => $id));
             } else {
                 throw new \InvalidArgumentException('Cliente id does not exist');

@@ -122,10 +122,14 @@ class IndexController extends AbstractActionController
             }
         }
         if(isset($tpl) && isset($fsc)) {
-            return new ViewModel(array(
+            $view =  new ViewModel(array(
                 'tpl' => $tpl,
                 'fsc' => $fsc
             ));
+            if(strpos($fsc->template, 'ajax') !== false) {
+               $view->setTerminal(true);
+            }
+            return $view;
         } else {
             $view = new ViewModel();
             $view->setTerminal(true);
