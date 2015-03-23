@@ -1,0 +1,22 @@
+<ul class="list-group">
+<?php
+
+foreach($this->results as $i => $result): ?>
+    <li id="solucion_<?php echo $i; ?>" class="habitacionItem list-group-item"
+        data-habitaciones="<?php echo $result['ids']; ?>"
+        data-categorias="<?php echo $result['categorias']; ?>">Opción <?php echo $i+1;?>: (<?php echo $this->getCategoriaName($result['categorias']);?>)<?php
+    foreach($result['habitaciones'] as $habitaciones):
+        $idsHabitacion = explode(',', $habitaciones['idsHabitacion']);
+        foreach($idsHabitacion as $id):
+            $habitacion = $this->getHabitacion($id); ?>
+        <span style="color:black;"
+           class="btn <?php echo $this->getHabitacionStatus($habitacion, $this->fecha);?>"
+           title="<?php echo $habitacion->getNumero(); ?>"
+            >
+            <?php echo $habitacion->getNumero(); ?>: <?php echo $habitacion->getPlazaMaxima(); ?>
+        </span>
+        <?php endforeach; ?>
+    <?php endforeach; ?>
+    </li>
+<?php endforeach; ?>
+</ul>

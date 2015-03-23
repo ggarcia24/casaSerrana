@@ -1,0 +1,35 @@
+<div class="container"><?php
+		$form = $this->form;
+		$form->setAttribute('action', $this->url('categoria', array('action' => 'add')));
+    	$form->prepare();
+		$formLabel = $this->plugin('formLabel');
+		echo $this->form()->openTag($form);
+	?>
+	<ol class="breadcrumb">
+  		<li><a href="<?php echo $this->url('categoria')?>">Categoria de Habitaciones</a></li>
+  		<li class="active">Alta</li>  		
+	</ol>
+	<h3><?php echo $this->translate('Agregar Categoria'); ?></h3>
+	<div class="row">
+		<?php echo $this->formHidden($form->get('id')); ?>
+		<div class="col-sm-2">
+			<?php
+    			$nombre = $form->get('nombre');
+    			echo $formLabel->openTag() . $nombre->getLabel('label');    			
+    			
+    			echo $formLabel->closeTag();
+    			echo $this->formInput($nombre);
+                        ?>
+                    <div style="color:red">
+                        <?php echo $this->formElementErrors($nombre); ?>
+                    </div>
+			
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12">
+			<?php echo $this->formElement($form->get('send')) ?> 
+		</div>		
+	</div>
+	<?php  echo $this->form()->closeTag() ?>
+</div>

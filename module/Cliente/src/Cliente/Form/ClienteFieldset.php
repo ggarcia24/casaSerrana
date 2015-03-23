@@ -46,7 +46,8 @@ class ClienteFieldset  extends Fieldset implements InputFilterProviderInterface 
                 'class' => 'form-control nombre',
                 'jquery' => array(
                     'focus'  => new JsonExpr('autocomplete_focus'),
-                    'select' => new JsonExpr('autcomplete_select')
+                    'select' => new JsonExpr('autcomplete_select'),
+                    'response' => new JsonExpr('autcomplete_response')
                 ),
             )
         ));

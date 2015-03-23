@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?> 
+<?xml version="1.0" encoding="UTF-8"?>
 <databaseChangeLog
-  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-  <!--include file="data/db_scripts/changelog/1.0/00_create_table_huespedesporreserva.sql"/ -->
-  <!-- 
+  <!--
   Agregar los otros scripts acá de la siguiente forma:
   
   <include file="data/db_scripts/changelog/1.0/##_accion.sql"/>
@@ -15,4 +14,11 @@
   
   01_alter_table_reserva.sql
   -->
+    <include file="data/db_scripts/changelog/1.0/00_create_table_huespedesporreserva.sql"/>
+    <include file="data/db_scripts/changelog/1.0/01_create_constrains_table_habitaciones.sql"/>
+    <include file="data/db_scripts/changelog/1.0/02_create_constrains_table_reservas.sql"/>
+    <include file="data/db_scripts/changelog/1.0/03_alter_table_tarifas.sql"/>
+    <include file="data/db_scripts/changelog/1.0/04_alter_table_reserva.sql"/>
+    <include file="data/db_scripts/changelog/1.0/05_create_table_habitacionporreserva.sql"/>
+    <include file="data/db_scripts/changelog/1.0/06_rename_table_huespedesporserva_to_huespedesporhabitacion.sql"/>
 </databaseChangeLog>

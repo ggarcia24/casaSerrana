@@ -200,6 +200,11 @@ class Module implements
     {
         return array(
             'factories' => array(
+                'getHabitacion' => function($sm) {
+                    $helper = new View\Helper\GetHabitacion();
+                    $helper->setServiceLocator($sm->getServiceLocator());
+                    return $helper;
+                },
                 'getHabitaciones' => function($sm) {
                     $helper = new View\Helper\GetHabitaciones();
                     $helper->setServiceLocator($sm->getServiceLocator());

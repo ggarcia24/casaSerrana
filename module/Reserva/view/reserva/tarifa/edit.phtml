@@ -42,15 +42,6 @@
     			    <?php echo $this->formElementErrors($monto);?>
     			</div>
 		</div>
-		<div class="col-sm-3"><?php
-			$vigencia = $form->get('vigencia');
-			echo $formLabel->openTag() . $vigencia->getLabel('label') . $formLabel->closeTag();
-		        echo $this->formElement($vigencia);
-                        ?>
-    			<div style="color:red">
-    			    <?php echo $this->formElementErrors($vigencia);?>
-    			</div>                       
-		</div>
 	</div>
         <br>
 	<div class="row">

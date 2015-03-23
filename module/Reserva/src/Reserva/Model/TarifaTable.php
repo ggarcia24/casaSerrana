@@ -14,7 +14,7 @@ class TarifaTable {
     }
 
     public function fetchAll() {
-        $resultSet = $this->tableGateway->select();
+        $resultSet = $this->tableGateway->select(array('vigencia' => '0000-00-00 00:00:00'));
 
         return $resultSet;
     }
@@ -31,9 +31,7 @@ class TarifaTable {
 
     public function saveTarifa(Tarifa $tarifa) {
         $data = array(
-            'idTarifa' => $tarifa->getId(),
             'monto' => $tarifa->getMonto(),
-            'vigencia' => $tarifa->getVigencia(),
             'idCategoria' => $tarifa->getIdCategoria(),
             'idTipoHuesped' => $tarifa->getIdTipoHuesped(),
         );
@@ -43,8 +41,13 @@ class TarifaTable {
         if ($id == 0) {
             $this->tableGateway->insert($data);
         } else {
-            if ($this->getTarifa($id)) {
-                $this->tableGateway->update($data, array('idTarifa' => $id));
+            $tarifaOld = $this->getTarifa($id);
+            if ($tarifaOld) {
+                $tarifaOld->setVigencia(date('Y-m-d'));
+                $oldData = $tarifaOld->toArray();
+                unset($oldData['id']);
+                $this->tableGateway->update($oldData, array('idTarifa' => $id));
+                $this->tableGateway->insert($data);
             } else {
                 throw new \Exception('La tarifa no existe');
             }

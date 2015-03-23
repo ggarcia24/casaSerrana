@@ -26,54 +26,29 @@ class Reserva implements InputFilterAwareInterface {
     protected $cliente;
 
     /**
-     * @var int
+     * @var array Habitacion
      */
-    protected $idHabitacion;
+    protected $habitaciones;
 
     /**
-     * @var Habitacion
+     * @var array
      */
-    protected $habitacion;
+    protected $huespedes;
 
     /**
-     * @var int
+     * @var array Pago
      */
-    protected $idTarifa;
-
-    /**
-     * @var Tarifa
-     */
-    protected $tarifa;
-
-    /**
-     * @var int
-     */
-    protected $idEstado;
-
-    /**
-     * @var Estado
-     */
-    protected $estado;
-
-    /**
-     * @var int
-     */
-    protected $idTipoHuesped;
-
-    /**
-     * @var Tipohuesped
-     */
-    protected $tipoHuesped;
+    public $pagos;
 
     /**
      * @var string
      */
-    protected $fechaIn;
+    protected $arrival_date;
 
     /**
      * @var string
      */
-    protected $fechaOut;
+    protected $departure_date;
 
     /**
      * @var int
@@ -84,7 +59,6 @@ class Reserva implements InputFilterAwareInterface {
      * @var int
      */
     protected $cantidadMenores;
-    //public $idPago;
 
     /**
      * @var string
@@ -92,14 +66,20 @@ class Reserva implements InputFilterAwareInterface {
     protected $comentario;
 
     /**
+     * @var string
+     */
+    protected $created_date;
+
+    /**
+     * @var string
+     */
+    protected $updated_date;
+
+    /**
      * @var InputFilter
      */
     protected $inputFilter;
 
-    /**
-     * @var array
-     */
-    protected $huespedes;
 
     /**
      * @return int
@@ -136,94 +116,63 @@ class Reserva implements InputFilterAwareInterface {
     /**
      * @return Habitacion
      */
-    public function getHabitacion() {
-        return $this->habitacion;
+    public function getHabitaciones() {
+        return $this->habitaciones;
     }
 
     /**
-     * @param Habitacion $habitacion
+     * @param array
      * @return Reserva
      */
-    public function setHabitacion(Habitacion $habitacion) {
-        $this->habitacion = $habitacion;
+    public function setHabitaciones(array $habitaciones) {
+        $this->habitaciones = $habitaciones;
         return $this;
     }
 
     /**
-     * @return Tarifa
+     * @return mixed
      */
-    public function getTarifa() {
-        return $this->tarifa;
+    public function getHuespedes() {
+        return $this->huespedes;
     }
 
     /**
-     * @param Tarifa $tarifa
+     * @param mixed $huespedes
      * @return Reserva
      */
-    public function setTarifa(Tarifa $tarifa) {
-        $this->tarifa = $tarifa;
-        return $this;
-    }
-
-    /**
-     * @return Estado
-     */
-    public function getEstado() {
-        return $this->estado;
-    }
-
-    /**
-     * @param Estado $estado
-     * @return Reserva
-     */
-    public function setEstado(Estado $estado) {
-        $this->estado = $estado;
-        return $this;
-    }
-
-    /**
-     * @return Tipohuesped
-     */
-    public function getTipoHuesped() {
-        return $this->tipoHuesped;
-    }
-
-    /**
-     * @param Tipohuesped $tipoHuesped
-     * @return Reserva
-     */
-    public function setTipoHuesped(Tipohuesped $tipoHuesped) {
-        $this->tipoHuesped = $tipoHuesped;
+    public function setHuespedes($huespedes) {
+        $this->huespedes = $huespedes;
     }
 
     /**
      * @return string
      */
-    public function getFechaIn() {
-        return $this->fechaIn;
+    public function getArrivalDate() {
+        return $this->arrival_date;
     }
 
     /**
-     * @param string $fechaIn
+     * @param string $arrival_date
      * @return Reserva
      */
-    public function setFechaIn($fechaIn) {
-        $this->fechaIn = $fechaIn;
+    public function setArrivalDate($arrival_date) {
+        $this->arrival_date = $arrival_date;
+        return $this;
     }
 
     /**
      * @return string
      */
-    public function getFechaOut() {
-        return $this->fechaOut;
+    public function getDepartureDate() {
+        return $this->departure_date;
     }
 
     /**
-     * @param string $fechaOut
+     * @param string $departure_date
      * @return Reserva
      */
-    public function setFechaOut($fechaOut) {
-        $this->fechaOut = $fechaOut;
+    public function setDepartureDate($departure_date) {
+        $this->departure_date = $departure_date;
     }
 
     /**
@@ -294,34 +243,16 @@ class Reserva implements InputFilterAwareInterface {
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getHuespedes() {
-        return $this->huespedes;
-    }
-
-    /**
-     * @param mixed $huespedes
-     * @return Reserva
-     */
-    public function setHuespedes($huespedes) {
-        $this->huespedes = $huespedes;
-    }
-
     public function exchangeArray($data) {
         $this->id = (isset($data['idReserva'])) ? $data['idReserva'] : null;
         $this->idCliente = (isset($data['idCliente'])) ? $data['idCliente'] : null;
-        $this->idHabitacion = (isset($data['idHabitacion'])) ? $data['idHabitacion'] : null;
-        $this->idTarifa = (isset($data['idTarifa'])) ? $data['idTarifa'] : null;
-        $this->idEstado = (isset($data['idEstado'])) ? $data['idEstado'] : null;
-        $this->idTipoHuesped = (isset($data['idTipoHuesped'])) ? $data['idTipoHuesped'] : null;
-        $this->fechaIn = (isset($data['fechaIngreso'])) ? $data['fechaIngreso'] : null;
-        $this->fechaOut = (isset($data['fechaSalida'])) ? $data['fechaSalida'] : null;
+        $this->arrival_date = (isset($data['arrival_date'])) ? $data['arrival_date'] : null;
+        $this->departure_date = (isset($data['departure_date'])) ? $data['departure_date'] : null;
         $this->cantidadAdultos = (isset($data['cantidadAdulto'])) ? $data['cantidadAdulto'] : null;
         $this->cantidadMenores = (isset($data['cantidadMenores'])) ? $data['cantidadMenores'] : null;
-        //$this->idPago = (isset($data['idPago'])) ? $data['idPago'] : null;
         $this->comentario = (isset($data['comentario'])) ? $data['comentario'] : null;
+        $this->created_date = (isset($data['created_date'])) ? $data['created_date'] : null;
+        $this->updated_date = (isset($data['updated_date'])) ? $data['updated_date'] : null;
     }
 
 
@@ -354,7 +285,7 @@ class Reserva implements InputFilterAwareInterface {
             ));
 
             $inputFilter->add(array(
-                'name' => 'fechaIngreso',
+                'name' => 'arrival_date',
                 'required' => true,
                 'filters' => array(
                     array('name' => 'StripTags'),
@@ -373,7 +304,7 @@ class Reserva implements InputFilterAwareInterface {
             ));
 
             $inputFilter->add(array(
-                'name' => 'fechaSalida',
+                'name' => 'departure_date',
                 'required' => true,
                 'filters' => array(
                     array('name' => 'StripTags'),

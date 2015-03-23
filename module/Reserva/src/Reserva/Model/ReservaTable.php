@@ -33,8 +33,8 @@ class ReservaTable {
         $select->join('habitaciones', 'habitaciones.idHabitacion = reservas.idHabitacion');
         $where = $select->where;
         $where->equalTo('idPabellon', $idPabellon);
-        $where->lessThanOrEqualTo('fechaIn', $fecha);
-        $where->greaterThanOrEqualTo('fechaOut', $fecha);
+        $where->lessThanOrEqualTo('arrival_date', $fecha);
+        $where->greaterThanOrEqualTo('departure_date', $fecha);
 
         print($select->getSqlString($adapter->platform));
         $statement = $sql->prepareStatementForSqlObject($select);
@@ -49,8 +49,8 @@ class ReservaTable {
         $select->from('reservas');
         $where = $select->where;
         $where->equalTo('idHabitacion', $idHabitacion)->AND->NEST
-              ->lessThanOrEqualTo('fechaIn', $fecha)->AND
-              ->lessThanOrEqualTo('fechaOut', $fecha);
+              ->lessThanOrEqualTo('arrival_date', $fecha)->AND
+              ->lessThanOrEqualTo('departure_date', $fecha);
 
         //print($select->getSqlString($adapter->platform) . '<br>');
         $statement = $sql->prepareStatementForSqlObject($select);
@@ -84,7 +84,7 @@ class ReservaTable {
         $sql = new Sql($adapter);
         $select = $sql->select();
         $select->from('reservas');
-        $select->where('fechaIn >=' . "'" . $fechaDesde . "'" OR 'fechaOut <=' . "'" . $fechaHasta . "'");
+        $select->where('arrival_date >=' . "'" . $fechaDesde . "'" OR 'departure_date <=' . "'" . $fechaHasta . "'");
         //$select->where('fechaOut <='."'". $fechaHasta ."'");
         //$select->where('idReserva='."'". "1" ."'");
 
@@ -99,8 +99,8 @@ class ReservaTable {
         $sql = new Sql($adapter);
         $select = $sql->select();
         $select->from('reservas');
-        $select->where('fechaIn <=' . "'" . $fecha . "'");
-        $select->where('fechaOut >=' . "'" . $fecha . "'");
+        $select->where('arrival_date <=' . "'" . $fecha . "'");
+        $select->where('departure_date >=' . "'" . $fecha . "'");
         $statement = $sql->prepareStatementForSqlObject($select);
         $result = $statement->execute();
         return $result;
@@ -113,8 +113,8 @@ class ReservaTable {
             'idTarifa' => $reserva->getTarifa()->getId(),
             'idEstado' => $reserva->getEstado()->getId(),
             'idTipoHuesped' => $reserva->getTipoHuesped()->getId(),
-            'fechaIn' => $reserva->getFechaIn(),
-            'fechaOut' => $reserva->getFechaOut(),
+            'arrival_date' => $reserva->getFechaIn(),
+            'departure_date' => $reserva->getFechaOut(),
             'cantidadAdultos' => $reserva->getCantidadAdultos(),
             'cantidadMenores' => $reserva->getCantidadMenores(),
             //'idPago'                =>$reserva->idPago,
@@ -125,7 +125,7 @@ class ReservaTable {
             $this->tableGateway->insert($data);
         } else {
             if ($this->getReserva($id)) {
-                $this->tableGateway->update($data, array('idReserva' => $idReserva));
+                $this->tableGateway->update($data, array('idReserva' => $id));
             } else {
                 throw new \Exception('Reserva id does not exist');
             }

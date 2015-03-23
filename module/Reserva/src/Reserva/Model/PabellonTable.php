@@ -24,7 +24,7 @@ class PabellonTable {
      * @return Pabellon
      * @throws \Exception
      */
-    public function getPabellon($id) {
+    public function get($id) {
         $id  = (int) $id;
         $rowset = $this->tableGateway->select(array('idPabellon' => $id));
         $row = $rowset->current();
@@ -47,7 +47,7 @@ class PabellonTable {
         return $result;
     }
 
-    public function savePabellon(Pabellon $pabellon) {
+    public function save(Pabellon $pabellon) {
         $data = array(
             'idPabellon' => $pabellon->getId(),
             'nombre' => $pabellon->getNombre(),
@@ -65,7 +65,7 @@ class PabellonTable {
         }
     }
 
-    public function deletePabellon($id) {
+    public function delete($id) {
         $this->tableGateway->delete(array('idPabellon' => (int) $id));
     }
 }

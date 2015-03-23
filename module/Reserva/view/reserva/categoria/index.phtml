@@ -1,0 +1,67 @@
+<script language="JavaScript">
+    function doSearch() 
+    {
+        var tableReg = document.getElementById('datos');
+        var searchText = document.getElementById('buscador').value.toLowerCase();
+        for (var i = 1; i < tableReg.rows.length; i++)
+        {
+            var cellsOfRow = tableReg.rows[i].getElementsByTagName('td');
+            var found = false;
+            for (var j = 0; j < cellsOfRow.length && !found; j++)
+            {
+                var compareWith = cellsOfRow[j].innerHTML.toLowerCase();
+                if (searchText.length == 0 || (compareWith.indexOf(searchText) > -1))
+                {
+                    found = true;
+                }
+            }
+            if(found) 
+            {
+                tableReg.rows[i].style.display = '';
+            }else{
+                    tableReg.rows[i].style.display = 'none';
+                 }
+        }
+    }    
+</script>
+<div class="container">
+    <ol class="breadcrumb">
+        <li class="active">Categoria Habitaciones</li>
+    </ol>
+    <h3><?php echo $this->translate('Listado de Categorias de Habitaciones') ?></h3>
+    <!-- desde aca -->
+    <div class="row">
+        <div class="col-sm-3">
+            <label for="buscador">Buscar Categorias</label>
+            <input type="text" onkeyup="doSearch()" id="buscador" class="form-control">
+        </div>  
+    </div>
+    <!-- hasta aca -->
+    <a href="<?php echo $this->url('categoria', array('action' => 'add')) ?>">Nuevo Categoria (+)</a>
+    <table class="table" id="datos">
+        <thead>
+            <tr>
+                <th>Nombre Categoria</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach($categorias as $categoria):
+            /** @var \Reserva\Model\Categoria $categoria */?>
+            <tr style="background-color:<?php echo $this->cycle(array("#F0F0F0","#FFFFFF"))->next() ?>">
+                <td><?php echo $this->escapeHtml($categoria->getNombre());?></td>
+                <td>
+                    <a href="<?php echo $this->url('categoria', array('action' => 'edit', 'id' => $categoria->getId())) ?>">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                    &nbsp;
+                    <a onclick="return confirm('Esta seguro que desea eliminar a <?php echo $categoria->getNombre() ?>?')"
+                    href="<?php echo $this->url('categoria', array('action' => 'delete', 'id' => $categoria->getId())) ?>">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>

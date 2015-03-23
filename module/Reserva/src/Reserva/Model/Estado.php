@@ -46,14 +46,27 @@ class Estado implements InputFilterAwareInterface {
 
     /**
      * @param string $nombre
+     *
+     * @return Ca
      */
     public function setNombre($nombre) {
         $this->nombre = $nombre;
+        return $this;
     }
 
+    public function getArrayCopy() {
+        return get_object_vars($this);
+    }
+
+    /**
+     * @param $data
+     *
+     * @return $this
+     */
     public function exchangeArray($data) {
         $this->id = (isset($data['idEstado'])) ? $data['idEstado'] : null;
         $this->nombre = (isset($data['nombre'])) ? $data['nombre'] : null;
+        return $this;
     }
 
     // Add content to these methods:

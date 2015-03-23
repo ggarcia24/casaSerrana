@@ -1,77 +1,122 @@
 <div class="container">
-<?php
-$form = $this->form;
-$form->setAttribute('action', $this->url('reserva', array('action' => 'add')));
-$form->prepare();
-
-echo $this->form()->openTag($form) ?>
 	<ol class="breadcrumb">
-		<li><a href="<?php echo $this->url('home')?>reserva/index">Reservas</a></li>
+		<li><a href="<?php echo $this->url('reserva')?>">Reservas</a></li>
 		<li class="active">Generar Reserva</li>
 	</ol>
 	<h3><?php echo $this->translate('Agregar Reserva'); ?></h3>
-	<?php
-	echo $this->formCollection($this->form); ?>
-	<div class="row">
-		<div class="col-sm-2">
-			<a href="" class="btn btn-info">Imprimir</a>
-		</div>
-		<div class="col-sm-2">
-			<a href="" class="btn btn-info">Check Out</a>
-		</div>
-		<div class="col-sm-2">
-			<a href="" class="btn btn-info">Generar Pago</a>
-		</div>
 
+    <form id="formulario" action="<?php $this->url('reserva', array('action' => 'add')); ?>" method="post">
+        <input type="hidden" name="cliente" id="cliente" value="" />
+        <input type="hidden" name="idsHabitaciones" id="idsHabitaciones" value="" />
+        <div class="row">
+            <label><span>Fecha de Ingreso</span>
+                <input type="date" name="arrival" id="arrival" value="<?php echo date('Y-m-d');?>" />
+            </label>
+        </div>
+        <div class="row">
+            <label><span>Fecha de Egreso</span>
+                <input type="date" name="departure" id="departure" value="<?php echo date('Y-m-d');?>" />
+            </label>
+        </div>
+        <div class="row">
+            <label><span>Cantidad de Huespedes</span>
+                <input type="text" name="cantidadHuespedes" id="cantidadHuespedes" value="0" />
+            </label>
+        </div>
+        <div class="row">
+            <label><span>Cantidad de Menores</span>
+            <input type="text" name="cantidadMenores" id="cantidadMenores" value="0" />
+            </label>
+        </div>
+        <div class="row">
+            <label><span>Cantidad de Huespedes por Habitacion</span>
+            <input type="text" name="cantidadHuespHab" id="cantidadHuespHab" value="0" />
+            </label>
+        </div>
+        <script type="text/javascript">
+            $('#formulario').on('change', function() {
 
+                var baseUrl = "<?php echo $this->url('findreserva'); ?>";
+                var finalUrl = baseUrl + '/'
+                                + (parseInt($('#cantidadHuespedes').val()) + parseInt($('#cantidadMenores').val()))
+                                    .toString() + '/'
+                                + parseInt($('#cantidadHuespHab').val()).toString() + '/'
+                                + $('#arrival').val() + '/' + $('#departure').val();
+                $.ajax(finalUrl, {
+                    beforeSend: function () {
+                        $('#habitaciones').html('<span class="spinner"><i class="glyphicon glyphicon-refresh"></i></span>');
+                        $('#habitaciones').addClass('active');
+                    },
+                    success: function (html) {
+                        $('#habitaciones').html(html);
+                        $('#habitaciones').removeClass('active');
+                    }
+                });
+})
+                </script>
+        <div class="row">
+            <label><span>Cliente</span>
+                <input type="text" name="cliente" id="clienteAutocomplete" />
+            </label>
+            <script type="text/javascript">
+$('#clienteAutocomplete').autocomplete({
+    autoFocus: true,
+    source: function(request, response) {
+        $.get('/contabilidad?page=nueva_venta&tipo=factura', { buscar_cliente: request.term }, function(data) {
+            var res = [];
+            if(data.suggestions) {
+                for(var i in data.suggestions) {
+                    var result = data.suggestions[i];
+                    res.push({
+                        label: result.value,
+                        value: result.data
+                    });
+                }
+            }
+            response(res);
+        })
+    },
+    minLength: 3,
+    response: autocomplete_response,
+    select: autcomplete_select,
+    focus: autocomplete_focus
+});
+            </script>
+        </div>
+        <div id="clientInfo" class="has-spinner">
+            <p><span class="spinner"><i class="glyphicon glyphicon-refresh"></i></span></p>
+        </div>
+        <h2>Habitaciones Disponibles:</h2>
+        <div id="habitaciones" class="has-spinner">
 
+        </div>
+        <h2>Tarifa:</h2>
+        <div id="tarfa" class="has-spinner">
 
-	</div>
+        </div>
 
+        <div class="row">
+            <input type="submit" value="Reservar" />
+        </div>
+    </form>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form action>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Agregar Cliente</h4>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
-
-<br><br><br>
-<div class="row">
-
-
-
-
-
-
-</div>
-
-</div>
-
-<?php  echo $this->form()->closeTag() ?>
-
-<script type="text/javascript">
-
-	$(document).ready(function(){
-		$('#agregarHuesped').on('click', function()
-		{
-			var nombre= $('#nombreHuesped').val();
-			var documento= $('#documentoHuesped').val();
-			if(nombre==='' || documento==='')
-			{
-				alert('Complete Nombre y Documento del Huesped');
-				return false;
-			}else
-			{
-
-				var huesped = '<div onclick="remover()" class="huesped">' + nombre + ' - ' +  documento + ' ' + '<a type="button" id="botonHuesped" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-remove-sign"></span></a></div>' + '<br><br>';
-				$('#listaHuesped').append(huesped);
-			}
-		});
-
-	});
-
-
-	function remover()
-	{
-		var huesped = $('.huesped');
-		var padre= $(this).parent();
-		huesped.remove();
-
-	}
-
-</script>

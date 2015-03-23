@@ -13,11 +13,12 @@ class IndexController extends AbstractActionController
 
     public function indexAction()
     {
-        //echo getcwd();
+        $server_request = new \Zend\Http\PhpEnvironment\Request();
         chdir('module/FacturaScriptBridge/src/facturascripts');
         $_GET = $this->params()->fromQuery();
         $_POST = $this->params()->fromPost();
-        $_REQUEST = array_merge_recursive($_GET,$_POST);
+        $_SERVER = $server_request->getServer()->toArray();
+        $_REQUEST = array_merge($_GET,$_POST);
         if( !file_exists('config.php') )
         {
             header('Location: install.php');

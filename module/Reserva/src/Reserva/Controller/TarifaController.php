@@ -10,6 +10,7 @@ namespace Reserva\Controller;
 
 use Reserva\Form\TarifaForm;
 use Reserva\Model\Tarifa;
+use Zend\Db\Adapter\Exception\InvalidQueryException;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;;
 
@@ -34,8 +35,13 @@ class TarifaController extends AbstractActionController {
             $form->setData($request->getPost());
             if ($form->isValid()) {
                 $tarifa->exchangeArray($form->getData());
-                $this->getTarifaTable()->saveTarifa($tarifa);
-                return $this->redirect()->toRoute('tarifa', array('action' => 'index'));
+                try {
+                    $this->getTarifaTable()->saveTarifa($tarifa);
+                    $this->flashMessenger()->addSuccessMessage('Tarifa agregada!');
+                    return $this->redirect()->toRoute('tarifa', array('action' => 'index'));
+                } catch (InvalidQueryException $e) {
+                    $this->flashMessenger()->addErrorMessage('Tarifa duplicada');
+                }
             }
         }
         return array('form' => $form);
@@ -49,8 +55,7 @@ class TarifaController extends AbstractActionController {
 
         try {
             $tarifa = $this->getTarifaTable()->getTarifa($id);
-        }
-        catch (\Exception $ex) {
+        } catch (\Exception $ex) {
             return $this->redirect()->toRoute('tarifa', array('action' => 'index'));
         }
 
@@ -70,6 +75,10 @@ class TarifaController extends AbstractActionController {
             'id' => $id,
             'form' => $form,
         );
+    }
+
+    public function findAction() {
+
     }
 
     public function deleteAction() {

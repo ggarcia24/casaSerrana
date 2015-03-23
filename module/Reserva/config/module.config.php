@@ -4,6 +4,7 @@ return array(
          'invokables' => array(
              'Reserva\Controller\Reserva' => 'Reserva\Controller\ReservaController',
              'Reserva\Controller\Tarifa' => 'Reserva\Controller\TarifaController',
+             'Reserva\Controller\Categoria' => 'Reserva\Controller\CategoriaController',
              'Reserva\Controller\TipoConvenio' => 'Reserva\Controller\TipoConvenioController',
              'Reserva\Controller\Habitacion' => 'Reserva\Controller\HabitacionController',
              'Reserva\Controller\Pabellon' => 'Reserva\Controller\PabellonController',
@@ -70,6 +71,20 @@ return array(
                      ),
                  ),
              ),
+             'categoria' => array(
+                 'type'    => 'segment',
+                 'options' => array(
+                     'route'    => '/categoria-habitaciones[/][:action][/:id]',
+                     'constraints' => array(
+                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                         'id'     => '[0-9]+',
+                     ),
+                     'defaults' => array(
+                         'controller' => 'Reserva\Controller\Categoria',
+                         'action'     => 'index',
+                     ),
+                 ),
+             ),
              'tipo-convenio' => array(
                  'type'    => 'segment',
                  'options' => array(
@@ -97,7 +112,23 @@ return array(
                          'action'     => 'index',
                      ),
                  ),
-             )
+             ),
+             'findreserva' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/habitacion/find[/:guestAmount][/:minGuest][/:arrival][/:departure]',
+                    'constraints' => array(
+                        'guestAmount' => '[0-9]+',
+                        'minGuest' => '[0-9]+',
+                        'arrival' => '[0-9-]+',
+                        'departure' => '[0-9-]+'
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Reserva\Controller\Habitacion',
+                        'action'     => 'find',
+                    )
+                )
+            ),
          ),
      ),
      'view_manager' => array(

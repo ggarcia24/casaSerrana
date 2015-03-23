@@ -31,36 +31,37 @@ class ReservaController extends AbstractActionController {
 
     public function addAction() {
         $this->setResources();
-
-        $reserva = new Reserva();
-        /* @var \Reserva\Model\ReservaTable $reservaTable */
-        $reservaTable = $this->getReservaTable();
-        $formManager = $this->serviceLocator->get('FormElementManager');
-        /* @var ReservaForm $form */
-        $form = $formManager->get('Reserva\Form\ReservaForm');
-
-        $formData = array();
-
-        $autocomplete = $form->get('reserva')->get('cliente')->get('nombre');
-        $autocompleteParams = $autocomplete->getAttribute('jquery');
-        $autocompleteParams['source'] = $this->url()->fromRoute('cliente');
-        $autocomplete->setAttribute('jquery', $autocompleteParams);
-
-        $idReserva = (int) $this->params()->fromRoute('id', 0);
-        $idHabitacion = (int) $this->params()->fromRoute('idHabitacion', 0);
-        $fechaIn = date('Y-m-d', strtotime($this->params()->fromRoute('fechaIn', date('Y-m-d'))));
-
-        if($idReserva != 0) {
-            $reserva = $reservaTable->getReserva($idReserva);
-        } elseif($idHabitacion != 0) {
-            $reserva->setHabitacion($this->getHabitacion($idHabitacion));
-            $reserva->setFechaIn($fechaIn);
-        }
-        $form->bind($reserva);
-
         $request = $this->getRequest();
 
+        $reserva = new Reserva();
+        ///* @var \Reserva\Model\ReservaTable $reservaTable */
+        //$reservaTable = $this->getReservaTable();
+        $formManager = $this->serviceLocator->get('FormElementManager');
+        ///* @var ReservaForm $form */
+        $form = $formManager->get('Reserva\Form\ReservaForm');
+        //
+        //$autocomplete = $form->get('reserva')->get('cliente')->get('nombre');
+        //$autocompleteParams = $autocomplete->getAttribute('jquery');
+        //$autocompleteParams['source'] = $this->url()->fromRoute('cliente');
+        //$autocomplete->setAttribute('jquery', $autocompleteParams);
+        //
+        //$idReserva = (int) $this->params()->fromRoute('id', 0);
+        //$idHabitacion = (int) $this->params()->fromRoute('idHabitacion', 0);
+        //$fechaIn = date('Y-m-d', strtotime($this->params()->fromRoute('fechaIn', date('Y-m-d'))));
+        //
+        //if($idReserva != 0) {
+        //    $reserva = $reservaTable->getReserva($idReserva);
+        //} elseif($idHabitacion != 0) {
+        //    $reserva->setHabitacion($this->getHabitacion($idHabitacion));
+        //    $reserva->setFechaIn($fechaIn);
+        //}
+        //$form->bind($reserva);
+
         if ($request->isPost()) {
+
+            var_dump($request->getPost());
+            die();
+
             $form->setData($request->getPost());
             if ($form->isValid()) {
                 $this->getReservaTable()->saveReserva($reserva);

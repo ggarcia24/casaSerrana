@@ -62,17 +62,6 @@ class TarifaForm extends Form {
         ));
 
         $this->add(array(
-            'name' => 'vigencia',
-            'options' => array(
-                'label' => 'Vigencia:',
-            ),
-            'attributes'   => array(
-                'type' => 'date',
-                'class' => 'form-control',
-            ),
-        ));
-
-        $this->add(array(
             'name' => 'send',
             'attributes' => array(
                 'type' => 'submit',

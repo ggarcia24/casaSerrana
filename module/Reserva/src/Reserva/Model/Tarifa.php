@@ -188,6 +188,14 @@ class Tarifa implements InputFilterAwareInterface {
         return get_object_vars($this);
     }
 
+    public function toArray() {
+        $data = $this->getArrayCopy();
+        unset($data['categoria']);
+        unset($data['tipoHuesped']);
+        unset($data['inputFilter']);
+        return $data;
+    }
+
     // Add content to these methods:
     public function setInputFilter(InputFilterInterface $inputFilter) {
         throw new \Exception("Not used");
@@ -248,25 +256,6 @@ class Tarifa implements InputFilterAwareInterface {
                         'options' => array(
                             'messages' => array(
                                 \Zend\Validator\NotEmpty::IS_EMPTY => 'Por favor introducir el monto diario'
-                            ),
-                        ),
-                    ),
-                ),
-            ));
-
-            $inputFilter->add(array(
-                'name' => 'vigencia',
-                'required' => true,
-                'filters' => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                ),
-                'validators' => array(
-                    array(
-                        'name' => 'NotEmpty',
-                        'options' => array(
-                            'messages' => array(
-                                \Zend\Validator\NotEmpty::IS_EMPTY => 'Por favor introducir la vigencia'
                             ),
                         ),
                     ),

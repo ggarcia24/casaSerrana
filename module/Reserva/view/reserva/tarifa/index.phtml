@@ -31,13 +31,15 @@
         </div>  
     </div>
     <a href="<?php echo $this->url('tarifa', array('action' => 'add')) ?>">Nueva Tarifa (+)</a>
+    <div class="row">
+        <p><?php echo $this->flashMessenger()->render('success'); ?></p>
+    </div>
     <table class="table" id="datos">
         <thead>
             <tr>
                 <th>Categoria Habitacion</th>
                 <th>Tipo de Convenio</th>
                 <th>Monto Diario</th>
-                <th>Vigencia</th>
                 <th>Opciones</th>
             </tr>
         </thead>
@@ -48,7 +50,6 @@
             <td><?php echo $this->escapeHtml($this->getCategoriaName($tarifa->getIdCategoria()));?></td>
             <td><?php echo $this->escapeHtml($this->getTipoHuespedName($tarifa->getIdTipoHuesped()));?></td>
             <td>$<?php echo $this->escapeHtml($tarifa->getMonto());?></td>
-            <td><?php echo $this->escapeHtml($tarifa->getVigencia());?></td>
             <td>
                 <a href="<?php echo $this->url('tarifa', array('action' => 'edit', 'id' => $tarifa->getId())) ?>">
                     <span class="glyphicon glyphicon-pencil"></span>

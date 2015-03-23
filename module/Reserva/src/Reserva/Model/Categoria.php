@@ -33,9 +33,26 @@ class Categoria implements InputFilterAwareInterface {
 
     /**
      * @param int $id
+     * @return Categoria
      */
     public function setId($id) {
-        $this->id = $id;
+        // This is an ugly thing use an Hydrator insted
+        if(is_int($id)) {
+            $this->id = $id;
+            return $this;
+        }
+
+        if(is_array($id)) {
+            if(isset($id['idCategoria'])) {
+                $this->id = $id['idCategoria'];
+                return $this;
+            }
+
+            if(isset($id['id'])) {
+                $this->id = $id['id'];
+                return $this;
+            }
+        }
     }
 
     /**
@@ -47,9 +64,12 @@ class Categoria implements InputFilterAwareInterface {
 
     /**
      * @param string $nombre
+     *
+     * @return Categoria
      */
     public function setNombre($nombre) {
         $this->nombre = $nombre;
+        return $this;
     }
 
     // Add content to these methods:
@@ -62,7 +82,7 @@ class Categoria implements InputFilterAwareInterface {
             $inputFilter = new InputFilter();
 
             $inputFilter->add(array(
-                'name' => 'artist',
+                'name' => 'nombre',
                 'required' => true,
                 'filters' => array(
                     array('name' => 'StripTags'),
@@ -79,26 +99,6 @@ class Categoria implements InputFilterAwareInterface {
                     ),
                 ),
             ));
-
-            $inputFilter->add(array(
-                'name' => 'title',
-                'required' => true,
-                'filters' => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                ),
-                'validators' => array(
-                    array(
-                        'name' => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min' => 1,
-                            'max' => 100,
-                        ),
-                    ),
-                ),
-            ));
-
 
             $this->inputFilter = $inputFilter;
         }
@@ -106,9 +106,20 @@ class Categoria implements InputFilterAwareInterface {
         return $this->inputFilter;
     }
 
+    public function getArrayCopy() {
+        return get_object_vars($this);
+    }
+
+    /**
+     * @param $data
+     *
+     * @return Categoria
+     */
     public function exchangeArray($data) {
-        $this->id = (isset($data['idCategoria'])) ? $data['idCategoria'] : null;
+        $this->setId($data);
         $this->nombre = (isset($data['nombre'])) ? $data['nombre'] : null;
+
+        return $this;
     }
 
 }

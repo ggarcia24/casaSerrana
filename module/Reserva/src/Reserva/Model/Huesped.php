@@ -31,6 +31,26 @@ class Huesped {
      */
     protected $documento;
 
+    /**
+     * @var int
+     */
+    protected $reserva_id;
+
+    /**
+     * @var Reserva
+     */
+    protected $reserva;
+
+    /**
+     * @var int
+     */
+    protected $habitacion_id;
+
+    /**
+     * @var Habitacion
+     */
+    protected $habitacion;
+
     const EDAD_MENOR = 5;
 
     /**

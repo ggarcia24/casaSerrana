@@ -33,8 +33,29 @@ class ReservaFieldset extends Fieldset implements InputFilterProviderInterface {
     public function init() {
 
         $this->add(array(
-            'name' => 'habitacion',
-            'type' => 'HabitacionFieldset',
+            'name' => 'habitaciones',
+            'type' => 'Collection',
+            'options' => array(
+                'Habitaciones',
+                'count' => 1,
+                'should_create_template' => true,
+                'allow_add' => true,
+                'allow_remove' => true,
+                'target_element' => array(
+                    'type' => 'Reserva\Form\HabitacionFieldset'
+                )
+            )
+        ));
+
+        $this->add(array(
+            'name' => 'agregarHuesped',
+            'type' => 'button',
+            'options' => array(
+                'label' => 'Agregar Huesped'
+            ),
+            'attributes' => array(
+                'onclick' => 'return add_huesped()'
+            )
         ));
 
         $this->add(array(
